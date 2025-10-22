@@ -120,26 +120,6 @@ cat > '"\?$*'ChouMi'*$?\"' << 'EOF'
 EOF
 ```
 
-**Verification:**
-```bash
-ls | grep ChouMi
-cat '"\?$*'"'"'ChouMi'"'"'*$?"'
-```
-
-**Important Note:**
-This doesn't work on Windows Git Bash because Windows doesn't allow these special characters (`\`, `?`, `*`, `"`) in filenames. You need:
-- WSL (Windows Subsystem for Linux)
-- A real Linux system
-- Or let the checker test it on their Linux server
-
-**For WSL:**
-```bash
-cd piscine-go
-echo -n "01" > '"\?$*'"'"'ChouMi'"'"'*$?"'
-```
-
----
-
 ## 5. skip.sh - "pick your equipment"
 
 **Task:** Print `ls -l` output, showing every other line starting with the first.
@@ -218,6 +198,14 @@ Witness: Annabel Church
 
 Conclusion:
 The murderer is Dartey Henv — tall male, blue Honda, L337…9, wallet matches clues.
+
+`my_answer.sh`
+
+```bash
+#!/bin/bash
+
+echo "Dartey Henv"
+```
 ## How to Push to GitHub
 ```bash
 # Make all scripts executable
