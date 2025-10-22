@@ -151,7 +151,7 @@ ls -l | sed -n 'p;n'
 - `NR % 2 == 1` means "line number modulo 2 equals 1" (odd lines)
 
 ---
-🕵️‍♂️ the-final-cl-test (Murder Mystery)
+## 6. 🕵️‍♂️ the-final-cl-test (Murder Mystery)
 
 Objective:
 Solve the Terminal City murder mystery using Linux commands and data from the mystery/ directory.
@@ -190,12 +190,13 @@ Cross-checking revealed Dartey Henv as the only tall male wallet holder owning a
 
 Key witness:
 
-From mystery/interviews/interview-699607:
+```From mystery/interviews/interview-699607:
 
 “Interviewed Ms. Church… Describes a blue Honda with a plate starting with ‘L337’ and ending with ‘9’.”
 
-Witness: Annabel Church
 
+Witness: Annabel Church
+```
 Conclusion:
 The murderer is Dartey Henv — tall male, blue Honda, L337…9, wallet matches clues.
 
@@ -207,7 +208,7 @@ The murderer is Dartey Henv — tall male, blue Honda, L337…9, wallet matches 
 echo "Dartey Henv"
 ```
 ---
-## 🧾 `explain.sh`
+## 7. 🧾 `explain.sh`
 
 **Objective:**  
 Summarize how the case was solved, showing:
@@ -230,7 +231,7 @@ echo "Erika Owens"
 echo ""
 ```
 ---
-## 🧑‍🏫 `teacher.sh`
+## 8.🧑‍🏫 `teacher.sh`
 
 **Objective:**  
 Automate the process of identifying and displaying the key evidence used to solve the Terminal City mystery, while adapting to different `mystery` folder locations in each training dataset.
@@ -323,7 +324,7 @@ export HERO_ID=1
 
 ### Clean up test files:
 ```bash
-rm -f '"'  # Remove the test file created earlier
+rm -f file_name # Remove the test file created 
 ```
 
 ---
@@ -342,8 +343,6 @@ chmod +x script_name.sh
 # Ubuntu/Debian
 sudo apt-get install jq
 
-# Mac
-brew install jq
 ```
 
 ### Issue: Special character filename won't create on Windows
