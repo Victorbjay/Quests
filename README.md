@@ -134,7 +134,7 @@ This doesn't work on Windows Git Bash because Windows doesn't allow these specia
 
 **For WSL:**
 ```bash
-cd /mnt/c/Users/USER/piscine-go
+cd piscine-go
 echo -n "01" > '"\?$*'"'"'ChouMi'"'"'*$?"'
 ```
 
