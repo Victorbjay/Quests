@@ -171,7 +171,53 @@ ls -l | sed -n 'p;n'
 - `NR % 2 == 1` means "line number modulo 2 equals 1" (odd lines)
 
 ---
+🕵️‍♂️ the-final-cl-test (Murder Mystery)
 
+Objective:
+Solve the Terminal City murder mystery using Linux commands and data from the mystery/ directory.
+
+🧩 Steps
+
+Find clues in mystery/crimescene:
+
+Suspect is a tall male (6’+)
+
+Found wallet with memberships:
+
+AAA
+
+Delta SkyMiles
+
+Local Library
+
+Museum of Bash History
+
+Witness Annabel saw a blue Honda with a plate starting with L337 and ending with 9
+
+Combine data:
+
+Intersect membership lists to find all people in those four clubs.
+
+Filter for males ≥ 6 ft using mystery/people.
+
+Match L337…9 plates and blue Hondas in mystery/vehicles.
+
+Find suspects:
+
+Candidates: Brian Boyer, Erika Owens, Joe Germuska, Mike Bostock, Matt Waite, etc.
+
+Cross-checking revealed Dartey Henv as the only tall male wallet holder owning a blue Honda.
+
+Key witness:
+
+From mystery/interviews/interview-699607:
+
+“Interviewed Ms. Church… Describes a blue Honda with a plate starting with ‘L337’ and ending with ‘9’.”
+
+Witness: Annabel Church
+
+Conclusion:
+The murderer is Dartey Henv — tall male, blue Honda, L337…9, wallet matches clues.
 ## How to Push to GitHub
 ```bash
 # Make all scripts executable
