@@ -230,6 +230,60 @@ echo "Erika Owens"
 echo ""
 ```
 ---
+## 🧑‍🏫 `teacher.sh`
+
+**Objective:**  
+Automate the process of identifying and displaying the key evidence used to solve the Terminal City mystery, while adapting to different `mystery` folder locations in each training dataset.
+
+**Steps performed by the script:**
+
+1. **Step 1:**  
+   Locate the key interview file containing the phrase related to the clue (`L337...9`) anywhere within a `mystery/interviews` directory.  
+   Extract and store only the interview number (digits) into the environment variable `KEY_INTERVIEW`.
+
+2. **Step 2:**  
+   Print the value of the environment variable `KEY_INTERVIEW`.
+
+3. **Step 3:**  
+   Display the full contents of the interview file.
+
+4. **Step 4:**  
+   Print the value of the environment variable `MAIN_SUSPECT` (set by the environment or the grading system).
+
+---
+
+**Final Output Example:**
+```
+699607
+Interviewed Ms. Church at 2:04 pm. Witness stated that she did not see anyone she could identify as the shooter, that she ran away as soon as the shots were fired.
+
+However, she reports seeing the car that fled the scene. Describes it as a blue Honda, with a license plate that starts with "L337" and ends with "9"
+Dartey Henv
+```
+
+---
+
+**Final Solution:**
+```bash
+#!/bin/bash
+
+# Step 1 — find the key interview file (searches recursively for any mystery/interviews folder)
+interview_file="$(find . -type f -path '*/mystery/interviews/*' -exec grep -Il -i 'L337.*9' {} + | head -n1)"
+
+# Extract only the interview number
+export KEY_INTERVIEW="$(basename "$interview_file" | tr -dc '0-9')"
+
+# Step 2 — print the interview number
+echo "$KEY_INTERVIEW"
+
+# Step 3 — print the contents of the interview file
+cat "$interview_file"
+
+# Step 4 — print the value of MAIN_SUSPECT (environment variable)
+echo "${MAIN_SUSPECT}"
+```
+---
+
 ## How to Push to GitHub
 ```bash
 # Make all scripts executable
