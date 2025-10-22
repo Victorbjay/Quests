@@ -102,20 +102,20 @@ find . | wc -l
 
 ## 4. Special Filename - "Be accurate"
 
-**Task:** Create a file named `"\?$*'ChouMi'*$?"` containing `01`
+**Task:** Create a file named `"\?$*'ChouMi'*$?\"` containing `01`
 
 **Command (for Linux/Mac/WSL):**
 ```bash
-echo -n "01" > '"\?$*'"'"'ChouMi'"'"'*$?"'
+echo -n "01" > '"\?$*'ChouMi'*$?\"'
 ```
 
 **Alternative Methods:**
 ```bash
 # Using printf
-printf "01" > '"\?$*'"'"'ChouMi'"'"'*$?"'
+printf "01" > '"\?$*'ChouMi'*$?\"'
 
 # Using cat
-cat > '"\?$*'"'"'ChouMi'"'"'*$?"' << 'EOF'
+cat > '"\?$*'ChouMi'*$?\"' << 'EOF'
 01
 EOF
 ```
