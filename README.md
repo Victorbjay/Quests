@@ -224,10 +224,10 @@ Summarize how the case was solved, showing:
 echo "Annabel Church"
 echo "699607"
 echo "Blue Honda"
+echo "Joe Germuska"
 echo "Hellen Maher"
 echo "Erika Owens"
-echo "Joe Germuska"
-echo
+echo ""
 ```
 ---
 ## How to Push to GitHub
