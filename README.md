@@ -206,6 +206,30 @@ The murderer is Dartey Henv — tall male, blue Honda, L337…9, wallet matches 
 
 echo "Dartey Henv"
 ```
+---
+## 🧾 `explain.sh`
+
+**Objective:**  
+Summarize how the case was solved, showing:
+
+1. The key witness’s name  
+2. Her interview number  
+3. The car color and make of the main suspect  
+4. The 3 other suspects not arrested (in alphabetical order of last name)
+
+**Final output:**
+```bash
+#!/bin/bash
+
+echo "Annabel Church"
+echo "699607"
+echo "Blue Honda"
+echo "Hellen Maher"
+echo "Erika Owens"
+echo "Joe Germuska"
+echo
+```
+---
 ## How to Push to GitHub
 ```bash
 # Make all scripts executable
