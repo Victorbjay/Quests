@@ -1,4 +1,4 @@
-# 🧠 Piscine-Go Shell & Command Line Quest Solutions
+# 🧠 Piscine-Go Shell & Command Line Quests 1 Solutions
 
 This repository contains my completed solutions for several shell scripting and command line challenges from the **01 Edu Piscine Go** training series.  
 Each task focuses on building Unix command fluency, data parsing, and problem-solving logic.
@@ -265,22 +265,19 @@ Dartey Henv
 
 **Final Solution:**
 ```bash
-#!/bin/bash
+#!/usr/bin/env bash
 
-# Step 1 — find the key interview file (searches recursively for any mystery/interviews folder)
-interview_file="$(find . -type f -path '*/mystery/interviews/*' -exec grep -Il -i 'L337.*9' {} + | head -n1)"
+# Step 1: Isolate the key interview number into an environment variable
+export INTERVIEW=$(grep -h "SEE INTERVIEW" mystery/streets/* | grep -oE '[0-9]+')
 
-# Extract only the interview number
-export KEY_INTERVIEW="$(basename "$interview_file" | tr -dc '0-9')"
+# Step 2: Print the newly created environment variable
+echo "$INTERVIEW"
 
-# Step 2 — print the interview number
-echo "$KEY_INTERVIEW"
+# Step 3: Print what the interview contains
+cat mystery/interviews/interview-"$INTERVIEW"
 
-# Step 3 — print the contents of the interview file
-cat "$interview_file"
-
-# Step 4 — print the value of MAIN_SUSPECT (environment variable)
-echo "${MAIN_SUSPECT}"
+# Step 4: Print the content of the environment variable MAIN_SUSPECT
+echo "$MAIN_SUSPECT"
 ```
 ---
 
@@ -367,3 +364,6 @@ brew install jq
 ---
 
 **All scripts are ready to push! 🚀**
+# 🧠 Piscine-Go Shell & Command Line Quests 2 Solutions
+
+Keep refreshing!!! solutions not yet uploaded!
