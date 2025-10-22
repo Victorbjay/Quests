@@ -1,3 +1,27 @@
+# 🧠 Piscine-Go Shell & Command Line Quest Solutions
+
+This repository contains my completed solutions for several shell scripting and command line challenges from the **01 Edu Piscine Go** training series.  
+Each task focuses on building Unix command fluency, data parsing, and problem-solving logic.
+
+---
+
+## 🔍 `look`
+**Objective:**  
+Search from the current directory and its subfolders for all `.sh` files and display their names (with the `.sh` extension included).
+
+**Tools used:**  
+`find`, basic shell redirection
+
+**Final solution:**
+```bash
+#!/bin/bash
+find . \( \
+  -name 'a*' \
+  -o \( -type f -name '*z' \) \
+  -o \( -type f -name 'z*a!' \) \
+\)
+```
+
 # Shell Scripting Solutions
 
 ## 1. myfamily.sh - "someone familiar"
