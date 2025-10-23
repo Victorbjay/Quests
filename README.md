@@ -537,7 +537,7 @@ func main() {
 }
 ```
 `cd test` to make sure you are seeing `/piscine-go/test ` now Run it
-`go run .`
+`go run .` <br>
 *📤 Expected Output*
 ```
 F
@@ -632,7 +632,7 @@ func main() {
 }
 ```
 `cd test` and Run it
-`go run .`
+`go run .` <br>
 *📤 check Expected Output on your dashboard*
 ## 🚀 How to Submit (remember to format)
 if you tested, make sure you go back to the `piscine-go` folder using this command `cd ..`
