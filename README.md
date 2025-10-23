@@ -707,8 +707,198 @@ gofumpt -w .
 ```
 **File to push:** `printcomb2/printcomb2.go`
 ---
+## Here's the solution for the `printnbr.go` 
+
+📋 **Explanation:**
+
+1. **Handle minimum int:** The most negative int value (-9223372036854775808) cannot be converted to positive by simply negating it (it would overflow). So we handle it specially by printing '-' and '9', then recursively printing the rest.
+
+2. **Handle negative numbers:** If n is negative, print '-' and make n positive.
+
+3. **Recursive printing:** 
+   - If n >= 10, recursively call PrintNbr with n/10 to print all digits except the last
+   - Print the last digit using `'0' + n%10`
+
+## 🧪 Code
+
+```bash
+package piscine
+
+import "github.com/01-edu/z01"
+
+func PrintNbr(n int) {
+	// Handle the special case of the most negative int
+	if n == -9223372036854775808 {
+		z01.PrintRune('-')
+		z01.PrintRune('9')
+		PrintNbr(223372036854775808)
+		return
+	}
+
+	// Handle negative numbers
+	if n < 0 {
+		z01.PrintRune('-')
+		n = -n
+	}
+
+	// Recursively print digits
+	if n >= 10 {
+		PrintNbr(n / 10)
+	}
+
+	z01.PrintRune(rune('0' + n%10))
+}
+```
+**Always make sure you format immediately after creating your file**
+use this command 
+```bash
+gofmt -w .
+```
+## 📤 **Expected Output:**
+```
+-1230123
+```
+
+## 🎯 **Test Cases:**
+| Input | Output |
+|-------|--------|
+| `-123` | `-123` |
+| `0` | `0` |
+| `123` | `123` |
+| `-9223372036854775808` | `-9223372036854775808` |
+| `9223372036854775807` | `9223372036854775807` |
+
+## ✅ **Key Points:**
+- Handles all possible int values including the minimum int (-9223372036854775808)
+- Uses recursion to print digits from left to right
+- Cannot use int64 conversion
+- Uses only z01.PrintRune for output
+
+🚀 Ready to submit!
 ---
+##  `printcombn.go` 
+📋 **Explanation:**
 
+1. **PrintCombN(n int):** Main function that initializes and starts the combination generation
+2. **printCombinations:** Recursive function that generates all valid combinations
+   - `start`: The minimum digit for current position (must be greater than previous digit)
+   - `digit <= 9-(n-pos-1)`: Ensures we have enough digits left for remaining positions
+3. **printComb:** Prints a single combination and adds comma/space if not the last one
+
+## 🎯 **Key Logic:**
+- For n=3: Last combination is 789 (digits 7,8,9)
+- For n=9: Last combination is 012345678 (digits 0,1,2,3,4,5,6,7,8)
+- Formula for last combination digit at position i: `10 - n + i`
+
+## 🧪 Code
+
+```bash
+package piscine
+
+import "github.com/01-edu/z01"
+
+func PrintCombN(n int) {
+	if n <= 0 || n >= 10 {
+		return
+	}
+
+	// Create a slice to hold the current combination
+	comb := make([]int, n)
+
+	// Initialize the first combination (0, 1, 2, ..., n-1)
+	for i := 0; i < n; i++ {
+		comb[i] = i
+	}
+
+	// Print combinations
+	printCombinations(comb, n, 0)
+	z01.PrintRune('\n')
+}
+
+func printCombinations(comb []int, n int, pos int) {
+	// Base case: we've filled all positions
+	if pos == n {
+		printComb(comb, n)
+		return
+	}
+
+	// Determine the starting digit for this position
+	start := 0
+	if pos > 0 {
+		start = comb[pos-1] + 1
+	}
+
+	// Try all possible digits for this position
+	for digit := start; digit <= 9-(n-pos-1); digit++ {
+		comb[pos] = digit
+		printCombinations(comb, n, pos+1)
+	}
+}
+
+func printComb(comb []int, n int) {
+	// Print the combination
+	for i := 0; i < n; i++ {
+		z01.PrintRune(rune('0' + comb[i]))
+	}
+
+	// Check if this is the last combination
+	isLast := true
+	for i := 0; i < n; i++ {
+		if comb[i] != 10-n+i {
+			isLast = false
+			break
+		}
+	}
+
+	// Print comma and space if not the last combination
+	if !isLast {
+		z01.PrintRune(',')
+		z01.PrintRune(' ')
+	}
+}
+
+```
+**Always make sure you format immediately after creating your file**
+use this command 
+```bash
+gofmt -w .
+```
+
+## 📤 **Expected Output:**
+
+**For n=1:**
+```
+0, 1, 2, 3, 4, 5, 6, 7, 8, 9
+```
+
+**For n=3:**
+```
+012, 013, 014, 015, 016, 017, 018, 019, 023, ..., 689, 789
+```
+
+**For n=9:**
+```
+012345678, 012345679, ..., 123456789
+```
+
+## ✅ **Efficiency:**
+- Uses recursion with proper bounds to avoid unnecessary iterations
+- Only generates valid combinations (no backtracking needed)
+- Time complexity: O(C(10,n)) where C is combinations
+
+🚀 Ready to submit!
+---
+### If you encounter Formatting error!!! then you forgot to format the go file
+### If you encounter go mod init piscine error!! you skipped the first instruction
+### If you encounter go run package error! go and delete the required github library installed inside your `go.mod` file it must only have two lines, delete the 3rd one:
+```bash
+module piscine
+
+go 1.25.3
+
+require github.com/01-edu/z01 v0.2.0 // indirect #Delete this last line to clear that error
+```
 Keep refreshing!!! solutions not yet uploaded!
+## If you are still struggling to understand for your Checkpoint Practice? Check the ReadME file in the 📁 titled **Learn Quest2** I hope that helps. GoodLuck!
 
-Now check README file in 📁 Resource for beginner-friendly guides. 
+### Also check -README file in 📁 Resource for beginner-friendly guides. 
