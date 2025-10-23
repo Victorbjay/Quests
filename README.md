@@ -363,6 +363,345 @@ sudo apt-get install jq
 ---
 
 **All scripts are ready to push! 🚀**
-# 🧠 Piscine-Go Shell & Command Line Quests 2 Solutions
+# 🧠 Piscine-Go Quests 2 Solutions
+  
+All work is submitted from the root repo: `piscine-go`.
+
+---
+
+## 🔧 One-Time Setup (do this once in `piscine-go`)
+```bash
+go mod init piscine
+go get github.com/01-edu/z01
+go mod tidy
+```
+### 🧼 Formatting Before Every Push (do this for each exercise)
+
+Run one of these in the exercise folder (e.g., printalphabet/ or printreversealphabet/):
+```bash
+gofmt -w .
+```
+or
+```bash
+gofumpt -w .
+```
+Then commit & push.
+## Let's Start!
+## 🔤 `printalphabet`
+
+**Goal:** print the lowercase Latin alphabet on one line, then a newline.
+
+**File to submit:** `printalphabet/main.go`
+**Allowed function:** `github.com/01-edu/z01.PrintRune`
+
+# Solution:
+```go
+package main
+
+import "github.com/01-edu/z01"
+
+func main() {
+	for char := 'a'; char <= 'z'; char++ {
+		z01.PrintRune(char)
+	}
+	z01.PrintRune('\n')
+}
+
+```
+### ▶️ Usage
+```
+$ go run .
+abcdefghijklmnopqrstuvwxyz
+$
+```
+---
+Then push only these files and remember to format(check above for the command):
+
+```go
+go.mod
+printalphabet/main.go
+```
+---
+
+Note:
+All exercises (like printalphabet, printdigits, etc.) must be in their own folders inside `piscine-go/` and submitted from there.
+If Go command not found install, then install it 
+```bash
+sudo apt update
+#quick update
+sudo apt install golang
+#this installs total packages
+go version #confirms the version installed
+```
+---
+## 🧩 printreversealphabet
+### 🧰 Instructions
+
+Write a program that prints the Latin alphabet in lowercase in reverse order (from z to a) on a single line.
+
+A line is a sequence of characters preceding the end-of-line character ('\n').
+### Code
+```go
+package main
+
+import "github.com/01-edu/z01"
+
+func main() {
+	for ch := 'z'; ch >= 'a'; ch-- {
+		z01.PrintRune(ch)
+	}
+	z01.PrintRune('\n')
+}
+
+```
+### Next: remember to format and push only the files created:
+**File to submit:** `printreversealphabet/main.go`
+---
+## Printdigits:
+## Explanation:
+
+`for digit := '0'; digit <= '9'; digit++` - Loop through ASCII characters from '0' to '9'
+`z01.PrintRune(digit)` - Print each digit character using the allowed function <br>
+`z01.PrintRune('\n')` - Print a newline at the end
+```go
+package main
+
+import "github.com/01-edu/z01"
+
+func main() {
+	for ch := '0'; ch <= '9'; ch++ {
+		z01.PrintRune(ch)
+	}
+	z01.PrintRune('\n')
+}
+
+```
+`go run printdigits/main.go`
+*Output:*
+0123456789
+### Next: remember to format and push only the files created:
+**File to submit:** `printdigits/main.go`
+---
+# isnegative
+
+## 📋 Instructions
+Write a function that prints `'T'` (true) on a single line if the `int` passed as parameter is negative, otherwise it prints `'F'` (false).
+
+**Level:** 6  
+**Files to submit:** `isnegative.go`  
+**Allowed functions:** `github.com/01-edu/z01.PrintRune`, `--allow-builtin`
+
+## 📝 Expected Function
+```go
+func IsNegative(nb int) {
+}
+```
+
+## 💡 Solution
+```go
+package piscine
+
+import "github.com/01-edu/z01"
+
+func IsNegative(nb int) {
+	if nb < 0 {
+		z01.PrintRune('T')
+	} else {
+		z01.PrintRune('F')
+	}
+	z01.PrintRune('\n')
+}
+```
+
+## 🔍 Explanation
+1. **`if nb < 0`** - Check if the number is negative
+2. **`z01.PrintRune('T')`** - Print 'T' for true (number is negative)
+3. **`z01.PrintRune('F')`** - Print 'F' for false (number is zero or positive)
+4. **`z01.PrintRune('\n')`** - Print a newline character after the result
+
+## 🧪 Usage Example (To test locally) !!!! Pls skip this if you are not interested in testing and jump to 'How to Submit below'
+```bash
+mkdir -p test #create a test folder
+nano main.go # paste the test code below into this file
+```
+```go
+package main
+
+import "piscine"
+
+func main() {
+	piscine.IsNegative(1)   // Not negative
+	piscine.IsNegative(0)   // Not negative (zero)
+	piscine.IsNegative(-1)  // Negative
+}
+```
+`cd test` and Run it
+`go run .`
+*📤 Expected Output*
+```
+F
+F
+T
+```
+
+## 🎯 Test Cases
+| Input | Output | Reason |
+|-------|--------|--------|
+| `1` | `F` | 1 is positive |
+| `0` | `F` | 0 is not negative |
+| `-1` | `T` | -1 is negative |
+| `42` | `F` | 42 is positive |
+| `-999` | `T` | -999 is negative |
+
+## 📌 Key Points
+- Zero (0) is **not** considered negative, so it returns 'F'
+- Only numbers less than 0 return 'T'
+- Each result must be followed by a newline character
+- Must use `github.com/01-edu/z01.PrintRune` for output
+- Function must be in the `piscine` package
+
+## 🚀 How to Submit (remember to format)
+if you tested, make sure you go back to the `piscine-go` folder using this command `cd ..`
+```bash
+git add isnegative.go
+git commit -m "Add isnegative solution"
+git push
+```
+---
+# Printcomb
+
+## 📋 Instructions
+Write a function that prints, in ascending order and on a single line: all unique combinations of three different digits so that, the first digit is lower than the second, and the second is lower than the third.
+These combinations are separated by a comma and a space.
+
+**Files to submit:** `printcomb.go`  
+
+## 📝 Expected Function
+```go
+func PrintComb () {
+}
+```
+
+## 💡 Solution
+```go
+package piscine
+
+import "github.com/01-edu/z01"
+
+func PrintComb() {
+	for i := '0'; i <= '7'; i++ {
+		for j := i + 1; j <= '8'; j++ {
+			for k := j + 1; k <= '9'; k++ {
+				z01.PrintRune(i)
+				z01.PrintRune(j)
+				z01.PrintRune(k)
+				
+				// Don't print comma and space after the last combination (789)
+				if i != '7' || j != '8' || k != '9' {
+					z01.PrintRune(',')
+					z01.PrintRune(' ')
+				}
+			}
+		}
+	}
+	z01.PrintRune('\n')
+}
+
+```
+
+## 🔍 Explanation
+1. **First loop:** `i := '0'; i <= '7'` - First digit ranges from 0 to 7
+2. **Second loop:** `j := i + 1; j <= '8'` - Second digit starts from i+1 (ensuring i < j) up to 8
+3. **Third loop:** `k := j + 1; k <= '9'` - Third digit starts from j+1 (ensuring j < k) up to 9
+4. **Print combination:** Print all three digits
+5. **Comma and space:** Add ", " after each combination except the last one (789)
+6. **Newline:** Print '\n' at the end
+## 🧪 Usage Example (To test locally) !!!! Pls skip this if you are not interested in testing and jump to 'How to Submit below'
+replace your previous test file `main.go` with this:
+```go
+package main
+
+package main
+
+import "piscine"
+
+func main() {
+	piscine.PrintComb()
+}
+```
+`cd test` and Run it
+`go run .`
+*📤 check Expected Output on your dashboard*
+## 🚀 How to Submit (remember to format)
+if you tested, make sure you go back to the `piscine-go` folder using this command `cd ..`
+```bash
+By now you should have mastered the art of adding a file, commiting with a message and pushing.
+I think you gat this, thumbs up!
+```
+---
+# 🧩 printcomb2
+
+### 🧰 Instructions
+Write a function that prints **all possible combinations of two different two-digit numbers** (`00 01`, `00 02`, …, `98 99`) in **ascending order** on a single line.
+
+Each combination must be separated by a comma and a space, and the final output should end with a newline.
+
+**Allowed function:**  
+`github.com/01-edu/z01.PrintRune`  
+**Casting is not allowed.**
+
+---
+
+### ✅ Code (`printcomb2.go`)
+```go
+package piscine
+
+import "github.com/01-edu/z01"
+
+func PrintComb2() {
+	for i := 0; i <= 98; i++ {
+		for j := i + 1; j <= 99; j++ {
+			z01.PrintRune(rune('0' + i/10))
+			z01.PrintRune(rune('0' + i%10))
+			z01.PrintRune(' ')
+			z01.PrintRune(rune('0' + j/10))
+			z01.PrintRune(rune('0' + j%10))
+			if i != 98 || j != 99 {
+				z01.PrintRune(',')
+				z01.PrintRune(' ')
+			}
+		}
+	}
+	z01.PrintRune('\n')
+}
+
+```
+### ▶️ Usage Example
+This is the test file below (replace main.go):
+```go
+package main
+
+import "piscine"
+
+func main() {
+	piscine.PrintComb2()
+}
+
+```
+**Expected Output:**
+```
+$ go run .
+00 01, 00 02, 00 03, ..., 98 99
+$
+```
+*Always format your code before you push:*
+```bash
+gofmt -w .
+# or, if installed:
+gofumpt -w .
+```
+**File to push:** `printcomb2/printcomb2.go`
+---
+---
 
 Keep refreshing!!! solutions not yet uploaded!
