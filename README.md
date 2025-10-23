@@ -522,6 +522,7 @@ func IsNegative(nb int) {
 ## 🧪 Usage Example (To test locally) !!!! Pls skip this if you are not interested in testing and jump to 'How to Submit below'
 ```bash
 mkdir -p test #create a test folder
+cd test #moves you into the test folder 📁 created so you can create the main file below
 nano main.go # paste the test code below into this file
 ```
 ```go
@@ -535,7 +536,7 @@ func main() {
 	piscine.IsNegative(-1)  // Negative
 }
 ```
-`cd test` and Run it
+`cd test` to make sure you are seeing `/piscine-go/test ` now Run it
 `go run .`
 *📤 Expected Output*
 ```
@@ -561,7 +562,8 @@ T
 - Function must be in the `piscine` package
 
 ## 🚀 How to Submit (remember to format)
-if you tested, make sure you go back to the `piscine-go` folder using this command `cd ..`
+if you tested, make sure you go back to the `piscine-go` folder 📁 using this command `cd ..`
+Confirm you are back `~piscine-go` if so, you're good 2 go 👍 
 ```bash
 git add isnegative.go
 git commit -m "Add isnegative solution"
@@ -636,7 +638,8 @@ func main() {
 if you tested, make sure you go back to the `piscine-go` folder using this command `cd ..`
 ```bash
 By now you should have mastered the art of adding a file, commiting with a message and pushing.
-I think you gat this, thumbs up!
+I think you gat this, thumbs up! 👍 😎
+If you see any error occurred check again and again, you probably made a mistake terminal is your friend.
 ```
 ---
 # 🧩 printcomb2
@@ -705,3 +708,5 @@ gofumpt -w .
 ---
 
 Keep refreshing!!! solutions not yet uploaded!
+
+Now check README file in 📁 Resource for beginner-friendly guides. 
