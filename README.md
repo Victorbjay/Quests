@@ -898,7 +898,1511 @@ go 1.25.3
 
 require github.com/01-edu/z01 v0.2.0 // indirect #Delete this last line to clear that error
 ```
-Keep refreshing!!! solutions not yet uploaded!
-## If you are still struggling to understand for your Checkpoint Practice? Check the ReadME file in the 📁 titled **Learn Quest2** I hope that helps. GoodLuck!
+## If you are still struggling to understand for your Checkpoint Practice? After copy and pasting, try to Check the ReadME file in the 📁 titled **Learn Quest2** I hope that helps. GoodLuck!
 
 ### Also check -README file in 📁 Resource for beginner-friendly guides. 
+---
+# QUEST-3
+Excellent 👏 — this one introduces **pointers** 🧠
+Let’s make it super simple so you’ll *never* be afraid of pointers again.
+
+---
+
+## 🧩 What They’re Asking
+
+> “Write a function that takes a **pointer to an int**, and makes that int equal to 1.”
+
+So the function doesn’t return anything —
+it just *changes* the number that was given **through a pointer**.
+
+---
+
+### 👶 Imagine this story
+
+You have a box 📦 that contains a number — let’s call the box `n`.
+Normally, if you hand someone the **number itself**, they can’t change your box.
+
+But if you hand them the **key to your box** (the *address*),
+they can open it and put a new number inside.
+
+That “key” is called a **pointer** 🔑
+
+---
+
+## ✅ Solution Code
+
+```go
+package piscine
+
+func PointOne(n *int) {
+	*n = 1
+}
+```
+**Now that you ve created the file, format it now**
+---
+
+### 🧒 Explanation
+
+* `n *int` → means:
+  “I’m not getting an integer directly — I’m getting a *pointer to* an integer.”
+
+* `*n = 1` →
+  means: “go to that address and change what’s inside to 1.”
+
+---
+
+### 🧪 Test Program (you can run this locally)
+
+```go
+package main
+
+import (
+	"fmt"
+	"piscine"
+)
+
+func main() {
+	n := 0          // normal integer
+	piscine.PointOne(&n) // send the address of n (not the value)
+	fmt.Println(n)  // prints 1
+}
+```
+
+### Output
+
+```
+$ go run .
+1
+```
+
+---
+
+### 💡 Key Concepts (Pointers for Kids)
+
+| Concept  | Meaning                                   |
+| -------- | ----------------------------------------- |
+| `*int`   | A pointer to an integer                   |
+| `&n`     | “Address of” n — like the box’s key       |
+| `*n`     | “Value inside the address” — open the box |
+| `*n = 1` | Change what’s inside the box to 1         |
+
+---
+
+### 🧰 What to Push
+
+Just one file:
+
+```
+ git add pointone.go
+```
+
+---
+
+Don’t panic — this one looks scary only because there are more `*`,
+but it’s the *same logic* as before, just more boxes 📦 inside boxes.
+
+---
+
+## 🧩UltimatePointOne
+
+> “Write a function that takes a pointer to a pointer to a pointer to an int
+> and gives that int the value of 1.”
+
+In plain English:
+
+> “You get a key to a box, inside it there’s another box, and inside *that* one is the number — set it to 1.”
+
+---
+
+## ✅ Solution Code
+
+```go
+package piscine
+
+func UltimatePointOne(n ***int) {
+	***n = 1
+}
+```
+**If you like no remember to format LOL**
+---
+
+## 🧒 Step-By-Step Explanation
+
+Let’s break this down gently:
+
+### 1️⃣ You start with an `int`
+
+```go
+a := 0  // box that holds 0
+```
+
+### 2️⃣ A pointer to `a`
+
+```go
+b := &a  // b holds the address of a
+```
+
+### 3️⃣ A pointer to that pointer
+
+```go
+n := &b  // n holds the address of b
+```
+
+### 4️⃣ The function takes a pointer to *that*
+
+```go
+piscine.UltimatePointOne(&n)
+```
+
+So the argument `n` inside your function is actually `***int` (pointer to pointer to pointer).
+
+---
+
+### 🧠 Inside the function:
+
+* `n` → pointer to pointer to pointer
+* `*n` → pointer to pointer
+* `**n` → pointer to int
+* `***n` → the integer itself ✅
+
+So `***n = 1` means:
+
+> go three levels deep and change the real number to 1.
+
+---
+
+## 🧪 Test Code
+
+```go
+package main
+
+import (
+	"fmt"
+	"piscine"
+)
+
+func main() {
+	a := 0
+	b := &a
+	n := &b
+	piscine.UltimatePointOne(&n)
+	fmt.Println(a)
+}
+```
+
+### Output
+
+```
+$ go run .
+1
+```
+
+---
+
+## 🧩 Visual Analogy (for fun)
+
+| Level      | Variable | What it stores                                       |
+| ---------- | -------- | ---------------------------------------------------- |
+| 🎯 Level 1 | `a`      | 0                                                    |
+| 📦 Level 2 | `b`      | → address of `a`                                     |
+| 📦 Level 3 | `n`      | → address of `b`                                     |
+| 🔑 Level 4 | `&n`     | → address of `n` (that’s what the function receives) |
+
+So to open all those boxes:
+`*` opens 1 layer → `***` opens 3 layers → reveals `a`.
+
+---
+
+## 💡 Key Lesson
+
+| Symbol | Meaning                           |
+| ------ | --------------------------------- |
+| `*`    | open one box                      |
+| `**`   | open two boxes                    |
+| `***`  | open three boxes                  |
+| `&`    | take the address (make a pointer) |
+
+---
+
+That’s literally all there is to it — same idea as before, just deeper nesting 😄
+Beautiful — this one brings together **math + pointers**, so let’s keep the same “baby logic” 🧒🧮
+
+---
+
+## divmod.go-🧩 The Task
+
+> “Write a function that divides two integers (`a` and `b`),
+> stores the **quotient** in one pointer and the **remainder** in another.”
+
+---
+
+## ✅ Solution Code
+
+```go
+package piscine
+
+func DivMod(a int, b int, div *int, mod *int) {
+	*div = a / b
+	*mod = a % b
+}
+```
+**Hope you remember to format**
+---
+
+## 🧒 Explanation (Like Teaching a Child)
+
+You know when you divide **13 ÷ 2** on paper?
+
+```
+2 goes into 13 → 6 times, remainder 1
+```
+
+So:
+
+* Quotient (the result of division) = `6`
+* Remainder (what’s left) = `1`
+
+In Go:
+
+* `a / b` gives **quotient**
+* `a % b` gives **remainder**
+
+But the tricky part here is the **pointers**.
+We don’t print or return the results — we put them *inside the boxes* (the memory spots) that were given to us.
+
+---
+
+### 💡 Line-by-line Explanation
+
+```go
+*div = a / b
+```
+
+👉 Go to the memory location `div` is pointing at, and write the quotient there.
+
+```go
+*mod = a % b
+```
+
+👉 Go to the memory location `mod` is pointing at, and write the remainder there.
+
+---
+
+## 🧪 Test Program
+
+```go
+package main
+
+import (
+	"fmt"
+	"piscine"
+)
+
+func main() {
+	a := 13
+	b := 2
+	var div int
+	var mod int
+	piscine.DivMod(a, b, &div, &mod)
+	fmt.Println(div)
+	fmt.Println(mod)
+}
+```
+
+### 🧾 Output
+
+```
+$ go run .
+6
+1
+```
+
+---
+
+## 📦 Quick Summary
+
+| Symbol  | Meaning                                          |
+| ------- | ------------------------------------------------ |
+| `*div`  | Value inside the pointer (place to store answer) |
+| `a / b` | Division result                                  |
+| `a % b` | Remainder of the division                        |
+| `&div`  | Address of div (we send this to the function)    |
+
+---
+
+## 🧠 How to Remember
+
+Think of it like this:
+
+> “I tell my friend the answers,
+> and my friend writes them into two different boxes I gave them.” 📦📦
+
+One box holds **div**, the other holds **mod**.
+
+---
+
+This one is just the *upgraded version* of **DivMod**, but now with **pointers everywhere** 🔁
+
+---
+
+## Ultimatedivmod 🧩 Task Summary
+
+> “You’re given two pointers to integers, `a` and `b`.”
+> You must:
+>
+> * Divide the value inside `a` by the value inside `b`
+> * Store the **quotient** back inside `a`
+> * Store the **remainder** back inside `b`
+
+---
+
+## ✅ Solution Code
+
+```go
+package piscine
+
+func UltimateDivMod(a *int, b *int) {
+	quotient := *a / *b
+	remainder := *a % *b
+	*a = quotient
+	*b = remainder
+}
+```
+**gofmt -w .**
+---
+
+## 🧒 Explanation (as simple as possible)
+
+Think of:
+
+* `*a` → the number **inside box A**
+* `*b` → the number **inside box B**
+
+You don’t want to **return** anything —
+you just open both boxes, do your math, and put the results back inside.
+
+---
+
+### Step-by-step logic:
+
+Let’s say:
+
+```go
+a = 13
+b = 2
+```
+
+1️⃣ **Get the numbers inside the boxes**
+
+```go
+*a = 13
+*b = 2
+```
+
+2️⃣ **Do the math**
+
+```go
+quotient = 13 / 2  // → 6
+remainder = 13 % 2 // → 1
+```
+
+3️⃣ **Put them back**
+
+```go
+*a = 6
+*b = 1
+```
+
+So now:
+
+```
+a = 6
+b = 1
+```
+
+---
+
+## 🧪 Test Program
+
+```go
+package main
+
+import (
+	"fmt"
+	"piscine"
+)
+
+func main() {
+	a := 13
+	b := 2
+	piscine.UltimateDivMod(&a, &b)
+	fmt.Println(a)
+	fmt.Println(b)
+}
+```
+
+### Output:
+
+```
+$ go run .
+6
+1
+```
+
+---
+
+## 💡 Key Lessons
+
+| Symbol    | Meaning                        |
+| --------- | ------------------------------ |
+| `*a`      | the value inside the pointer a |
+| `*b`      | the value inside the pointer b |
+| `*a / *b` | divide values                  |
+| `*a % *b` | remainder                      |
+| `a *int`  | a is a pointer to an integer   |
+| `&a`      | address of a (pointer)         |
+
+---
+
+## 🧠 Easy Way to Remember
+
+> 🧮 **DivMod formula:**
+> Store `(a / b)` in `a`,
+> Store `(a % b)` in `b`.
+
+Or say it like this:
+
+> “A gets the quotient, B gets the remainder.” 💥
+
+---
+
+— welcome to **PrintStr**, one of the easiest but most *fundamental* exercises in Go strings and runes.
+
+Let’s make this simple and fun 👇
+
+---
+
+## PrintStr 🧩 Task Summary
+
+> Write a function that prints every character of a string one by one on the screen.
+
+---
+
+## ✅ Solution Code
+
+```go
+package piscine
+
+import "github.com/01-edu/z01"
+
+func PrintStr(s string) {
+	for _, char := range s {
+		z01.PrintRune(char)
+	}
+}
+```
+**I know you don tire for my reminder sorry**
+---
+
+## 🧒 Explanation (Step by Step)
+
+Let’s break it down like storytime 📖:
+
+### 1️⃣ What’s a **string**?
+
+A string is just a list (sequence) of **characters** — like a word:
+
+```
+"Hello"
+```
+
+is actually
+`H`, `e`, `l`, `l`, `o`
+
+---
+
+### 2️⃣ What’s `for _, char := range s`?
+
+That’s Go’s way of saying:
+
+> “Go through every character (rune) inside the string `s`.”
+
+* `_` = ignore the index number
+* `char` = the current character (like `'H'`, `'e'`, `'l'`, etc.)
+
+---
+
+### 3️⃣ What’s `z01.PrintRune(char)`?
+
+It **prints** one single character (rune) at a time on the screen —
+so when we do it in a loop, it prints the whole string, letter by letter.
+
+---
+
+### 4️⃣ Why not just `fmt.Println(s)`?
+
+Because this challenge wants you to *manually* print every rune using `z01.PrintRune`, not the easy way 😄
+
+You’re training to understand **how iteration works on strings** in Go.
+
+---
+
+## 🧪 Test Program
+
+```go
+package main
+
+import "piscine"
+
+func main() {
+	piscine.PrintStr("Hello World!")
+}
+```
+
+### 🧾 Output
+
+```
+$ go run . | cat -e
+Hello World!$
+```
+
+---
+
+## 💡 Quick Recap
+
+| Concept                  | Meaning                                |
+| ------------------------ | -------------------------------------- |
+| `string`                 | sequence of runes (characters)         |
+| `range s`                | loops through each character in string |
+| `z01.PrintRune(char)`    | prints one rune at a time              |
+| `_`                      | ignore the index                       |
+| `for _, char := range s` | go through every character             |
+
+---
+
+## 🧠 Memory Tip
+
+> 🔤 “PrintStr walks through every letter of the string,
+> and hands it to z01.PrintRune like giving letters to a printer.” 🖨️
+
+---
+## StrLen
+Excellent 🔢 — this one teaches you **how to count characters (runes)** in a string manually.
+It’s very simple, but it’s a key building block for string manipulation in Go.
+
+---
+
+## ✅ Solution Code
+
+```go
+package piscine
+
+func StrLen(s string) int {
+	count := 0
+	for range s {
+		count++
+	}
+	return count
+}
+```
+**make I keep mute here!**
+---
+
+## 🧠 Step-by-Step Explanation
+
+### 1️⃣ What’s happening here?
+
+You’re given a string — for example:
+
+```go
+"Hello World!"
+```
+
+You need to **count how many runes (characters)** it has.
+So you’re basically counting:
+`H` (1), `e` (2), `l` (3), `l` (4), `o` (5), … until the last character.
+
+---
+
+### 2️⃣ Why use `for range`?
+
+When you write:
+
+```go
+for range s
+```
+
+You’re saying:
+
+> “Go through every character in the string — one at a time.”
+
+And for each one, just increase `count` by 1:
+
+```go
+count++
+```
+
+When it’s done, `count` holds the **total number of characters**.
+
+---
+
+### 3️⃣ Why not just use `len(s)`?
+
+Good question!
+✅ Because `len(s)` counts **bytes**, not **runes**.
+
+So if your string contains special characters like `é`, `ñ`, or emojis 😊
+`len(s)` gives the wrong answer (since some runes use multiple bytes).
+But `for range` counts each *rune* properly.
+
+---
+
+### 4️⃣ What’s a “rune”?
+
+A **rune** in Go = one Unicode character.
+This means even emojis or accented letters count as 1.
+
+---
+
+## 🧪 Test Program
+
+```go
+package main
+
+import (
+	"fmt"
+	"piscine"
+)
+
+func main() {
+	l := piscine.StrLen("Hello World!")
+	fmt.Println(l)
+}
+```
+
+### 🧾 Output
+
+```
+$ go run .
+12
+```
+
+---
+
+## 🧩 Quick Recap
+
+| Line           | Meaning                    |
+| -------------- | -------------------------- |
+| `count := 0`   | start from zero            |
+| `for range s`  | go through each character  |
+| `count++`      | add 1 for each rune        |
+| `return count` | give back the total number |
+
+---
+
+## 🧠 Memory Trick
+
+> “Walk through the string, count every letter you see,
+> and when you’re done, return the number to me.” 🧮✨
+
+---
+
+# swap.go - It’s all about **swapping values between two memory boxes** 🧠📦
+
+---
+
+## ✅ Solution Code
+
+```go
+package piscine
+
+func Swap(a *int, b *int) {
+	temp := *a
+	*a = *b
+	*b = temp
+}
+```
+
+---
+
+## 🧒 Step-by-Step Explanation
+
+Imagine you have two boxes:
+
+| Box | Value |
+| --- | ----- |
+| `a` | 0     |
+| `b` | 1     |
+
+Each variable holds a **pointer** — meaning a *reference* to the box, not the box itself.
+
+So:
+
+* `*a` → open box A (get the number inside)
+* `*b` → open box B (get the number inside)
+
+---
+
+### 🧠 Step-by-step logic
+
+1️⃣ Store what’s inside `a`
+
+```go
+temp := *a   // temp = 0
+```
+
+2️⃣ Put what’s inside `b` into `a`
+
+```go
+*a = *b      // a = 1
+```
+
+3️⃣ Put what’s in temp (old `a`) into `b`
+
+```go
+*b = temp    // b = 0
+```
+
+Now they’ve swapped!
+
+| Box | New Value |
+| --- | --------- |
+| `a` | 1         |
+| `b` | 0         |
+
+---
+
+## 🧪 Test Program
+
+```go
+package main
+
+import (
+	"fmt"
+	"piscine"
+)
+
+func main() {
+	a := 0
+	b := 1
+	piscine.Swap(&a, &b)
+	fmt.Println(a)
+	fmt.Println(b)
+}
+```
+
+### 🧾 Output
+
+```
+$ go run .
+1
+0
+```
+
+---
+
+## 🧩 Key Points
+
+| Symbol | Meaning                       |
+| ------ | ----------------------------- |
+| `*a`   | value stored inside pointer a |
+| `*b`   | value stored inside pointer b |
+| `&a`   | address of a (pointer to a)   |
+| `temp` | temporary storage for swap    |
+
+---
+
+## 💡 Simple Memory Tip
+
+> “Use a temp box to hold one value while you switch the two.” 🔄
+
+Like this in real life:
+
+> You have two cups — one has coffee ☕, one has juice 🧃.
+> You need a third empty cup to pour coffee into first,
+> so you can swap them without spilling!
+
+---
+
+This one — **StrRev** — teaches you how to *reverse* a string in Go!
+That means taking `"Hello World!"` and flipping it backwards to `"!dlroW olleH"`.
+
+---
+
+## ✅ Solution Code
+
+```go
+package piscine
+
+func StrRev(s string) string {
+	runes := []rune(s)
+	length := len(runes)
+
+	for i := 0; i < length/2; i++ {
+		runes[i], runes[length-1-i] = runes[length-1-i], runes[i]
+	}
+
+	return string(runes)
+}
+```
+**format pls**
+---
+
+## 🧒 Step-by-Step Explanation
+
+### 1️⃣ What’s happening?
+
+We’re taking a string, and flipping it so the last character becomes the first.
+
+For example:
+
+```
+Before: H e l l o
+After:  o l l e H
+```
+
+---
+
+### 2️⃣ Why convert to `[]rune`?
+
+In Go, a **string** is a list of **bytes**, not characters.
+Some letters (like `é` or emojis 😊) take *multiple bytes*,
+so we convert it to a **rune slice** first to avoid breaking them:
+
+```go
+runes := []rune(s)
+```
+
+Now `runes` is a proper list of characters that we can swap easily.
+
+---
+
+### 3️⃣ The reversing trick
+
+This part is pure magic 🔁
+
+```go
+for i := 0; i < length/2; i++ {
+    runes[i], runes[length-1-i] = runes[length-1-i], runes[i]
+}
+```
+
+We:
+
+* start from the **beginning** (`i`)
+* swap it with the **end** (`length-1-i`)
+* keep doing that until we reach the middle
+
+It’s like turning the word around in a mirror!
+
+---
+
+### 4️⃣ Convert back to string
+
+After swapping, we turn the rune slice back to a string:
+
+```go
+return string(runes)
+```
+
+---
+
+## 🧪 Test Program
+
+```go
+package main
+
+import (
+	"fmt"
+	"piscine"
+)
+
+func main() {
+	s := "Hello World!"
+	s = piscine.StrRev(s)
+	fmt.Println(s)
+}
+```
+
+### 🧾 Output
+
+```
+$ go run .
+!dlroW olleH
+```
+
+---
+
+## 🧩 Key Concepts Recap
+
+| Concept         | Explanation                               |
+| --------------- | ----------------------------------------- |
+| `[]rune(s)`     | converts string → list of characters      |
+| `len(runes)`    | gives the total number of runes           |
+| swapping        | `runes[i], runes[j] = runes[j], runes[i]` |
+| `string(runes)` | converts runes back → string              |
+
+---
+
+## 🧠 Memory Trick
+
+> “To reverse a string — walk from both ends to the middle, swapping as you go.” 🔄
+
+Like two people exchanging seats from the edges toward the center of a row 🎭
+
+---
+
+## Basicatoi— this is a very important one: it teaches you how to **convert a string of digits into an integer manually**, just like Go’s `strconv.Atoi()` does internally. 🔢
+
+Let’s break it down gently 👇
+
+---
+
+## ✅ Solution Code
+
+```go
+package piscine
+
+func BasicAtoi(s string) int {
+	result := 0
+	for _, r := range s {
+		result = result*10 + int(r-'0')
+	}
+	return result
+}
+```
+
+---
+
+## 🧒 Step-by-Step Explanation
+
+### 1️⃣ What is “Atoi”?
+
+`Atoi` means **ASCII to Integer**.
+
+So, `"1234"` (string) → `1234` (int)
+
+Your job: take every digit (as a character) and build up the actual number.
+
+---
+
+### 2️⃣ How do we get digits from characters?
+
+Each character `'0'` to `'9'` has an ASCII code (like 48 to 57).
+To turn `'5'` into the actual number 5, we subtract `'0'`:
+
+```go
+int('5' - '0') // gives 5
+```
+
+That’s the secret conversion.
+
+---
+
+### 3️⃣ Building the full number
+
+We start from 0 and go through each character:
+
+Example: `"123"`
+
+| Step  | Current digit | Calculation | Result |
+| ----- | ------------- | ----------- | ------ |
+| Start | —             | —           | 0      |
+| 1     | `'1'`         | 0×10 + 1    | 1      |
+| 2     | `'2'`         | 1×10 + 2    | 12     |
+| 3     | `'3'`         | 12×10 + 3   | 123    |
+
+So we just keep multiplying by 10, then adding the next digit.
+
+---
+
+### 4️⃣ The loop in action
+
+```go
+for _, r := range s {
+    result = result*10 + int(r-'0')
+}
+```
+
+* `range s` → loop through every character in the string
+* `r-'0'` → convert rune (like `'5'`) to number
+* multiply by 10 each time (to “shift left” one place)
+
+---
+
+### 5️⃣ Return the result
+
+Finally:
+
+```go
+return result
+```
+
+---
+
+## 🧪 Test Program
+
+```go
+package main
+
+import (
+	"fmt"
+	"piscine"
+)
+
+func main() {
+	fmt.Println(piscine.BasicAtoi("12345"))
+	fmt.Println(piscine.BasicAtoi("0000000012345"))
+	fmt.Println(piscine.BasicAtoi("000000"))
+}
+```
+
+### 🧾 Output
+
+```
+$ go run .
+12345
+12345
+0
+```
+
+---
+
+## 🧩 Key Concepts
+
+| Concept        | Meaning                                      |
+| -------------- | -------------------------------------------- |
+| `'0'`          | base ASCII for digits                        |
+| `r-'0'`        | converts a rune to its actual number         |
+| `result*10`    | shifts existing number one place to the left |
+| `+ int(r-'0')` | adds the new digit to the end                |
+
+---
+
+## 🧠 Memory Trick
+
+> “Start at zero, multiply by ten, and add each new digit again and again.” 🧮✨
+
+---
+
+Basicatoi2 is a **smarter version of `BasicAtoi`** 👨🏽‍🏫
+
+It’s the same idea — converting `"12345"` into the integer `12345` —
+but **this time**, you must check for *invalid characters* too (like spaces or letters).
+
+If the string contains anything that’s not a digit (`0–9`), you must return **0**.
+
+---
+
+## ✅ Solution Code
+
+```go
+package piscine
+
+func BasicAtoi2(s string) int {
+	result := 0
+	for _, r := range s {
+		if r < '0' || r > '9' {
+			return 0
+		}
+		result = result*10 + int(r-'0')
+	}
+	return result
+}
+```
+
+---
+
+## 🧒 Step-by-Step Explanation
+
+### 1️⃣ Loop through each character
+
+We check one by one every character (rune) in the string.
+
+```go
+for _, r := range s {
+```
+
+### 2️⃣ Verify that the rune is a digit
+
+If the character isn’t between `'0'` and `'9'`,
+that means it’s not a number — return **0** immediately.
+
+```go
+if r < '0' || r > '9' {
+    return 0
+}
+```
+
+This line filters out:
+
+* letters like `'A'` or `'h'`
+* spaces `' '`
+* punctuation `'.'`, `'!'`, etc.
+
+---
+
+### 3️⃣ Convert each valid digit
+
+We use the same logic from `BasicAtoi`:
+
+```go
+result = result*10 + int(r-'0')
+```
+
+So `"123"` becomes:
+
+* Step 1: 0×10 + 1 = 1
+* Step 2: 1×10 + 2 = 12
+* Step 3: 12×10 + 3 = 123 ✅
+
+---
+
+### 4️⃣ Return the result
+
+When the loop ends, return your final number:
+
+```go
+return result
+```
+
+---
+
+## 🧪 Test Program
+
+```go
+package main
+
+import (
+	"fmt"
+	"piscine"
+)
+
+func main() {
+	fmt.Println(piscine.BasicAtoi2("12345"))
+	fmt.Println(piscine.BasicAtoi2("0000000012345"))
+	fmt.Println(piscine.BasicAtoi2("012 345"))
+	fmt.Println(piscine.BasicAtoi2("Hello World!"))
+}
+```
+
+### 🧾 Output
+
+```
+$ go run .
+12345
+12345
+0
+0
+```
+
+---
+
+## 🧩 Key Takeaways
+
+| Concept                    | Description                    |          |                              |
+| -------------------------- | ------------------------------ | -------- | ---------------------------- |
+| `r < '0'                   |                                | r > '9'` | ensures character is a digit |
+| `r-'0'`                    | converts rune digit to integer |          |                              |
+| `result = result*10 + ...` | builds the number gradually    |          |                              |
+| `return 0`                 | rejects invalid strings        |          |                              |
+
+---
+
+## 🧠 Memory Trick
+
+> “If you find even one bad apple (non-digit), throw away the whole basket (return 0).” 🍎
+
+---
+
+`atoi.go` — this one’s the **final boss** of the Atoi family 💪
+
+You now have to handle **signs (+ / -)** *and* **invalid characters**.
+Let’s break it down cleanly 👇
+
+---
+
+## ✅ Solution Code
+
+```go
+package piscine
+
+func Atoi(s string) int {
+	if s == "" {
+		return 0
+	}
+
+	sign := 1
+	result := 0
+
+	for i, r := range s {
+		// Handle signs at the beginning
+		if i == 0 && (r == '+' || r == '-') {
+			if r == '-' {
+				sign = -1
+			}
+			continue
+		}
+
+		// Return 0 if not a digit
+		if r < '0' || r > '9' {
+			return 0
+		}
+
+		result = result*10 + int(r-'0')
+	}
+
+	return result * sign
+}
+```
+
+---
+
+## 🧒 Step-by-Step Explanation
+
+### 1️⃣ Check if string is empty
+
+If the string is empty (`""`), it’s invalid — just return `0`.
+
+---
+
+### 2️⃣ Handle `+` and `-` signs
+
+```go
+if i == 0 && (r == '+' || r == '-') {
+	if r == '-' {
+		sign = -1
+	}
+	continue
+}
+```
+
+✅ This means:
+
+* if the **first character** is `+`, keep `sign = 1`
+* if it’s `-`, make `sign = -1`
+* skip over the sign (don’t treat it as a digit)
+
+---
+
+### 3️⃣ Validate digits only
+
+If any character is not between `'0'` and `'9'`, it’s invalid:
+
+```go
+if r < '0' || r > '9' {
+	return 0
+}
+```
+
+So `"12a3"` or `"01 23"` → `0`
+
+---
+
+### 4️⃣ Build the number
+
+The magic line again ✨
+
+```go
+result = result*10 + int(r-'0')
+```
+
+---
+
+### 5️⃣ Apply the sign at the end
+
+After the loop, multiply by the sign:
+
+```go
+return result * sign
+```
+
+So `"-1234"` becomes `-1234`.
+
+---
+
+## 🧪 Test Program
+
+```go
+package main
+
+import (
+	"fmt"
+	"piscine"
+)
+
+func main() {
+	fmt.Println(piscine.Atoi("12345"))
+	fmt.Println(piscine.Atoi("0000000012345"))
+	fmt.Println(piscine.Atoi("012 345"))
+	fmt.Println(piscine.Atoi("Hello World!"))
+	fmt.Println(piscine.Atoi("+1234"))
+	fmt.Println(piscine.Atoi("-1234"))
+	fmt.Println(piscine.Atoi("++1234"))
+	fmt.Println(piscine.Atoi("--1234"))
+}
+```
+
+---
+
+### 🧾 Output
+
+```
+$ go run .
+12345
+12345
+0
+0
+1234
+-1234
+0
+0
+```
+
+---
+
+## 🧩 Key Concepts
+
+| Concept     | Description                                       |          |                            |
+| ----------- | ------------------------------------------------- | -------- | -------------------------- |
+| `sign`      | tracks whether the number is positive or negative |          |                            |
+| `r-'0'`     | converts rune to numeric value                    |          |                            |
+| `r < '0'    |                                                   | r > '9'` | detects invalid characters |
+| `continue`  | skips over `+` or `-` sign                        |          |                            |
+| `result*10` | shifts number left for next digit                 |          |                            |
+
+---
+
+## 🧠 Memory Trick
+
+> “Read the sign, read the digits, reject the junk.” 🚫
+> (And always multiply by the sign at the end!)
+
+---
+Final Quest -3 excercise 
+ **first sorting algorithm** in Go! 🔢
+Let’s make it crystal clear and easy to grasp.
+
+---
+
+## ✅ Solution Code
+
+```go
+package piscine
+
+func SortIntegerTable(table []int) {
+	for i := 0; i < len(table)-1; i++ {
+		for j := i + 1; j < len(table); j++ {
+			if table[i] > table[j] {
+				table[i], table[j] = table[j], table[i]
+			}
+		}
+	}
+}
+```
+
+---
+
+## 🧒 Step-by-Step Explanation
+
+### 1️⃣ You are given a slice of integers
+
+Example:
+
+```go
+s := []int{5, 4, 3, 2, 1, 0}
+```
+
+Goal → reorder it so it becomes:
+
+```go
+[0 1 2 3 4 5]
+```
+
+---
+
+### 2️⃣ We use two loops
+
+These help compare each number with all the ones after it.
+
+```go
+for i := 0; i < len(table)-1; i++ {
+	for j := i + 1; j < len(table); j++ {
+```
+
+This means:
+
+* `i` picks a number (say the first one)
+* `j` looks at every number after `i`
+* we compare and swap if needed
+
+---
+
+### 3️⃣ Compare and swap
+
+If the current number is bigger than the next one, we switch them.
+
+```go
+if table[i] > table[j] {
+	table[i], table[j] = table[j], table[i]
+}
+```
+
+That’s all Go needs — no temporary variable necessary!
+Go allows tuple assignment like that in one line.
+
+---
+
+### 4️⃣ Repeat until sorted
+
+After all comparisons are done, your slice becomes sorted in ascending order.
+
+---
+
+## 🧪 Test Program
+
+```go
+package main
+
+import (
+	"fmt"
+	"piscine"
+)
+
+func main() {
+	s := []int{5, 4, 3, 2, 1, 0}
+	piscine.SortIntegerTable(s)
+	fmt.Println(s)
+}
+```
+
+---
+
+### 🧾 Output
+
+```
+$ go run .
+[0 1 2 3 4 5]
+```
+
+---
+
+## 🧩 Key Concepts
+
+| Concept                                   | Description                   |
+| ----------------------------------------- | ----------------------------- |
+| `len(table)`                              | gives the number of elements  |
+| nested loops                              | compare every pair of numbers |
+| `table[i], table[j] = table[j], table[i]` | swap values in Go             |
+| in-place sort                             | modifies the slice directly   |
+
+---
+
+## 🧠 Memory Trick
+
+> “Look at every pair — if they’re out of order, swap and keep going.” 🔁
+
+That’s **bubble sort / selection sort logic**, and it’s all you need for this task.
+
+---
+Keep refreshing!!! solutions not yet uploaded!
