@@ -76,13 +76,13 @@ touch -t 198611130001 1   # Sets timestamp to Nov 13, 1986, 00:01
 
 ### Directory `0`:
 ```
-dr-------x = d 500 001 = directory with 501 permissions
+dr-------x = d 400 001 = directory with 401 permissions
 ```
 - `d` = it's a directory
 - `r--` = owner can read = 400
 - `---` = group nothing = 000
 - `--x` = others can execute (enter) = 001
-- Total: **501**
+- Total: **401**
 
 ### Symlink `3`:
 ```bash
@@ -104,7 +104,7 @@ mkdir permissions_task && cd permissions_task
 ### Step 2: Create directory 0
 ```bash
 mkdir 0
-chmod 501 0
+chmod 401 0
 touch -t 198601050000 0
 ```
 
@@ -131,7 +131,7 @@ touch -h -t 199002160011 3
 ### Step 6: Create file 4
 ```bash
 touch 4
-chmod 511 4
+chmod 510 4
 touch -t 199010070100 4
 ```
 
@@ -152,7 +152,7 @@ touch -t 199102080110 6
 ### Step 9: Create file 7
 ```bash
 touch 7
-chmod 511 7
+chmod 510 7
 touch -t 199103080111 7
 ```
 
@@ -173,7 +173,7 @@ touch -t 199406101001 9
 ### Step 12: Create directory A
 ```bash
 mkdir A
-chmod 501 A
+chmod 401 A
 touch -t 199504101010 A
 ```
 
@@ -194,17 +194,17 @@ You should see: `0  1  2  3  4  5  6  7  8  9  A  done.tar`
 
 | File | Permissions | Octal | Date & Time |
 |------|-------------|-------|-------------|
-| 0 | dr-------x | 501 | 1986-01-05 00:00 |
+| 0 | dr-------x | 401 | 1986-01-05 00:00 |
 | 1 | -r------w- | 402 | 1986-11-13 00:01 |
 | 2 | -rw----r-- | 604 | 1988-03-05 00:10 |
 | 3 | lrwxrwxrwx | (symlink) | 1990-02-16 00:11 |
-| 4 | -r-x--x--- | 511 | 1990-10-07 01:00 |
+| 4 | -r-x--x--- | 510 | 1990-10-07 01:00 |
 | 5 | -r--rw---- | 460 | 1990-11-07 01:01 |
 | 6 | -r--rw---- | 460 | 1991-02-08 01:10 |
-| 7 | -r-x--x--- | 511 | 1991-03-08 01:11 |
+| 7 | -r-x--x--- | 510 | 1991-03-08 01:11 |
 | 8 | -rw----r-- | 604 | 1994-05-20 10:00 |
 | 9 | -r------w- | 402 | 1994-06-10 10:01 |
-| A | dr-------x | 501 | 1995-04-10 10:10 |
+| A | dr-------x | 401 | 1995-04-10 10:10 |
 
 ---
 
