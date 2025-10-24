@@ -977,7 +977,7 @@ $ go run .
 
 ---
 
-### 💡 Key Concepts (Pointers for Kids)
+### 💡 Key Concepts
 
 | Concept  | Meaning                                   |
 | -------- | ----------------------------------------- |
