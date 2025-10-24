@@ -723,5 +723,499 @@ You just learned:
 Now you know who you are! 🦸
 
 ---
+# To-git-not-to-git Task
 
-**Ready to run it? Let me know what name you discover!** 😊
+---
+
+## 🎯 **Understanding the Task**
+
+You need to:
+1. Find the superhero with **id: 170**
+2. Extract **three fields**: name, power, and gender
+3. Display them on **separate lines**
+4. Save as `to-git-or-not-to-git.sh`
+
+---
+
+## 📝 **The Complete Solution**
+
+---
+
+## 🔍 **Line-by-Line Breakdown**
+
+### **Line 1: The Shebang**
+```bash
+#!/bin/bash
+```
+- Tells the system to use bash to execute this script
+- Must be the **first line** of the file
+- Makes the file executable as a bash script
+
+---
+
+### **Line 2: The Command Pipeline**
+
+Let me break this into digestible parts:
+
+```bash
+curl -s https://acad.learn2earn.ng/assets/superhero/all.json | jq -r '.[] | select(.id == 170) | .name, .powerstats.power, .appearance.gender'
+```
+
+---
+
+## 🧩 **Part 1: `curl -s`**
+
+```bash
+curl -s https://acad.learn2earn.ng/assets/superhero/all.json
+```
+
+**What it does:**
+- `curl` - Command-line tool to download data from URLs
+- `-s` - **Silent mode** (suppresses progress bar and errors)
+- Downloads the JSON file containing all superhero data
+
+**Output:** Raw JSON data (hundreds of superheroes)
+
+---
+
+## 🧩 **Part 2: `| jq -r`**
+
+```bash
+| jq -r
+```
+
+**The Pipe `|`:**
+- Takes output from `curl` and sends it to `jq`
+
+**`jq -r`:**
+- `jq` - JSON processor (parses and queries JSON data)
+- `-r` - **Raw output** mode
+  - Removes JSON quotes from strings
+  - Outputs plain text instead of JSON format
+  - `"Chameleon"` becomes `Chameleon`
+
+---
+
+## 🧩 **Part 3: `.[]`**
+
+```bash
+'.[]'
+```
+
+**What it does:**
+- `.[]` - Array iterator
+- Loops through each superhero object in the array
+
+**Example:**
+```json
+[
+  {"id": 169, "name": "Hero1"},
+  {"id": 170, "name": "Chameleon"},
+  {"id": 171, "name": "Hero3"}
+]
+```
+
+`.[]` processes each object one by one:
+```
+{"id": 169, "name": "Hero1"}
+{"id": 170, "name": "Chameleon"}
+{"id": 171, "name": "Hero3"}
+```
+
+---
+
+## 🧩 **Part 4: `select(.id == 170)`**
+
+```bash
+| select(.id == 170)
+```
+
+**What it does:**
+- `select()` - Filter function
+- `.id == 170` - Condition: keep only if id equals 170
+- Discards all other superheroes
+
+**Before:**
+```json
+{"id": 169, ...}
+{"id": 170, "name": "Chameleon", ...}
+{"id": 171, ...}
+```
+
+**After:**
+```json
+{"id": 170, "name": "Chameleon", "powerstats": {...}, "appearance": {...}}
+```
+
+---
+
+## 🧩 **Part 5: `.name, .powerstats.power, .appearance.gender`**
+
+```bash
+| .name, .powerstats.power, .appearance.gender
+```
+
+This is the **KEY PART**! Let me break it down:
+
+### **The Comma `,` Operator**
+- Comma in jq means: "extract multiple values"
+- Each value is printed on a **separate line**
+
+### **`.name`**
+- Accesses the `name` field directly
+- Example: `"Chameleon"` → (with `-r`) → `Chameleon`
+
+### **`.powerstats.power`**
+- **Nested field access** using dot notation
+- `powerstats` is an object
+- `power` is a field inside `powerstats`
+
+**JSON Structure:**
+```json
+{
+  "id": 170,
+  "name": "Chameleon",
+  "powerstats": {
+    "intelligence": 63,
+    "strength": 10,
+    "speed": 23,
+    "durability": 28,
+    "power": 28,  ← We want this
+    "combat": 64
+  }
+}
+```
+
+Result: `28`
+
+### **`.appearance.gender`**
+- Another nested field access
+- `appearance` is an object
+- `gender` is a field inside `appearance`
+
+**JSON Structure:**
+```json
+{
+  "id": 170,
+  "name": "Chameleon",
+  "appearance": {
+    "gender": "Male",  ← We want this
+    "race": "Human",
+    "height": ["5'9", "175 cm"],
+    "weight": ["165 lb", "74 kg"]
+  }
+}
+```
+
+Result: `Male`
+
+---
+
+## 🎬 **Complete Data Flow**
+
+Let's trace the entire pipeline:
+
+### **Step 1: curl downloads JSON**
+```json
+[
+  {
+    "id": 170,
+    "name": "Chameleon",
+    "powerstats": {
+      "power": 28
+    },
+    "appearance": {
+      "gender": "Male"
+    }
+  }
+]
+```
+
+### **Step 2: `.[]` iterates array**
+```json
+{
+  "id": 170,
+  "name": "Chameleon",
+  "powerstats": {"power": 28},
+  "appearance": {"gender": "Male"}
+}
+```
+
+### **Step 3: `select(.id == 170)` filters**
+```json
+{
+  "id": 170,
+  "name": "Chameleon",
+  "powerstats": {"power": 28},
+  "appearance": {"gender": "Male"}
+}
+```
+(Keeps this one, discards others)
+
+### **Step 4: Extract multiple fields with comma**
+```bash
+.name, .powerstats.power, .appearance.gender
+```
+
+### **Step 5: `-r` outputs as raw text**
+```
+Chameleon
+28
+Male
+```
+
+---
+
+## 📊 **Visual Breakdown**
+
+```
+JSON Object
+{
+  "id": 170,
+  "name": "Chameleon",                    ← .name
+  "powerstats": {
+    "power": 28                           ← .powerstats.power
+  },
+  "appearance": {
+    "gender": "Male"                      ← .appearance.gender
+  }
+}
+
+         ↓ Extract with comma separator ↓
+
+Chameleon
+28
+Male
+```
+
+---
+
+## 🚀 **How to Set Up and Run**
+
+### **Step 1: Create the script**
+
+**Method A - Using cat:**
+```bash
+cat > to-git-or-not-to-git.sh << 'EOF'
+#!/bin/bash
+
+curl -s https://acad.learn2earn.ng/assets/superhero/all.json | jq -r '.[] | select(.id == 170) | .name, .powerstats.power, .appearance.gender'
+EOF
+```
+
+**Method B - Using nano:**
+```bash
+nano to-git-or-not-to-git.sh
+```
+Paste the script, then `Ctrl+O`, `Enter`, `Ctrl+X`
+
+### **Step 2: Make it executable**
+```bash
+chmod +x to-git-or-not-to-git.sh
+```
+
+### **Step 3: Run it**
+```bash
+bash to-git-or-not-to-git.sh
+```
+
+or
+
+```bash
+./to-git-or-not-to-git.sh
+```
+
+---
+
+## 🧪 **Expected Output**
+
+```bash
+$ bash to-git-or-not-to-git.sh
+Chameleon
+28
+Male
+$
+```
+
+---
+
+## 🎓 **Key Concepts Explained**
+
+### **1. Nested Object Access**
+
+In JSON, objects can contain other objects:
+
+```json
+{
+  "person": {
+    "name": "John",
+    "address": {
+      "city": "NYC"
+    }
+  }
+}
+```
+
+Access nested values with dots:
+- `.person.name` → `"John"`
+- `.person.address.city` → `"NYC"`
+
+### **2. The Comma Operator in jq**
+
+```bash
+jq '.field1, .field2, .field3'
+```
+
+**Outputs each value on a new line:**
+```
+value1
+value2
+value3
+```
+
+**Without comma (wrong):**
+```bash
+jq '.field1 .field2 .field3'  # Error!
+```
+
+### **3. Raw Output `-r` Flag**
+
+**Without `-r`:**
+```bash
+echo '{"name":"Chameleon"}' | jq '.name'
+```
+Output: `"Chameleon"` (with quotes)
+
+**With `-r`:**
+```bash
+echo '{"name":"Chameleon"}' | jq -r '.name'
+```
+Output: `Chameleon` (no quotes)
+
+---
+
+## 💡 **Understanding the Difference**
+
+### **Single Field Extraction**
+```bash
+jq '.name'
+```
+Output: Just the name
+
+### **Multiple Field Extraction (comma)**
+```bash
+jq '.name, .power'
+```
+Output:
+```
+Chameleon
+28
+```
+
+### **Object with Multiple Fields (no comma)**
+```bash
+jq '{name, power}'
+```
+Output:
+```json
+{
+  "name": "Chameleon",
+  "power": 28
+}
+```
+
+---
+
+## 🧩 **Practice Exercises**
+
+Try modifying the script:
+
+### **1. Get different superhero (id 1):**
+```bash
+curl -s URL | jq -r '.[] | select(.id == 1) | .name, .powerstats.power, .appearance.gender'
+```
+
+### **2. Get more fields:**
+```bash
+curl -s URL | jq -r '.[] | select(.id == 170) | .name, .powerstats.power, .appearance.gender, .appearance.race'
+```
+
+### **3. Get name and ALL powerstats:**
+```bash
+curl -s URL | jq -r '.[] | select(.id == 170) | .name, .powerstats.intelligence, .powerstats.strength, .powerstats.speed'
+```
+
+---
+
+## 🐛 **Common Mistakes**
+
+### **❌ Mistake 1: Forgetting `-r` flag**
+```bash
+jq '.name, .powerstats.power'
+```
+Output:
+```
+"Chameleon"
+28
+```
+(Note the quotes around name - not clean!)
+
+### **❌ Mistake 2: Using wrong separator**
+```bash
+jq '.name .powerstats.power'  # Wrong! No comma
+```
+Error: Syntax error
+
+### **❌ Mistake 3: Wrong nested path**
+```bash
+jq '.power'  # Wrong! It's nested
+```
+Should be: `.powerstats.power`
+
+### **✅ Correct:**
+```bash
+jq -r '.name, .powerstats.power, .appearance.gender'
+```
+
+---
+
+## 📋 **Quick Reference**
+
+### **jq Operators:**
+| Operator | Meaning | Example |
+|----------|---------|---------|
+| `.field` | Access field | `.name` |
+| `.obj.field` | Nested access | `.powerstats.power` |
+| `.[]` | Array iterator | `.[] ` |
+| `select()` | Filter | `select(.id == 170)` |
+| `,` | Multiple outputs | `.name, .power` |
+| `-r` | Raw output | `jq -r` |
+
+---
+
+## ✅ **Checklist**
+
+- [ ] File is named `to-git-or-not-to-git.sh`
+- [ ] Has `#!/bin/bash` on first line
+- [ ] Has the curl + jq command
+- [ ] Script is executable (`chmod +x`)
+- [ ] Outputs three lines: name, power, gender
+- [ ] No quotes in the output (using `-r`)
+
+---
+
+## 🎉 **Summary**
+
+**What the script does:**
+1. Downloads superhero JSON data
+2. Loops through all superheroes
+3. Finds the one with id 170
+4. Extracts name, power stat, and gender
+5. Prints each on a separate line
+
+**Key techniques:**
+- Nested object access with `.object.field`
+- Multiple field extraction with commas
+- Raw output with `-r` flag
+
+---
