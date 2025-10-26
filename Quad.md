@@ -524,7 +524,7 @@ Ask in order:
 ---
 okay click this see how the statement runs and prints each results 
 # live preview 
-[quadfunctionspreview.netlify.app](quadfunctionspreview.netlify.app)
+[https://quadfunctionspreview.netlify.app](https://quadfunctionspreview.netlify.app)
 ## 🎯 Practice Exercise
 
 Try to trace this by hand: **QuadE(4, 3)**
