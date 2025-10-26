@@ -544,6 +544,8 @@ CBBA
 
 ---
 
+now heres the full quad.go file 
+
 ## 🎉 Summary 
 
 > "Imagine painting a rectangular picture frame. The function asks you:
@@ -635,3 +637,227 @@ Start → Corner? ─YES→ A or C
 ---
 
 Does this help? 😊
+
+Here's the complete code for the **Nested Loop** method! 🎯
+
+---
+
+---
+
+## 📁 **Complete Project Structure**
+
+Here's everything you need:
+
+### **File Structure:**
+```
+quest/
+├── go.mod
+├── main.go
+└── piscine/
+    └── quade.go
+```
+
+---
+
+## 📝 **File 1: `piscine/quade.go`**
+
+```go
+package piscine
+
+import "github.com/01-edu/z01"
+
+func QuadE(x, y int) {
+	// Check if dimensions are valid
+	if x <= 0 || y <= 0 {
+		return
+	}
+
+	// Loop through each row (top to bottom)
+	for row := 1; row <= y; row++ {
+		// Loop through each column (left to right)
+		for col := 1; col <= x; col++ {
+			// Check what character to print at this position
+			
+			// Top-left corner
+			if row == 1 && col == 1 {
+				z01.PrintRune('A')
+			
+			// Top-right corner
+			} else if row == 1 && col == x {
+				z01.PrintRune('C')
+			
+			// Bottom-left corner
+			} else if row == y && col == 1 {
+				z01.PrintRune('C')
+			
+			// Bottom-right corner
+			} else if row == y && col == x {
+				z01.PrintRune('A')
+			
+			// Any edge (but not a corner)
+			} else if row == 1 || row == y || col == 1 || col == x {
+				z01.PrintRune('B')
+			
+			// Inside (middle area)
+			} else {
+				z01.PrintRune(' ')
+			}
+		}
+		// After finishing a row, print newline
+		z01.PrintRune('\n')
+	}
+}
+```
+
+---
+
+## 📝 **File 2: `main.go`**
+
+```go
+package main
+
+import "piscine"
+
+func main() {
+	piscine.QuadE(5, 3)
+}
+```
+
+---
+
+## 🚀 **Quick Setup (Copy-Paste This)**
+
+Run this entire block in your terminal:
+
+```bash
+# Create project structure
+mkdir -p quest/piscine && cd quest
+
+# Initialize Go module
+go mod init quest
+
+# Create the QuadE function
+cat > piscine/quade.go << 'EOF'
+package piscine
+
+import "github.com/01-edu/z01"
+
+func QuadE(x, y int) {
+	if x <= 0 || y <= 0 {
+		return
+	}
+
+	for row := 1; row <= y; row++ {
+		for col := 1; col <= x; col++ {
+			if row == 1 && col == 1 {
+				z01.PrintRune('A')
+			} else if row == 1 && col == x {
+				z01.PrintRune('C')
+			} else if row == y && col == 1 {
+				z01.PrintRune('C')
+			} else if row == y && col == x {
+				z01.PrintRune('A')
+			} else if row == 1 || row == y || col == 1 || col == x {
+				z01.PrintRune('B')
+			} else {
+				z01.PrintRune(' ')
+			}
+		}
+		z01.PrintRune('\n')
+	}
+}
+EOF
+
+# Create main.go
+cat > main.go << 'EOF'
+package main
+
+import "piscine"
+
+func main() {
+	piscine.QuadE(5, 3)
+}
+EOF
+
+# Get dependencies
+go get github.com/01-edu/z01
+
+# Format the code
+gofumpt -w . 2>/dev/null || go fmt ./...
+
+# Run it!
+echo "Running QuadE(5, 3):"
+go run .
+```
+
+---
+
+## 🧪 **Expected Output**
+
+```bash
+$ go run .
+ABBBC
+B   B
+CBBBA
+```
+
+---
+
+## 🎯 **Test Different Sizes**
+
+Edit `main.go` to test different dimensions:
+
+```go
+package main
+
+import "piscine"
+
+func main() {
+	// Test 1: Normal rectangle
+	piscine.QuadE(5, 3)
+	
+	// Test 2: Single cell
+	// piscine.QuadE(1, 1)
+	
+	// Test 3: Vertical line
+	// piscine.QuadE(1, 5)
+	
+	// Test 4: Horizontal line
+	// piscine.QuadE(5, 1)
+	
+	// Test 5: Small square
+	// piscine.QuadE(2, 2)
+}
+```
+
+Just uncomment the ones you want to test!
+
+---
+
+## 📊 **Quick Reference**
+
+### **The Logic Flow:**
+```
+Start
+  ↓
+Check if valid size
+  ↓
+For each row (1 to y)
+  ↓
+  For each column (1 to x)
+    ↓
+    Is it top-left corner? → Print 'A'
+    Is it top-right corner? → Print 'C'
+    Is it bottom-left corner? → Print 'C'
+    Is it bottom-right corner? → Print 'A'
+    Is it any edge? → Print 'B'
+    Otherwise → Print ' ' (space)
+  ↓
+  Print newline
+↓
+Done!
+```
+
+---
+
+There you go! The complete, ready-to-run nested loop solution! 🎉
