@@ -522,7 +522,9 @@ Ask in order:
 3. **Inside** (everything else)
 
 ---
-
+okay click this see how the statement runs and prints each results 
+# live preview 
+[quadfunctionspreview.netlify.app](quadfunctionspreview.netlify.app)
 ## 🎯 Practice Exercise
 
 Try to trace this by hand: **QuadE(4, 3)**
