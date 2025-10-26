@@ -737,7 +737,9 @@ mkdir -p quad/piscine && cd quad
 go mod init quad
 
 # Create the QuadE function  #this for quadE
-cat > piscine/quade.go << 'EOF'
+
+mkdir piscine && cd piscine
+nano quade.go
 package piscine
 
 import "github.com/01-edu/z01"
@@ -766,10 +768,10 @@ func QuadE(x, y int) {
 		z01.PrintRune('\n')
 	}
 }
-EOF
+
 
 # Create main.go
-cat > main.go << 'EOF'
+nano main.go 
 package main
 
 import "piscine"
@@ -777,16 +779,15 @@ import "piscine"
 func main() {
 	piscine.QuadE(5, 3)
 }
-EOF
+
 
 # Get dependencies
 go get github.com/01-edu/z01
 
 # Format the code
-gofumpt -w . 2>/dev/null || go fmt ./...
+gofmt -w . 
 
 # Run it!
-echo "Running QuadE(5, 3):"
 go run .
 ```
 
