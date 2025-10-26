@@ -650,11 +650,11 @@ Here's everything you need:
 
 ### **File Structure:**
 ```
-quest/
+quad/
 ├── go.mod
 ├── main.go
 └── piscine/
-    └── quade.go
+    └── quade.go (a,b,c,d) #I used only quadE as example.
 ```
 
 ---
@@ -711,7 +711,7 @@ func QuadE(x, y int) {
 
 ---
 
-## 📝 **File 2: `main.go`**
+## 📝 **File 2: `main.go`** Since this is a test function, you dont need to submit any of them. just submit the structure mentioned earlier above.
 
 ```go
 package main
@@ -731,12 +731,12 @@ Run this entire block in your terminal:
 
 ```bash
 # Create project structure
-mkdir -p quest/piscine && cd quest
+mkdir -p quad/piscine && cd quad
 
 # Initialize Go module
-go mod init quest
+go mod init quad
 
-# Create the QuadE function
+# Create the QuadE function  #this for quadE
 cat > piscine/quade.go << 'EOF'
 package piscine
 
