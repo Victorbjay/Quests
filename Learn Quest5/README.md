@@ -154,3 +154,149 @@ HSO
 
 ---
 
+**The reverse** of the previous task — instead of returning the *first* rune, we’ll return the *last* rune of a string.
+
+
+---
+
+## 🧩 TASK NAME: `LastRune`
+
+### 🧠 What is a “rune” again?
+
+A **rune** in Go is a Unicode character — meaning it can represent **any letter, symbol, or emoji** (not just English characters).
+
+✅ `'A'`, `'é'`, `'ع'`, `'你'`, `'🌍'` — all are **runes**.
+Go treats them as **int32** values representing Unicode code points.
+
+---
+
+## ⚙️ What the task is asking
+
+We must write a function:
+
+```go
+func LastRune(s string) rune
+```
+
+✅ Takes a **string**
+✅ Returns the **last rune** in that string
+✅ Works correctly with Unicode (non-ASCII) text
+
+---
+
+## ✅ FINAL CODE (lastrune.go)
+
+```go
+package piscine
+
+// LastRune returns the last rune (Unicode character) in a string.
+// It properly handles multi-byte characters like emojis or non-Latin letters.
+func LastRune(s string) rune {
+	var last rune
+	for _, r := range s {
+		last = r // keeps updating until it reaches the last rune
+	}
+	return last
+}
+```
+
+---
+
+## 🧠 LINE-BY-LINE EXPLANATION
+
+| Line                  | Code                                                                     | Explanation |
+| --------------------- | ------------------------------------------------------------------------ | ----------- |
+| `var last rune`       | Create a variable to hold the last rune found. Starts empty.             |             |
+| `for _, r := range s` | Loop through each rune (character) in the string. `_` ignores the index. |             |
+| `last = r`            | On each loop, update `last` to the current rune. It keeps changing...    |             |
+| `return last`         | When the loop ends, `last` contains the **last** rune in the string.     |             |
+
+---
+
+## 🔍 EXAMPLE: `"Hello!"`
+
+| Step | r (current rune) | last (after assignment) |
+| ---- | ---------------- | ----------------------- |
+| 1    | 'H'              | 'H'                     |
+| 2    | 'e'              | 'e'                     |
+| 3    | 'l'              | 'l'                     |
+| 4    | 'l'              | 'l'                     |
+| 5    | 'o'              | 'o'                     |
+| 6    | '!'              | '!'                     |
+
+🧩 After the loop finishes → `last = '!'`
+✅ The function returns `'!'`
+
+---
+
+## 🧱 VISUAL FLOW DIAGRAM
+
+```
+Start
+ ↓
+var last rune
+ ↓
+for _, r := range s
+ ├─> update last = r
+ └─> loop until string ends
+ ↓
+return last
+ ↓
+End
+```
+
+---
+
+## 🧪 TEST FILE (main.go)
+
+```go
+package main
+
+import (
+	"piscine"
+	"github.com/01-edu/z01"
+)
+
+func main() {
+	z01.PrintRune(piscine.LastRune("Hello!")) // !
+	z01.PrintRune(piscine.LastRune("Salut!")) // !
+	z01.PrintRune(piscine.LastRune("Ola!"))   // !
+	z01.PrintRune('\n')
+}
+```
+
+### 🖥️ Expected Output
+
+```
+!!!
+```
+
+---
+
+## 🗂️ FILES TO SUBMIT
+
+✅ `lastrune.go`
+
+---
+
+## 🎨 VISUAL UNDERSTANDING (Rune Travel Map)
+
+```
+String: "Ola!"
+Runes:   O → l → a → !
+                     ↑
+          👈 this one is the last rune returned
+```
+
+---
+
+## 🧩 QUICK SUMMARY
+
+| Concept         | Meaning                            |
+| --------------- | ---------------------------------- |
+| **Rune**        | A Unicode character                |
+| **range s**     | Loops over runes (not bytes)       |
+| **last = r**    | Keeps overwriting until final rune |
+| **return last** | Gives us the last character        |
+
+---
