@@ -465,7 +465,7 @@ func IterativePower(nb int, power int) int {
 
 ---
 
-## 🎨 Step 7: Visualization (Like a Baby Learns 👶)
+## 🎨 Step 7: Visualization 
 
 Let’s visualize how `(4, 3)` works:
 
@@ -617,4 +617,151 @@ func main() {
 ✅ Only submit: `recursivepower.go`
 
 ---
+We’re now moving into the classic **Fibonacci** problem — a perfect example of recursion!
+
+---
+
+## 🧩 TASK SUMMARY
+
+We’re writing a recursive function called `Fibonacci(index int)` that returns the **Fibonacci number** at position `index`.
+
+🧮 The **Fibonacci sequence** goes like this:
+
+```
+Index:  0  1  2  3  4  5  6 ...
+Value:  0, 1, 1, 2, 3, 5, 8 ...
+```
+
+Formula (recursively defined):
+
+[
+Fib(n) = Fib(n-1) + Fib(n-2)
+]
+with:
+
+* `Fib(0) = 0`
+* `Fib(1) = 1`
+
+---
+
+## ✅ FILE TO SUBMIT
+
+**Filename:**
+`fibonacci.go`
+
+**Allowed functions:**
+✅ Built-ins only (no `for` loops, no external libraries)
+
+---
+
+## ✅ FULL CODE (Beginner-friendly)
+
+```go
+package piscine
+
+// Fibonacci returns the Fibonacci number at the given index using recursion.
+// - If index < 0, returns -1 (invalid).
+// - If index == 0, returns 0.
+// - If index == 1, returns 1.
+// - Otherwise, it returns Fibonacci(index-1) + Fibonacci(index-2).
+func Fibonacci(index int) int {
+	if index < 0 {
+		return -1
+	}
+	if index == 0 {
+		return 0
+	}
+	if index == 1 {
+		return 1
+	}
+	return Fibonacci(index-1) + Fibonacci(index-2)
+}
+```
+
+---
+
+## 🧠 LINE-BY-LINE EXPLANATION
+
+| Line                                             | Code                                                                                             | Explanation |
+| ------------------------------------------------ | ------------------------------------------------------------------------------------------------ | ----------- |
+| `if index < 0 { return -1 }`                     | If someone gives a negative index, we return `-1` because it doesn’t make sense in the sequence. |             |
+| `if index == 0 { return 0 }`                     | The first number in Fibonacci is 0.                                                              |             |
+| `if index == 1 { return 1 }`                     | The second number in Fibonacci is 1.                                                             |             |
+| `return Fibonacci(index-1) + Fibonacci(index-2)` | The recursive “magic” 🪄 happens here: to get Fib(n), we add the two previous Fibonacci values.  |             |
+
+---
+
+## 🔁 VISUAL FLOW (for `Fibonacci(4)`)
+
+| Step | Function Call                                             | What Happens        | Returns |
+| ---- | --------------------------------------------------------- | ------------------- | ------- |
+| 1    | `Fibonacci(4)`                                            | = `Fib(3) + Fib(2)` | waits   |
+| 2    | `Fibonacci(3)`                                            | = `Fib(2) + Fib(1)` | waits   |
+| 3    | `Fibonacci(2)`                                            | = `Fib(1) + Fib(0)` | waits   |
+| 4    | `Fibonacci(1)`                                            | returns 1           | ✅       |
+| 5    | `Fibonacci(0)`                                            | returns 0           | ✅       |
+| 6    | Back to step 3 → `Fib(2)` = `1 + 0 = 1`                   |                     |         |
+| 7    | Back to step 2 → `Fib(3)` = `1 (Fib(2)) + 1 (Fib(1)) = 2` |                     |         |
+| 8    | `Fibonacci(2)` again (right side of step 1) → returns 1   |                     |         |
+| 9    | Finally: `Fib(4)` = `2 + 1 = 3 ✅`                         |                     |         |
+
+🎯 Final Answer = **3**
+
+---
+
+## 🧱 MEMORY STACK VISUALIZATION
+
+```
+Fibonacci(4)
+ ├── Fibonacci(3)
+ │    ├── Fibonacci(2)
+ │    │    ├── Fibonacci(1) -> 1
+ │    │    └── Fibonacci(0) -> 0
+ │    └── returns 1 + 0 = 1
+ │    ├── Fibonacci(1) -> 1
+ │    └── returns 1 + 1 = 2
+ ├── Fibonacci(2)
+ │    ├── Fibonacci(1) -> 1
+ │    └── Fibonacci(0) -> 0
+ └── returns 2 + 1 = 3 ✅
+```
+
+---
+
+## 🧪 TEST PROGRAM
+
+```go
+package main
+
+import (
+	"fmt"
+	"piscine"
+)
+
+func main() {
+	fmt.Println(piscine.Fibonacci(4))  // 3
+	fmt.Println(piscine.Fibonacci(0))  // 0
+	fmt.Println(piscine.Fibonacci(1))  // 1
+	fmt.Println(piscine.Fibonacci(6))  // 8
+	fmt.Println(piscine.Fibonacci(-3)) // -1
+}
+```
+
+---
+
+## 🧾 STEPS TO PASS THE CHECKER ✅
+
+1. Create file:
+   `fibonacci.go` inside your `piscine` folder.
+2. Write the function exactly as shown.
+3. No `for` loops! (Recursion only)
+4. Run:
+
+   ```bash
+   go run .
+   ```
+5. Expected output for index `4` → `3`
+
+---
+
 
