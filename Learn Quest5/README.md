@@ -454,3 +454,155 @@ la!
 
 ---
 
+
+## 🧩 **Task Name:** Compare
+
+### 🧠 What does “Compare” mean?
+
+To *compare two strings* means checking if they are:
+
+* **Exactly the same**
+* **One is smaller (comes before)**
+* **One is larger (comes after)**
+
+In Go, this is similar to how you compare words in a dictionary (lexicographical order).
+
+### 📖 Example
+
+| a        | b        | Result | Why              |
+| -------- | -------- | ------ | ---------------- |
+| "Hello!" | "Hello!" | 0      | They are equal   |
+| "Salut!" | "lut!"   | -1     | "S" < "l"        |
+| "Ola!"   | "Ol"     | 1      | "a" > "" (empty) |
+
+👉 The function returns:
+
+* `0` → if both strings are equal
+* `-1` → if `a` < `b`
+* `1` → if `a` > `b`
+
+---
+
+### ⚙️ What the task is asking
+
+We must write a function:
+
+```go
+func Compare(a, b string) int
+```
+
+✅ It takes **two strings** (`a` and `b`)
+✅ It returns **an integer** showing their order comparison
+
+---
+
+### 🧱 Step-by-Step Breakdown
+
+#### 🪜 Step 1 — Loop through both strings
+
+Compare each rune (character) of `a` and `b` **from start to end**.
+
+#### 🪜 Step 2 — When a difference is found
+
+* If `a[i] < b[i]` → return `-1`
+* If `a[i] > b[i]` → return `1`
+
+#### 🪜 Step 3 — If no difference found
+
+* If both strings end together → return `0`
+* If one string is longer → the longer one is “greater”.
+
+---
+
+### ✅ **Final Code** (`compare.go`)
+
+```go
+package piscine
+
+// Compare compares two strings a and b lexicographically.
+// Returns:
+//   0 if a == b
+//  -1 if a < b
+//   1 if a > b
+func Compare(a, b string) int {
+	for i := 0; i < len(a) && i < len(b); i++ {
+		if a[i] < b[i] {
+			return -1
+		} else if a[i] > b[i] {
+			return 1
+		}
+	}
+	// If we reached here, all compared characters are equal
+	if len(a) < len(b) {
+		return -1
+	} else if len(a) > len(b) {
+		return 1
+	}
+	return 0
+}
+```
+
+---
+
+### 💻 **Test File** (`main.go`)
+
+```go
+package main
+
+import (
+	"fmt"
+	"piscine"
+)
+
+func main() {
+	fmt.Println(piscine.Compare("Hello!", "Hello!")) // expected: 0
+	fmt.Println(piscine.Compare("Salut!", "lut!"))   // expected: -1
+	fmt.Println(piscine.Compare("Ola!", "Ol"))       // expected: 1
+}
+```
+
+---
+
+### 🧩 **Visual Flow Explanation**
+
+Let’s visualize how `Compare("Salut!", "lut!")` runs:
+
+| Step | i | a[i] | b[i] | Comparison           | Action        |
+| ---- | - | ---- | ---- | -------------------- | ------------- |
+| 1    | 0 | 'S'  | 'l'  | 'S' (83) < 'l' (108) | return **-1** |
+
+So the function stops immediately and returns **-1**.
+
+---
+
+### 🧠 **How Go Compares Strings (ASCII Order)**
+
+Each character has a numeric value (ASCII):
+
+```
+A = 65, B = 66, C = 67, ...
+a = 97, b = 98, c = 99, ...
+```
+
+Uppercase letters come **before** lowercase letters.
+So `"Salut!"` < `"lut!"` because `'S' (83)` < `'l' (108)`
+
+---
+
+### 🧾 **Expected Output**
+
+```
+$ go run .
+0
+-1
+1
+```
+
+---
+
+### 🗂️ **Files to Submit**
+
+* `compare.go`
+
+---
+
