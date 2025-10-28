@@ -302,3 +302,155 @@ Runes:   O → l → a → !
 | **return last** | Gives us the last character        |
 
 ---
+
+
+## 🧩 TASK NAME: `NRune`
+
+### 🧠 What are we doing?
+
+We need to **get the nth character (rune)** from a given string.
+
+For example:
+
+| String     | n | Output |
+| ---------- | - | ------ |
+| `"Hello!"` | 3 | `'l'`  |
+| `"Salut!"` | 2 | `'a'`  |
+| `"Ola!"`   | 4 | `'!'`  |
+
+If it’s **not possible** (for example, if n is negative or larger than the number of characters), we return **0**.
+
+---
+
+## 💡 KEY IDEAS
+
+* A **rune** = a single Unicode character.
+  So looping with `range` gives us each rune in the correct order.
+* We **count** each rune until we reach the `n`th one.
+* If we finish the loop and didn’t reach it → return `0`.
+
+---
+
+## ✅ FINAL CODE (nrune.go)
+
+```go
+package piscine
+
+// NRune returns the nth rune (Unicode character) from a string.
+// If n is out of range (too small or too big), it returns 0.
+func NRune(s string, n int) rune {
+	if n <= 0 {
+		return 0
+	}
+
+	count := 0
+	for _, r := range s {
+		count++
+		if count == n {
+			return r
+		}
+	}
+	return 0
+}
+```
+
+---
+
+## 🧱 LINE-BY-LINE EXPLANATION
+
+| Line                         | Code                                                    | What it means |
+| ---------------------------- | ------------------------------------------------------- | ------------- |
+| `if n <= 0 { return 0 }`     | Negative or zero position? Impossible → return 0.       |               |
+| `count := 0`                 | We’ll count how many runes we’ve seen.                  |               |
+| `for _, r := range s`        | Go through each rune (Unicode character) in the string. |               |
+| `count++`                    | Increase our count every time we see a rune.            |               |
+| `if count == n { return r }` | If this is the nth rune, return it immediately!         |               |
+| `return 0`                   | If we finish and didn’t find it, return 0.              |               |
+
+---
+
+## 🔍 VISUAL EXAMPLE: `"Hello!"`, n = 3
+
+| Step | Rune  | Count | Is Count == n? | Action       |
+| ---- | ----- | ----- | -------------- | ------------ |
+| 1    | `'H'` | 1     | ❌              | Continue     |
+| 2    | `'e'` | 2     | ❌              | Continue     |
+| 3    | `'l'` | 3     | ✅              | Return `'l'` |
+
+✅ Function returns `'l'`
+
+---
+
+## 🎨 VISUAL DIAGRAM
+
+```
+String: "H e l l o !"
+Index:   1 2 3 4 5 6
+
+We want n = 3
+
+Loop:
+   H → e → l → stop!
+         ↑
+         return this rune
+```
+
+---
+
+## 🧪 TEST FILE (main.go)
+
+```go
+package main
+
+import (
+	"piscine"
+	"github.com/01-edu/z01"
+)
+
+func main() {
+	z01.PrintRune(piscine.NRune("Hello!", 3)) // l
+	z01.PrintRune(piscine.NRune("Salut!", 2)) // a
+	z01.PrintRune(piscine.NRune("Bye!", -1))  // 0 (nothing printed)
+	z01.PrintRune(piscine.NRune("Bye!", 5))   // 0 (nothing printed)
+	z01.PrintRune(piscine.NRune("Ola!", 4))   // !
+	z01.PrintRune('\n')
+}
+```
+
+---
+
+### 🖥️ Expected Output
+
+```
+la!
+```
+
+---
+
+## 🧩 ERROR & EDGE CASE CHECKS
+
+| Input         | Explanation              | Output |
+| ------------- | ------------------------ | ------ |
+| `"Hello!", 0` | 0 is invalid             | `0`    |
+| `"Hi", 5`     | Too big (only 2 letters) | `0`    |
+| `"🙂Go", 1`   | Works fine with emojis   | `'🙂'` |
+
+---
+
+## 🗂️ FILES TO SUBMIT
+
+✅ `nrune.go`
+
+---
+
+## 🧠 QUICK SUMMARY
+
+| Concept      | Meaning                            |
+| ------------ | ---------------------------------- |
+| **Rune**     | A single Unicode character         |
+| **range s**  | Loops through runes                |
+| **count**    | Tracks rune positions              |
+| **return 0** | When position invalid or not found |
+
+---
+
