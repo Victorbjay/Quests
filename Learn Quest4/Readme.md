@@ -1,3 +1,4 @@
+
 ### Learn at a steady pace! 
 Stop trying to complete all the tasks in one go, it doesn't matter if you don't Bim at first trial: the idea is to not give up and find a solution to your current bug. That's what makes you a great programmer!
 ## 🧩 Task name: `IterativeFactorial`
@@ -167,6 +168,18 @@ Expected output:
 ```
 24
 ```
+### 🧩 Visualization — how the code runs
+
+Let’s see how it works with `nb = 4`, `power = 3`
+
+| Loop | i | result (before) | result × nb | result (after) |
+| ---- | - | --------------- | ----------- | -------------- |
+| 1st  | 1 | 1               | 1×4         | 4              |
+| 2nd  | 2 | 4               | 4×4         | 16             |
+| 3rd  | 3 | 16              | 16×4        | 64             |
+
+🌀 The loop *turns 3 times*, multiplying each time.
+Final result = **64**
 
 ---
 
@@ -505,3 +518,103 @@ Expected output:
 
 
 ---
+let’s go through **`RecursivePower`** in full detail, just like before.
+
+---
+
+## 🧩 Task Summary
+
+We need to write a recursive Go function that calculates:
+[
+nb^{power} = nb \times nb \times nb \times ... \text{(power times)}
+]
+
+---
+
+## ✅ Full Solution (`recursivepower.go`)
+
+```go
+package piscine
+
+// RecursivePower calculates nb raised to the power of 'power' using recursion.
+// If power is negative, it returns 0 (not defined for integers).
+// No loops (for) are used as per instructions.
+func RecursivePower(nb int, power int) int {
+	if power < 0 {
+		return 0
+	}
+	if power == 0 {
+		return 1
+	}
+	return nb * RecursivePower(nb, power-1)
+}
+```
+
+---
+
+## 🧠 Line-by-Line Explanation
+
+| Line                                           | Code                                                                                                                                                | Explanation |
+| ---------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------- | ----------- |
+| `func RecursivePower(nb int, power int) int {` | Starts defining a function named `RecursivePower` that takes two integers: `nb` (the base) and `power` (the exponent), returning an integer result. |             |
+| `if power < 0 { return 0 }`                    | Handles **negative powers** — the question says to return `0` if the power is negative (since we’re only working with integers).                    |             |
+| `if power == 0 { return 1 }`                   | **Base case** — any number to the power of `0` equals `1`. This stops the recursion.                                                                |             |
+| `return nb * RecursivePower(nb, power-1)`      | **Recursive step:** multiply `nb` by the result of calling `RecursivePower` again with one less power. This keeps going until power = 0.            |             |
+| `}`                                            | Ends the function.                                                                                                                                  |             |
+
+---
+
+## 🔁 Visual Recursive Flow (for `RecursivePower(4, 3)`)
+
+| Step | Function Call          | Action                     | Return       |
+| ---- | ---------------------- | -------------------------- | ------------ |
+| 1    | `RecursivePower(4, 3)` | `4 * RecursivePower(4, 2)` | waits        |
+| 2    | `RecursivePower(4, 2)` | `4 * RecursivePower(4, 1)` | waits        |
+| 3    | `RecursivePower(4, 1)` | `4 * RecursivePower(4, 0)` | waits        |
+| 4    | `RecursivePower(4, 0)` | returns `1` (base case)    | ✅            |
+| 5    | Back to step 3         | `4 * 1 = 4`                | returns `4`  |
+| 6    | Back to step 2         | `4 * 4 = 16`               | returns `16` |
+| 7    | Back to step 1         | `4 * 16 = 64`              | returns `64` |
+
+🎯 Final Answer = **64**
+
+---
+
+## 🧩 Memory Stack Visualization
+
+```
+RecursivePower(4,3)
+ ├── RecursivePower(4,2)
+ │    ├── RecursivePower(4,1)
+ │    │    ├── RecursivePower(4,0)
+ │    │    └── returns 1
+ │    └── returns 4*1 = 4
+ └── returns 4*4 = 16
+returns 4*16 = 64 ✅
+```
+
+---
+
+## 🧪 Test Program
+
+```go
+package main
+
+import (
+	"fmt"
+	"piscine"
+)
+
+func main() {
+	fmt.Println(piscine.RecursivePower(4, 3))  // Expected: 64
+	fmt.Println(piscine.RecursivePower(2, 5))  // Expected: 32
+	fmt.Println(piscine.RecursivePower(5, 0))  // Expected: 1
+	fmt.Println(piscine.RecursivePower(3, -2)) // Expected: 0
+}
+```
+### 🗂️ Files to Submit
+
+✅ Only submit: `recursivepower.go`
+
+---
+
