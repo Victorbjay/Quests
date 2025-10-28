@@ -1,5 +1,7 @@
-# Do not be in a hurry to finish, make sure you rehearse and understand the code!
-Thissection is string handling — specifically **runes**, which are very important in Go for dealing with Unicode characters.
+## Do not be in a hurry to finish, make sure you rehearse and understand the code!
+
+
+This section is string handling — specifically **runes**, which are very important in Go for dealing with Unicode characters.
 
 Let’s go through it **step-by-step**, in the same clear format as quest4 before — with explanation, visuals, and test code.
 
