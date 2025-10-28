@@ -1,3 +1,7 @@
+
+# GO TO LEARN QUEST4: try to understand the simpler explanations and prepare for checkpoint 2
+
+
 # 🧠 Piscine-Go Shell & Command Line Quests 1 Solutions
 
 This repository contains my completed solutions for several shell scripting and command line challenges from the **01 Edu Piscine Go** training series.  
@@ -2405,4 +2409,5 @@ $ go run .
 That’s **bubble sort / selection sort logic**, and it’s all you need for this task.
 
 ---
-Keep refreshing!!! solutions not yet uploaded!
+#Keep refreshing!!! solutions not yet uploaded!
+# GO TO LEARN QUEST4 - Try to understand the explanation and prepare for checkpoint 2
