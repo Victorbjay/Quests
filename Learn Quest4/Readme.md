@@ -763,5 +763,954 @@ func main() {
 5. Expected output for index `4` → `3`
 
 ---
+Perfect 👍 Let’s go through this one in your preferred full structured documentation format — with complete explanation, visualization, and code.
 
+---
 
+## 🧩 **Task Name:** Sqrt
+
+### 🧠 What does “Square Root” mean?
+
+The **square root** of a number is a value that, when multiplied by itself, gives the original number.
+
+For example:
+
+| Number | Square Root | Why                                                 |
+| ------ | ----------- | --------------------------------------------------- |
+| 4      | 2           | 2 × 2 = 4                                           |
+| 9      | 3           | 3 × 3 = 9                                           |
+| 16     | 4           | 4 × 4 = 16                                          |
+| 3      | —           | no whole number gives 3 when squared → return **0** |
+
+👉 So if the square root is **not a whole number**, we return **0**.
+
+---
+
+### ⚙️ What the task is asking
+
+We must write a function that:
+
+* Takes an integer `nb`
+* Returns its **integer square root** (if it exists)
+* Returns **0** otherwise
+
+Function header:
+
+```go
+func Sqrt(nb int) int
+```
+
+✅ If `nb = 4` → return `2`
+✅ If `nb = 3` → return `0`
+✅ If `nb = 9` → return `3`
+✅ If `nb = 10` → return `0`
+
+---
+
+### 🚧 Restrictions
+
+We are **not allowed to use** any built-in math functions.
+So we must find the square root **manually**, using a **loop**.
+
+---
+
+### 🧱 Step-by-Step Plan
+
+#### Step 1 — Check invalid cases
+
+If `nb <= 0`, return `0` (no square root for negative or zero).
+
+#### Step 2 — Try every number starting from 1
+
+We test each integer `i`:
+
+* Multiply `i * i`
+* If it equals `nb`, we found the square root.
+* If it becomes greater than `nb`, stop and return `0`.
+
+#### Step 3 — Return the result
+
+Return the found integer if perfect, otherwise `0`.
+
+---
+
+### ✅ **Final Code** (`sqrt.go`)
+
+```go
+package piscine
+
+// Sqrt returns the integer square root of nb if it exists,
+// otherwise returns 0.
+func Sqrt(nb int) int {
+	if nb <= 0 {
+		return 0
+	}
+
+	for i := 1; i*i <= nb; i++ {
+		if i*i == nb {
+			return i
+		}
+	}
+	return 0
+}
+```
+
+---
+
+### 💻 **Test File** (`main.go`)
+
+```go
+package main
+
+import (
+	"fmt"
+	"piscine"
+)
+
+func main() {
+	fmt.Println(piscine.Sqrt(4))  // expected: 2
+	fmt.Println(piscine.Sqrt(3))  // expected: 0
+	fmt.Println(piscine.Sqrt(9))  // expected: 3
+	fmt.Println(piscine.Sqrt(16)) // expected: 4
+	fmt.Println(piscine.Sqrt(10)) // expected: 0
+}
+```
+
+---
+
+### 🧩 **Visual Step-by-Step Flow**
+
+Let’s take `Sqrt(9)` as example:
+
+| Step | i | i × i | Comparison | Action     |
+| ---- | - | ----- | ---------- | ---------- |
+| 1    | 1 | 1     | 1 < 9      | continue   |
+| 2    | 2 | 4     | 4 < 9      | continue   |
+| 3    | 3 | 9     | 9 == 9     | ✅ return 3 |
+
+👉 Loop stops as soon as `i*i == nb`.
+
+Now for `Sqrt(3)`:
+
+| Step | i | i × i | Comparison | Action          |
+| ---- | - | ----- | ---------- | --------------- |
+| 1    | 1 | 1     | 1 < 3      | continue        |
+| 2    | 2 | 4     | 4 > 3      | stop & return 0 |
+
+✅ Because 4 passed 3, we know 3 has no integer square root.
+
+---
+
+### ⚡ **Quick Visual Diagram**
+
+```
+Start nb = 9
+↓
+i = 1 → 1*1 = 1 → not equal
+↓
+i = 2 → 2*2 = 4 → not equal
+↓
+i = 3 → 3*3 = 9 → ✅ equal
+↓
+Return 3
+```
+
+For nb = 3:
+
+```
+Start nb = 3
+↓
+i = 1 → 1*1 = 1 → not equal
+↓
+i = 2 → 2*2 = 4 → greater
+↓
+Return 0
+```
+
+---
+
+### 🧾 **Expected Output**
+
+```
+$ go run .
+2
+0
+3
+4
+0
+```
+
+---
+
+### 🗂️ **Files to Submit**
+
+* `sqrt.go`
+
+---
+Excellent 👌 Let’s dive into this one in your **full preferred structured format** — with explanations, visualization, table flow, and example code.
+
+---
+
+## 🧩 **Task Name:** IsPrime
+
+---
+
+### 🧠 What does “Prime Number” mean?
+
+A **prime number** is a number that is **only divisible by 1 and itself.**
+That means:
+
+* It has **exactly two divisors** → `1` and the number itself.
+
+📘 Examples:
+
+| Number | Divisible By | Prime? | Why                            |
+| ------ | ------------ | ------ | ------------------------------ |
+| 1      | 1            | ❌      | Not prime (only one divisor)   |
+| 2      | 1, 2         | ✅      | Only divisible by 1 and itself |
+| 3      | 1, 3         | ✅      | Same reason                    |
+| 4      | 1, 2, 4      | ❌      | Divisible by 2 also            |
+| 5      | 1, 5         | ✅      | Prime                          |
+| 6      | 1, 2, 3, 6   | ❌      | Divisible by 2 & 3             |
+
+So `2, 3, 5, 7, 11, 13, 17…` are all **prime numbers**.
+
+---
+
+### ⚙️ What the task is asking
+
+We must write a function that:
+✅ Takes an integer `nb`
+✅ Returns `true` if `nb` is prime
+✅ Returns `false` otherwise
+
+Function header:
+
+```go
+func IsPrime(nb int) bool
+```
+
+Also:
+
+* 1 is **not** prime
+* Negative numbers are **not** prime
+* Optimize it (don’t check too many unnecessary numbers)
+
+---
+
+### ⚡ Optimization Logic
+
+Instead of checking all numbers from 1 to nb,
+we only check **up to the square root of nb**.
+
+Because if `nb` has a divisor greater than its square root,
+the corresponding divisor smaller than it would already have been found.
+
+📘 Example:
+For 25 → we only check divisors up to 5
+(5×5 = 25, any number > 5 would multiply past 25)
+
+---
+
+### 🧱 Step-by-Step Plan
+
+#### Step 1 — Handle invalid cases
+
+If `nb <= 1`, return `false` (not prime).
+
+#### Step 2 — Loop from 2 to √nb
+
+If `nb` is divisible by any number in that range,
+return `false`.
+
+#### Step 3 — Otherwise
+
+Return `true` (it’s prime).
+
+---
+
+### ✅ **Final Code** (`isprime.go`)
+
+```go
+package piscine
+
+// IsPrime checks if nb is a prime number.
+// It returns true if nb is prime, false otherwise.
+func IsPrime(nb int) bool {
+	if nb <= 1 {
+		return false
+	}
+
+	// Only check divisibility up to the square root of nb
+	for i := 2; i*i <= nb; i++ {
+		if nb%i == 0 {
+			return false
+		}
+	}
+	return true
+}
+```
+
+---
+
+### 💻 **Test File** (`main.go`)
+
+```go
+package main
+
+import (
+	"fmt"
+	"piscine"
+)
+
+func main() {
+	fmt.Println(piscine.IsPrime(5))  // true
+	fmt.Println(piscine.IsPrime(4))  // false
+	fmt.Println(piscine.IsPrime(11)) // true
+	fmt.Println(piscine.IsPrime(25)) // false
+	fmt.Println(piscine.IsPrime(2))  // true
+	fmt.Println(piscine.IsPrime(1))  // false
+}
+```
+
+---
+
+### 🧩 **Visual Flow Table**
+
+| Step | nb | i | i×i ≤ nb? | nb % i    | Result   |
+| ---- | -- | - | --------- | --------- | -------- |
+| 1    | 5  | 2 | 4 ≤ 5 ✅   | 5 % 2 = 1 | continue |
+| 2    | 5  | 3 | 9 > 5 ❌   | stop      | ✅ Prime  |
+
+| Step | nb | i | i×i ≤ nb? | nb % i    | Result      |
+| ---- | -- | - | --------- | --------- | ----------- |
+| 1    | 4  | 2 | 4 ≤ 4 ✅   | 4 % 2 = 0 | ❌ Not Prime |
+
+---
+
+### ⚡ **Quick Diagram**
+
+#### For nb = 5
+
+```
+Start nb=5
+↓
+Check 2 → 5%2 ≠ 0 → continue
+↓
+No divisors found
+↓
+Return true ✅
+```
+
+#### For nb = 4
+
+```
+Start nb=4
+↓
+Check 2 → 4%2 = 0 → divisible
+↓
+Return false ❌
+```
+
+---
+
+### 🧾 **Expected Output**
+
+```
+$ go run .
+true
+false
+true
+false
+true
+false
+```
+
+---
+
+### 🗂️ **Files to Submit**
+
+* `isprime.go`
+
+---
+Perfect 🎯
+Let’s continue in the **same style and structure** — with full explanation, visualization, diagram, table, and runnable example — for your next Go task:
+
+---
+
+## 🧩 **Task Name:** FindNextPrime
+
+---
+
+### 🧠 What does “Next Prime” mean?
+
+You already know a **prime number** is a number that’s only divisible by **1 and itself**.
+
+Now, this time, the question wants us to find the **next prime number that is equal to or greater than** a given number.
+
+So if you pass a number `nb`, you should return:
+
+* `nb` itself **if it’s already prime**,
+* or the **next** number that is prime.
+
+📘 Examples:
+
+| nb | Next Prime        |
+| -- | ----------------- |
+| 5  | 5 (already prime) |
+| 4  | 5 (next one)      |
+| 8  | 11                |
+| 14 | 17                |
+| 1  | 2                 |
+| 0  | 2                 |
+
+---
+
+### ⚙️ What the task is asking
+
+We must write a function:
+
+```go
+func FindNextPrime(nb int) int
+```
+
+✅ It takes one integer `nb`
+✅ It returns the first **prime number ≥ nb**
+✅ It must be **optimized** to avoid timeouts
+✅ We can use a helper function like `IsPrime` (from your last task!)
+
+---
+
+### 🧱 **Step-by-Step Logic**
+
+#### Step 1 — Handle bad inputs
+
+If `nb <= 2`, the next prime is **2** (smallest prime).
+
+#### Step 2 — Loop starting from nb
+
+While the number is **not prime**, increase it by 1.
+
+#### Step 3 — Use your `IsPrime()` function
+
+Check if each candidate is prime until one passes.
+
+#### Step 4 — Return it
+
+Return the first number that is prime.
+
+---
+
+### ⚙️ **Helper Function Reminder: `IsPrime()`**
+
+You can reuse your previous optimized function:
+
+```go
+func IsPrime(nb int) bool {
+	if nb <= 1 {
+		return false
+	}
+	for i := 2; i*i <= nb; i++ {
+		if nb%i == 0 {
+			return false
+		}
+	}
+	return true
+}
+```
+
+---
+
+### ✅ **Final Code — `findnextprime.go`**
+
+```go
+package piscine
+
+// FindNextPrime returns the first prime number greater than or equal to nb.
+func FindNextPrime(nb int) int {
+	if nb <= 2 {
+		return 2
+	}
+
+	for {
+		if IsPrime(nb) {
+			return nb
+		}
+		nb++
+	}
+}
+```
+
+---
+
+### 💻 **Test File — `main.go`**
+
+```go
+package main
+
+import (
+	"fmt"
+	"piscine"
+)
+
+func main() {
+	fmt.Println(piscine.FindNextPrime(5))  // 5 (already prime)
+	fmt.Println(piscine.FindNextPrime(4))  // 5
+	fmt.Println(piscine.FindNextPrime(8))  // 11
+	fmt.Println(piscine.FindNextPrime(14)) // 17
+	fmt.Println(piscine.FindNextPrime(0))  // 2
+}
+```
+
+---
+
+### 🧩 **Visual Flow Table**
+
+| Step | nb (start) | Prime? | Action               | Result    |
+| ---- | ---------- | ------ | -------------------- | --------- |
+| 1    | 5          | ✅      | stop                 | return 5  |
+| 2    | 4          | ❌      | nb = 5 → check again | return 5  |
+| 3    | 8          | ❌      | nb = 9, 10, 11 → ✅   | return 11 |
+
+---
+
+### ⚡ **Visualization**
+
+#### Example: `FindNextPrime(8)`
+
+```
+Start nb = 8
+↓
+IsPrime(8)? → false
+↓
+nb = 9
+↓
+IsPrime(9)? → false
+↓
+nb = 10
+↓
+IsPrime(10)? → false
+↓
+nb = 11
+↓
+IsPrime(11)? → true ✅
+↓
+Return 11
+```
+
+---
+
+### 🧾 **Expected Output**
+
+```
+$ go run .
+5
+5
+11
+17
+2
+```
+
+---
+
+### 🗂️ **Files to Submit**
+
+* `findnextprime.go`
+
+---
+
+### ⚡ Extra Tip for Understanding
+
+If you imagine a **number line**, your program “walks” forward from `nb` checking each number:
+
+```
+nb → nb+1 → nb+2 → nb+3 → ... until a prime is found ✅
+```
+
+That’s how it ensures it always returns the **closest prime ≥ nb**.
+
+---
+# Task **`EightQueens()`** (the legendary *Eight Queens puzzle*) step-by-step — with full **explanation**
+
+---
+
+## 🧩 Problem Summary
+
+We must place **8 queens** on a **8×8 chessboard** such that:
+
+* No two queens attack each other.
+* That means no two queens share:
+
+  * The same **row** 🟥
+  * The same **column** 🟦
+  * The same **diagonal** 🟩
+
+We’ll print **all valid arrangements**, each as a line of 8 digits —
+each digit shows the **row position** of the queen in that column (from left to right).
+
+Example output:
+
+```
+15863724
+16837425
+17468253
+...
+```
+
+---
+
+## 🧠 Approach (Recursive Backtracking)
+
+We’ll use **recursion** to try placing a queen column by column.
+
+### Step Flow:
+
+| Step | Description                                                          |
+| ---- | -------------------------------------------------------------------- |
+| 1️⃣  | Start from column 0.                                                 |
+| 2️⃣  | Try placing a queen in each row (1–8).                               |
+| 3️⃣  | Check if that position is **safe** (no attacks).                     |
+| 4️⃣  | If safe → place queen and **recurse** to next column.                |
+| 5️⃣  | If no safe position → **backtrack** (remove queen and try next row). |
+| 6️⃣  | When column == 8 → print the current valid solution.                 |
+
+---
+
+## 🧮 Visual Example
+
+Say we try to place queens one by one:
+
+```
+Column 1: place at row 1  ✅
+Column 2: cannot place at 1 (same row), or 2 (diagonal), ...
+           place at row 5 ✅
+Column 3: try rows → only row 8 works ✅
+...
+```
+
+Result: `15863724`
+
+---
+
+## 🧩 Full Go Code (with explanations)
+
+```go
+package piscine
+
+import "github.com/01-edu/z01"
+
+// EightQueens prints all solutions for the 8 queens puzzle
+func EightQueens() {
+	const size = 8
+	var board [size]int // board[col] = row (1-based)
+
+	// check if we can safely place a queen
+	var isSafe func(col, row int) bool
+	isSafe = func(col, row int) bool {
+		for prevCol := 0; prevCol < col; prevCol++ {
+			prevRow := board[prevCol]
+
+			// ❌ Same row check
+			if prevRow == row {
+				return false
+			}
+
+			// ❌ Same diagonal check (difference in col == difference in row)
+			if abs(prevRow-row) == abs(prevCol-col) {
+				return false
+			}
+		}
+		return true
+	}
+
+	// recursive backtracking solver
+	var solve func(col int)
+	solve = func(col int) {
+		if col == size {
+			// ✅ all queens placed safely → print the board
+			for i := 0; i < size; i++ {
+				z01.PrintRune(rune(board[i]) + '0')
+			}
+			z01.PrintRune('\n')
+			return
+		}
+
+		// try placing queen in each row (1–8)
+		for row := 1; row <= size; row++ {
+			if isSafe(col, row) {
+				board[col] = row
+				solve(col + 1) // recurse to next column
+			}
+		}
+	}
+
+	solve(0)
+}
+
+// helper absolute value function
+func abs(n int) int {
+	if n < 0 {
+		return -n
+	}
+	return n
+}
+```
+
+---
+
+## 🧩 Output Example
+
+Running this:
+
+```go
+package main
+
+import "piscine"
+
+func main() {
+	piscine.EightQueens()
+}
+```
+
+Will print:
+
+```
+15863724
+16837425
+17468253
+...
+```
+
+(There are exactly **92** valid solutions.)
+
+---
+
+## 📊 Step-by-Step Flow Diagram (Simplified)
+
+```
+solve(0)
+ ├── row=1 ✅ → solve(1)
+ │     ├── row=1 ❌ same row
+ │     ├── row=2 ✅ → solve(2)
+ │     │     ├── ...
+ │     │     └── full valid board → print
+ │     └── backtrack
+ ├── row=2 ✅ → solve(1)
+ │     ├── ...
+ └── row=8 ...
+```
+
+---
+
+## 🧩 Key Concepts Learned
+
+✅ Recursion
+✅ Backtracking
+✅ Diagonal detection logic
+✅ Array-based chessboard representation
+✅ Problem-solving with pruning
+
+---
+
+Let’s visualize how **recursion + backtracking** works for the **Eight Queens** puzzle — with a clear, **step-by-step chessboard diagram**
+---
+
+## 🧠 Recap of the Goal
+
+We must place **8 queens** 👑 on an **8×8 board** so that:
+
+* No two queens share a **row**, **column**, or **diagonal**.
+
+---
+
+## ♟️ Step-by-Step Visual Flow
+
+We’ll walk through the **first valid solution: `15863724`**
+
+Each column (1–8) gets one queen.
+Each number in `15863724` means the **row** for the queen in that **column**.
+
+---
+
+### 🧩 Step 1: Place Queen in Column 1, Row 1
+
+```
+Col →  1 2 3 4 5 6 7 8
+Row 1: 👑 . . . . . . .
+Row 2: .  . . . . . . .
+Row 3: .  . . . . . . .
+Row 4: .  . . . . . . .
+Row 5: .  . . . . . . .
+Row 6: .  . . . . . . .
+Row 7: .  . . . . . . .
+Row 8: .  . . . . . . .
+```
+
+✅ Safe — continue.
+
+---
+
+### 🧩 Step 2: Try Column 2
+
+* Row 1 ❌ (same row)
+* Row 2 ❌ (diagonal)
+* Row 3 ❌ (diagonal)
+* Row 4 ❌ (diagonal)
+* Row 5 ✅ → place queen
+
+```
+Col →  1 2 3 4 5 6 7 8
+Row 1: 👑 . . . . . . .
+Row 2: .  . . . . . . .
+Row 3: .  . . . . . . .
+Row 4: .  . . . . . . .
+Row 5: .  👑 . . . . . .
+Row 6: .  . . . . . . .
+Row 7: .  . . . . . . .
+Row 8: .  . . . . . . .
+```
+
+✅ Continue to next column.
+
+---
+
+### 🧩 Step 3: Column 3
+
+* Try rows 1–7, find **Row 8** ✅ safe.
+
+```
+Col →  1 2 3 4 5 6 7 8
+Row 1: 👑 . . . . . . .
+Row 2: .  . . . . . . .
+Row 3: .  . . . . . . .
+Row 4: .  . . . . . . .
+Row 5: .  👑 . . . . . .
+Row 6: .  . . . . . . .
+Row 7: .  . . . . . . .
+Row 8: .  . 👑 . . . . .
+```
+
+---
+
+### 🧩 Step 4: Column 4
+
+* After testing, Row 6 ✅ safe.
+
+```
+Col →  1 2 3 4 5 6 7 8
+Row 1: 👑 . . . . . . .
+Row 2: .  . . . . . . .
+Row 3: .  . . . . . . .
+Row 4: .  . . . . . . .
+Row 5: .  👑 . . . . . .
+Row 6: .  . . 👑 . . . .
+Row 7: .  . . . . . . .
+Row 8: .  . 👑 . . . . .
+```
+
+---
+
+### 🧩 Step 5: Column 5
+
+* Row 3 ✅ safe.
+
+```
+Col →  1 2 3 4 5 6 7 8
+Row 1: 👑 . . . . . . .
+Row 2: .  . . . . . . .
+Row 3: .  . . . 👑 . . .
+Row 4: .  . . . . . . .
+Row 5: .  👑 . . . . . .
+Row 6: .  . . 👑 . . . .
+Row 7: .  . . . . . . .
+Row 8: .  . 👑 . . . . .
+```
+
+---
+
+### 🧩 Step 6: Column 6
+
+* Row 7 ✅ safe.
+
+```
+Col →  1 2 3 4 5 6 7 8
+Row 1: 👑 . . . . . . .
+Row 2: .  . . . . . . .
+Row 3: .  . . . 👑 . . .
+Row 4: .  . . . . . . .
+Row 5: .  👑 . . . . . .
+Row 6: .  . . 👑 . . . .
+Row 7: .  . . . . 👑 . .
+Row 8: .  . 👑 . . . . .
+```
+
+---
+
+### 🧩 Step 7: Column 7
+
+* Row 2 ✅ safe.
+
+```
+Col →  1 2 3 4 5 6 7 8
+Row 1: 👑 . . . . . . .
+Row 2: .  . . . . . 👑 .
+Row 3: .  . . . 👑 . . .
+Row 4: .  . . . . . . .
+Row 5: .  👑 . . . . . .
+Row 6: .  . . 👑 . . . .
+Row 7: .  . . . . 👑 . .
+Row 8: .  . 👑 . . . . .
+```
+
+---
+
+### 🧩 Step 8: Column 8
+
+* Row 4 ✅ safe → 🎯 **solution found!**
+
+```
+Col →  1 2 3 4 5 6 7 8
+Row 1: 👑 . . . . . . .
+Row 2: .  . . . . . 👑 .
+Row 3: .  . . . 👑 . . .
+Row 4: .  . . . . . . 👑
+Row 5: .  👑 . . . . . .
+Row 6: .  . . 👑 . . . .
+Row 7: .  . . . . 👑 . .
+Row 8: .  . 👑 . . . . .
+```
+
+📜 Printed output:
+
+```
+15863724
+```
+
+---
+
+## 🔁 What Happens Next
+
+After printing, the algorithm **backtracks**:
+
+* Removes the last queen 👑,
+* Tries the next row in column 8,
+* And continues recursively until **all 92 valid solutions** are found.
+
+---
+
+## 🧩 Summary of the Recursion Tree
+
+```
+solve(0)
+ ├── row=1
+ │   ├── row=5
+ │   │   ├── row=8
+ │   │   │   ├── row=6
+ │   │   │   │   ├── row=3
+ │   │   │   │   │   ├── row=7
+ │   │   │   │   │   │   ├── row=2
+ │   │   │   │   │   │   │   ├── row=4 ✅ (solution)
+ │   │   │   │   │   │   │   └── backtrack
+```
+
+---
