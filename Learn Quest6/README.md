@@ -1,5 +1,6 @@
 ### Before starting this Quest, ensure to check on your gittea piscine-go, the `go.mod` file shouldn't have the github.com/z01 package else the checker will fail you. delete that 3rd linw entirely
-##Also for those Testing, make sure you don't add and push those test files to your gittea, stop using `git add .` entirely and use `git add filename` instead.
+##Also for those Testing, make sure you don't add and push those test files to your gittea, stop using `git add .` entirely and use `git add filename` instead. 
+Finally, always remember to format any file you create.
 ---
 
 # 🧩 **Lesson: `printprogramname`**
@@ -540,4 +541,295 @@ choumi
 | `\n`                                  | Adds newline after each argument                 |
 
 ---
+Perfect 💪 This one’s called **`nbrconvertalpha`** — and it’s a fun one!
+
+You’ll convert **numbers to letters**, like this:
+`1 → a`, `2 → b`, `3 → c`, … `26 → z`.
+If a number is **invalid** or not an integer (like `"h"` or `"56"`), print a **space**.
+
+Let’s go step by step 👇
+
+---
+
+## 🧩 **Task Summary**
+
+### ✅ What the program does
+
+| Input Argument                 | Output      |
+| ------------------------------ | ----------- |
+| `1`                            | `a`         |
+| `2`                            | `b`         |
+| `8 5 12 12 15`                 | `hello`     |
+| `--upper 8 5 25`               | `HEY`       |
+| Invalid (e.g. `56`, `h`, `32`) | space `" "` |
+
+---
+
+## ⚙️ **Steps to Solve**
+
+### 1️⃣ Import needed packages
+
+```go
+import (
+	"os"
+	"github.com/01-edu/z01"
+)
+```
+
+We’ll use:
+
+* `os.Args` → to read input arguments.
+* `z01.PrintRune` → to print characters (like always in these piscine tasks).
+
+---
+
+### 2️⃣ Read the command-line arguments
+
+```go
+args := os.Args[1:]
+```
+
+If no arguments, print nothing.
+
+---
+
+### 3️⃣ Check if the first argument is the flag `--upper`
+
+We can handle that like this:
+
+```go
+upper := false
+if len(args) > 0 && args[0] == "--upper" {
+	upper = true
+	args = args[1:] // remove the flag from the list
+}
+```
+
+---
+
+### 4️⃣ Loop through each argument
+
+We’ll try to **convert** each argument from string to integer using a small manual conversion (no `strconv.Atoi` allowed).
+
+Let’s write a small helper to convert string → int safely.
+
+---
+
+### 5️⃣ Convert argument to integer (manual way)
+
+We’ll check if all runes are digits (`'0'`–`'9'`), then compute the number.
+
+```go
+func toInt(s string) (int, bool) {
+	n := 0
+	for _, r := range s {
+		if r < '0' || r > '9' {
+			return 0, false
+		}
+		n = n*10 + int(r-'0')
+	}
+	return n, true
+}
+```
+
+* If it’s not numeric → return `false`.
+* Otherwise, return the integer.
+
+---
+
+### 6️⃣ Map number to letter
+
+ASCII value of `'a'` = **97**
+So, for letter `n`, we do:
+`rune(96 + n)` → `'a'` for 1, `'b'` for 2, etc.
+
+If `--upper` flag is on, use `'A'` = 65 instead.
+So → `rune(64 + n)`.
+
+If `n < 1` or `n > 26`, print `' '` (space).
+
+---
+
+### 7️⃣ Print each converted character
+
+Loop through all args, convert, print rune by rune.
+
+At the end, print a newline.
+
+---
+
+## ✅ **Final Code: `nbrconvertalpha/main.go`**
+
+```go
+package main
+
+import (
+	"os"
+	"github.com/01-edu/z01"
+)
+
+func main() {
+	args := os.Args[1:]
+	if len(args) == 0 {
+		return
+	}
+
+	upper := false
+	if args[0] == "--upper" {
+		upper = true
+		args = args[1:]
+	}
+
+	for _, arg := range args {
+		n, ok := toInt(arg)
+		if !ok || n < 1 || n > 26 {
+			z01.PrintRune(' ')
+		} else {
+			if upper {
+				z01.PrintRune(rune(64 + n)) // 'A' + n - 1
+			} else {
+				z01.PrintRune(rune(96 + n)) // 'a' + n - 1
+			}
+		}
+	}
+	z01.PrintRune('\n')
+}
+
+func toInt(s string) (int, bool) {
+	n := 0
+	for _, r := range s {
+		if r < '0' || r > '9' {
+			return 0, false
+		}
+		n = n*10 + int(r-'0')
+	}
+	return n, true
+}
+```
+
+---
+
+## 🧪 **Tests**
+
+### 🧠 Example 1
+
+```bash
+$ go run . 8 5 12 12 15 | cat -e
+hello$
+```
+
+### 🧠 Example 2
+
+```bash
+$ go run . 12 5 7 5 14 56 4 1 18 25 | cat -e
+legen dary$
+```
+
+### 🧠 Example 3
+
+```bash
+$ go run . 32 86 h | cat -e
+   $
+```
+
+### 🧠 Example 4 (uppercase)
+
+```bash
+$ go run . --upper 8 5 25 | cat -e
+HEY$
+```
+
+---
+
+## 🧩 **Visual Flow (ASCII Diagram)**
+
+```
+Arguments: ["--upper", "8", "5", "25"]
+
+         ↓ remove flag
+Args: ["8", "5", "25"]
+Upper: true
+
+For each n:
+  8  → 72 → 'H'
+  5  → 69 → 'E'
+  25 → 89 → 'Y'
+
+Output: "HEY"
+```
+
+---
+
+This will help you easily remember how numbers map to letters — both lowercase and uppercase.
+
+---
+
+## 🧠 **NbrConvertAlpha Visual Chart**
+
+| Number | Lowercase | Uppercase | ASCII (lower) | ASCII (upper) |
+| :----: | :-------: | :-------: | :-----------: | :-----------: |
+|    1   |     a     |     A     |       97      |       65      |
+|    2   |     b     |     B     |       98      |       66      |
+|    3   |     c     |     C     |       99      |       67      |
+|    4   |     d     |     D     |      100      |       68      |
+|    5   |     e     |     E     |      101      |       69      |
+|    6   |     f     |     F     |      102      |       70      |
+|    7   |     g     |     G     |      103      |       71      |
+|    8   |     h     |     H     |      104      |       72      |
+|    9   |     i     |     I     |      105      |       73      |
+|   10   |     j     |     J     |      106      |       74      |
+|   11   |     k     |     K     |      107      |       75      |
+|   12   |     l     |     L     |      108      |       76      |
+|   13   |     m     |     M     |      109      |       77      |
+|   14   |     n     |     N     |      110      |       78      |
+|   15   |     o     |     O     |      111      |       79      |
+|   16   |     p     |     P     |      112      |       80      |
+|   17   |     q     |     Q     |      113      |       81      |
+|   18   |     r     |     R     |      114      |       82      |
+|   19   |     s     |     S     |      115      |       83      |
+|   20   |     t     |     T     |      116      |       84      |
+|   21   |     u     |     U     |      117      |       85      |
+|   22   |     v     |     V     |      118      |       86      |
+|   23   |     w     |     W     |      119      |       87      |
+|   24   |     x     |     X     |      120      |       88      |
+|   25   |     y     |     Y     |      121      |       89      |
+|   26   |     z     |     Z     |      122      |       90      |
+
+---
+
+## 🔍 **Program Flow Diagram**
+
+```
+           ┌────────────────────────┐
+           │ Read command arguments │
+           └────────────┬───────────┘
+                        ↓
+             ┌────────────────────┐
+             │ Check for --upper  │
+             └──────────┬─────────┘
+                        ↓
+     ┌────────────────────────────────────┐
+     │ For each argument:                │
+     │  - Convert string to int          │
+     │  - If invalid → print ' '         │
+     │  - Else → find matching letter    │
+     │    (lowercase or uppercase)       │
+     └────────────────────────────────────┘
+                        ↓
+              ┌──────────────────┐
+              │ Print newline (\n) │
+              └──────────────────┘
+```
+
+---
+
+## 💡 **Memory Trick**
+
+* `'a'` starts at **96 + 1 → 97**
+* `'A'` starts at **64 + 1 → 65**
+* So lowercase = `rune(96 + n)`
+  Uppercase = `rune(64 + n)`
+
+---
+
 
