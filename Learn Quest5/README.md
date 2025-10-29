@@ -605,4 +605,498 @@ $ go run .
 * `compare.go`
 
 ---
+Perfect ✅ Got it — we’ll keep using the **Go Learning Log format** (with full documentation, explanations, diagrammatic step-by-step visual of code flow, and example output).
 
+Here’s your **Go Learning Log entry for `AlphaCount`** 👇
+
+---
+
+## 🧩 `AlphaCount`**
+
+### 🗂️ File to submit:
+
+`alphacount.go`
+
+---
+
+### 🧠 **Purpose**
+
+The function **`AlphaCount`** counts the number of alphabetic letters (A–Z, a–z) in a string.
+It ignores numbers, spaces, and special symbols.
+
+---
+
+### 🧩 **Function Definition**
+
+```go
+package piscine
+
+func AlphaCount(s string) int {
+	count := 0
+	for _, r := range s {
+		if (r >= 'A' && r <= 'Z') || (r >= 'a' && r <= 'z') {
+			count++
+		}
+	}
+	return count
+}
+```
+
+---
+
+### 🔍 **Explanation (Line-by-Line)**
+
+| Line                       | Description                                                 |                         |                                                                                       |
+| -------------------------- | ----------------------------------------------------------- | ----------------------- | ------------------------------------------------------------------------------------- |
+| `count := 0`               | Initializes a counter to store the number of letters found. |                         |                                                                                       |
+| `for _, r := range s`      | Iterates through each character (`rune`) in the string `s`. |                         |                                                                                       |
+| `if (r >= 'A' && r <= 'Z') |                                                             | (r >= 'a' && r <= 'z')` | Checks if the character is within the ASCII range for uppercase or lowercase letters. |
+| `count++`                  | Increases the counter when a valid letter is found.         |                         |                                                                                       |
+| `return count`             | Returns the final number of letters in the string.          |                         |                                                                                       |
+
+---
+
+### 🧮 **Flow Diagram (Step-by-Step)**
+
+**Example Input:** `"Hello 78 World!"`
+
+```
+s = "Hello 78 World!"
+count = 0
+
+┌──────────────────────────────────────────────┐
+│ Loop through each character in the string:   │
+│                                              │
+│ H → letter? ✅ count = 1                     │
+│ e → letter? ✅ count = 2                     │
+│ l → letter? ✅ count = 3                     │
+│ l → letter? ✅ count = 4                     │
+│ o → letter? ✅ count = 5                     │
+│ ' ' → ❌ skip                                │
+│ 7 → ❌ skip                                  │
+│ 8 → ❌ skip                                  │
+│ ' ' → ❌ skip                                │
+│ W → ✅ count = 6                             │
+│ o → ✅ count = 7                             │
+│ r → ✅ count = 8                             │
+│ l → ✅ count = 9                             │
+│ d → ✅ count = 10                            │
+│ ! → ❌ skip                                  │
+└──────────────────────────────────────────────┘
+
+✅ Final count = 10
+```
+
+---
+
+### 🧾 **Example Usage**
+
+```go
+package main
+
+import (
+	"fmt"
+	"piscine"
+)
+
+func main() {
+	s := "Hello 78 World!    4455 /"
+	nb := piscine.AlphaCount(s)
+	fmt.Println(nb)
+}
+```
+
+---
+
+### 💡 **Expected Output**
+
+```
+10
+```
+
+---
+
+### 🧠 **Key Concept**
+
+* **Runes** represent Unicode characters (not just bytes).
+* Checking ASCII ranges ensures only **Latin letters** are counted.
+* Efficient since it loops only once through the string.
+
+---
+
+Would you like me to include **a mini ASCII diagram** showing ASCII ranges (`A–Z` = 65–90, `a–z` = 97–122`) at the end of each similar exercise for quick reference?
+
+Perfect ✅ — we’ll go **back to your preferred full learning format**, where I:
+1️⃣ Explain what the task means in simple English
+2️⃣ Build it step by step (like teaching)
+3️⃣ Add a **visual illustration** of how the code runs (with loops and variable updates)
+4️⃣ Then finish with the **final full code** and **file to submit** last.
+
+Let’s redo the `Index` task exactly like that 👇
+
+---
+
+## 🧩 Task Name: `Index`
+
+### 🧠 What does *Index* mean?
+
+The **index** of a character or word is its **position** in a string.
+
+Example:
+👉 `"Hello!"`
+Positions are numbered starting from **0**:
+
+```
+H   e   l   l   o   !
+0   1   2   3   4   5
+```
+
+If we search for `"l"`, the first `"l"` appears at position **2**.
+
+So, `Index("Hello!", "l")` should return **2**.
+If we search for something not inside the text — say `"hOl"` — it returns **-1**.
+
+---
+
+### ⚙️ What the task is asking
+
+We must write a function:
+
+```go
+func Index(s string, toFind string) int {
+}
+```
+
+✅ It receives two strings:
+
+* `s` → the main text
+* `toFind` → the word we’re looking for
+
+✅ It returns:
+
+* The **starting position** (index) of where `toFind` first appears inside `s`
+* Or **-1** if it doesn’t appear at all.
+
+---
+
+### 🧱 Let’s build it step-by-step
+
+#### Step 1 — Define the function
+
+```go
+func Index(s string, toFind string) int {
+```
+
+We create our function with two string inputs.
+
+---
+
+#### Step 2 — Loop through the main string `s`
+
+We want to look through every position of `s` where `toFind` *could* start.
+
+We’ll loop from the beginning (index `0`) until there’s enough room left for the word to fit.
+
+```go
+for i := 0; i <= len(s)-len(toFind); i++ {
+```
+
+🧩 Example:
+If `s = "Salut!"` (length 6)
+and `toFind = "alu"` (length 3)
+then the loop goes from `i = 0` to `i = 3`.
+
+That gives us 4 possible start points:
+
+```
+i = 0  → "Sal"
+i = 1  → "alu"
+i = 2  → "lu!"
+i = 3  → "u!"
+```
+
+---
+
+#### Step 3 — Check if substring matches
+
+Now, at each position, we take a “slice” of the main string that’s the same length as `toFind`:
+
+```go
+if s[i:i+len(toFind)] == toFind {
+    return i
+}
+```
+
+💡 Example:
+
+```
+i = 0 → s[0:3] = "Sal" ≠ "alu"
+i = 1 → s[1:4] = "alu" ✅ MATCH!
+```
+
+So we return **i = 1**.
+
+---
+
+#### Step 4 — If nothing found, return -1
+
+If we finish the loop and never find a match:
+
+```go
+return -1
+```
+
+That tells us the substring doesn’t exist.
+
+---
+
+### ✅ Final Code (`index.go`)
+
+```go
+package piscine
+
+// Index returns the first position of toFind in s.
+// If not found, it returns -1.
+func Index(s string, toFind string) int {
+	for i := 0; i <= len(s)-len(toFind); i++ {
+		if s[i:i+len(toFind)] == toFind {
+			return i
+		}
+	}
+	return -1
+}
+```
+
+---
+
+### 🔍 Visual Simulation (How the loop runs)
+
+Let’s visualize with
+`s = "Salut!"`
+`toFind = "alu"`
+
+| i | s[i:i+3] | Comparison      | Match? | Return |
+| - | -------- | --------------- | ------ | ------ |
+| 0 | "Sal"    | "Sal" == "alu"? | ❌      | —      |
+| 1 | "alu"    | "alu" == "alu"? | ✅      | 1      |
+| 2 | "lu!"    | "lu!" == "alu"? | ❌      | —      |
+| 3 | "u!"     | too short       | —      | —      |
+
+➡️ First match found at index **1** → function stops → returns `1`.
+
+---
+
+### 🧪 Test File (`main.go`)
+
+```go
+package main
+
+import (
+	"fmt"
+	"piscine"
+)
+
+func main() {
+	fmt.Println(piscine.Index("Hello!", "l"))   // 2
+	fmt.Println(piscine.Index("Salut!", "alu")) // 1
+	fmt.Println(piscine.Index("Ola!", "hOl"))   // -1
+}
+```
+
+---
+
+### 💻 How to Run
+
+Make sure you have:
+
+```
+piscine/index.go
+main.go
+```
+
+Then run:
+
+```bash
+$ go run .
+```
+
+**Expected output:**
+
+```
+2
+1
+-1
+```
+
+---
+
+### 🗂️ File to Submit
+
+> ✅ **index.go**
+
+---
+
+Would you like me to continue this same deep-visual format with the next task (`Concat`)?
+Perfect 😎 Let’s go through this **step-by-step, visual, beginner-friendly** like our previous Go lessons — you’ll understand **exactly how `Concat` works** from inside out.
+
+---
+
+## 🧩 Task Name: `Concat`
+
+---
+
+### 🧠 What does *concatenation* mean?
+
+“Concatenation” simply means **joining** two strings together — like putting two pieces of text side by side.
+
+Example:
+
+```
+"Hello!" + " How are you?" = "Hello! How are you?"
+```
+
+So, the task is asking us to join two given strings and return the result.
+
+---
+
+### ⚙️ What the task is asking
+
+We must create a function:
+
+```go
+func Concat(str1 string, str2 string) string {
+}
+```
+
+✅ It takes two text strings — `str1` and `str2`
+✅ It returns a single string that is `str1` followed by `str2`
+✅ No need to print inside the function — just **return** the result
+
+---
+
+### 🧱 Step-by-Step Construction
+
+#### Step 1 — Start the function
+
+We begin by defining our function:
+
+```go
+func Concat(str1 string, str2 string) string {
+```
+
+This means:
+
+* Input: two strings
+* Output: one string
+
+---
+
+#### Step 2 — Combine (join) both strings
+
+In Go, we can **join two strings** easily using the `+` operator.
+
+```go
+result := str1 + str2
+```
+
+🧩 Example:
+
+```
+str1 = "Hello!"
+str2 = " How are you?"
+
+result = "Hello! How are you?"
+```
+
+---
+
+#### Step 3 — Return the result
+
+Finally, we just return it:
+
+```go
+return result
+```
+
+---
+
+### ✅ Final Code (`concat.go`)
+
+```go
+package piscine
+
+// Concat joins two strings (str1 and str2) together and returns the new string.
+func Concat(str1 string, str2 string) string {
+	result := str1 + str2
+	return result
+}
+```
+
+---
+
+### 🔍 Visual Simulation — How It Works
+
+Let’s visualize what happens when you run this line in the test file:
+
+```go
+piscine.Concat("Hello!", " How are you?")
+```
+
+| Step | Variable | Value                 | Explanation      |
+| ---- | -------- | --------------------- | ---------------- |
+| 1    | str1     | "Hello!"              | first argument   |
+| 2    | str2     | " How are you?"       | second argument  |
+| 3    | result   | "Hello! How are you?" | joined using `+` |
+| 4    | return   | "Hello! How are you?" | final output     |
+
+🧩 So the function *glues* both together and sends back the full sentence.
+
+---
+
+### 🧪 Test File (`main.go`)
+
+```go
+package main
+
+import (
+	"fmt"
+	"piscine"
+)
+
+func main() {
+	fmt.Println(piscine.Concat("Hello!", " How are you?"))
+}
+```
+
+---
+
+### 💻 How to Run
+
+Make sure you have:
+
+```
+piscine/concat.go
+main.go
+```
+
+Then in your terminal:
+
+```bash
+$ go run .
+```
+
+**Expected Output:**
+
+```
+Hello! How are you?
+```
+
+---
+
+### 🗂️ File to Submit
+
+> ✅ **concat.go**
+
+---
+
+Would you like me to continue next with the same visual explanation style for **ConcatAlternate** (if that’s your next task)?
