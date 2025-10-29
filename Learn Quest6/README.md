@@ -3,6 +3,16 @@
 Finally, always remember to format any file you create.
 ---
 
+You can explore **animations, visual code flows, and interactive examples** here:
+👉 **[LearnQuests Visuals — Live Site](https://learnquestsvisuals.netlify.app/)**
+
+Each lesson includes:
+
+* 🧠 Step-by-step line explanations
+* 🎨 Animated flow visualizations
+* 💻 Example outputs
+* 🧩 Task links and beginner-friendly commentary
+
 # 🧩 **Lesson: `printprogramname`**
 
 ---
