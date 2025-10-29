@@ -2527,3 +2527,186 @@ $
 
 ---
 
+Excellent 👌 — this one, **`TrimAtoi`**, is a step up from previous string–number exercises.
+It’s about **parsing digits** buried in a messy string — just like a **mini number extractor**.
+Let’s go through it carefully, with our usual **full explanation, logic, and visualization**.
+
+---
+
+## 🧩 Task Name: `TrimAtoi`
+
+---
+
+### 🧠 Goal
+
+You must:
+
+1. Find all **digits** in a string and turn them into a single integer.
+2. Detect a **negative sign `-`** **before** any digits — if it exists, the number becomes negative.
+3. Return **0** if no digits exist.
+4. Ignore every other character (letters, symbols, spaces, etc.).
+
+---
+
+### 🧠 Example Behavior
+
+| Input            | Extracted Digits   | Sign                         | Final Output |
+| ---------------- | ------------------ | ---------------------------- | ------------ |
+| `"12345"`        | `12345`            | +                            | `12345`      |
+| `"str123ing45"`  | `12345`            | +                            | `12345`      |
+| `"012 345"`      | `012345` → `12345` | +                            | `12345`      |
+| `"Hello World!"` | *(none)*           | +                            | `0`          |
+| `"sd+x1fa2W3s4"` | `1234`             | +                            | `1234`       |
+| `"sd-x1fa2W3s4"` | `1234`             | -                            | `-1234`      |
+| `"sdx1-fa2W3s4"` | `1234`             | + (because - is after digit) | `1234`       |
+
+---
+
+## ⚙️ Step-by-Step Plan
+
+### 🪜 Step 1 — Initialize values
+
+We’ll need:
+
+* `result` (the final integer)
+* `sign` (1 or -1)
+* `foundNumber` (boolean to check if digits exist)
+
+---
+
+### 🪜 Step 2 — Loop through each character in the string
+
+We check each rune:
+
+* If it’s a **‘-’** and **no digit has been found yet**, mark `sign = -1`
+* If it’s a **digit (‘0’–‘9’)**:
+
+  * Mark `foundNumber = true`
+  * Add it to `result` by multiplying the previous result by 10 and adding the new digit.
+
+Example:
+
+```
+Input: "sd-x1fa2W3s4"
+
+→ s (ignore)
+→ d (ignore)
+→ - (sign = -1)
+→ x (ignore)
+→ 1 (result = 1)
+→ f (ignore)
+→ a (ignore)
+→ 2 (result = 12)
+→ W (ignore)
+→ 3 (result = 123)
+→ s (ignore)
+→ 4 (result = 1234)
+```
+
+---
+
+### 🪜 Step 3 — Apply the sign at the end
+
+After the loop:
+
+```go
+return result * sign
+```
+
+If no digits were found, result remains 0.
+
+---
+
+## ✅ Full Code — `trimatoi.go`
+
+```go
+package piscine
+
+// TrimAtoi converts all digits inside a string into an integer
+// If a '-' sign appears before any digit, the number is negative.
+// Otherwise, it returns 0 if no digits exist.
+func TrimAtoi(s string) int {
+	sign := 1       // Default: positive
+	result := 0     // The integer we’ll build
+	foundNumber := false
+
+	for _, char := range s {
+		if char == '-' && !foundNumber {
+			sign = -1 // Negative sign before digits
+		}
+		if char >= '0' && char <= '9' {
+			foundNumber = true
+			result = result*10 + int(char-'0') // Build number
+		}
+	}
+
+	return result * sign
+}
+```
+
+---
+
+## 🔍 Visualization — Example: `"sd-x1fa2W3s4"`
+
+| Step    | Char | Action                   | result    | sign |
+| ------- | ---- | ------------------------ | --------- | ---- |
+| 1       | `s`  | ignored                  | 0         | +    |
+| 2       | `d`  | ignored                  | 0         | +    |
+| 3       | `-`  | negative (before digits) | 0         | -    |
+| 4       | `x`  | ignored                  | 0         | -    |
+| 5       | `1`  | add digit                | 1         | -    |
+| 6       | `f`  | ignored                  | 1         | -    |
+| 7       | `a`  | ignored                  | 1         | -    |
+| 8       | `2`  | add digit                | 12        | -    |
+| 9       | `W`  | ignored                  | 12        | -    |
+| 10      | `3`  | add digit                | 123       | -    |
+| 11      | `s`  | ignored                  | 123       | -    |
+| 12      | `4`  | add digit                | 1234      | -    |
+| ✅ Final | —    | Multiply by sign         | **-1234** | —    |
+
+---
+
+## 🧪 Test File — `main.go`
+
+```go
+package main
+
+import (
+	"fmt"
+	"piscine"
+)
+
+func main() {
+	fmt.Println(piscine.TrimAtoi("12345"))
+	fmt.Println(piscine.TrimAtoi("str123ing45"))
+	fmt.Println(piscine.TrimAtoi("012 345"))
+	fmt.Println(piscine.TrimAtoi("Hello World!"))
+	fmt.Println(piscine.TrimAtoi("sd+x1fa2W3s4"))
+	fmt.Println(piscine.TrimAtoi("sd-x1fa2W3s4"))
+	fmt.Println(piscine.TrimAtoi("sdx1-fa2W3s4"))
+	fmt.Println(piscine.TrimAtoi("sdx1+fa2W3s4"))
+}
+```
+
+---
+
+## 🧾 Expected Output
+
+```
+12345
+12345
+12345
+0
+1234
+-1234
+1234
+1234
+```
+
+---
+
+## 🗂️ File to Submit
+
+> ✅ **trimatoi.go**
+
+---
