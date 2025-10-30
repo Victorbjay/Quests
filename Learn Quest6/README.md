@@ -844,3 +844,630 @@ This will help you easily remember how numbers map to letters — both lowercase
 ---
 
 
+Excellent 👏 — I’m really glad it worked perfectly!
+Now let’s **break down this `flags` program step by step** in the same “learning log” style we’ve been using —
+so even beginners or younger learners can follow along easily.
+
+---
+
+# 🧠`flags/main.go`
+
+### 🎯 **Goal of the task**
+
+We need to create a command-line program that:
+
+1. Can understand special *flags* like:
+
+   * `--insert` or `-i`
+   * `--order` or `-o`
+   * `--help` or `-h`
+2. If we run with `--insert` → it should **add text** at the end of another text.
+3. If we run with `--order` → it should **rearrange letters** in **ASCII order**.
+4. If we run with `--help` or no arguments → it should **show the help message**.
+
+---
+
+## 🧩 The Complete Code
+
+We start with only two imports:
+
+```go
+import (
+	"os"
+	"github.com/01-edu/z01"
+)
+```
+
+✅ Only `os` (for arguments) and `z01` (for printing characters) — allowed functions only!
+
+---
+
+## 🔹 Step 1: Get the Command-Line Arguments
+
+```go
+args := os.Args[1:]
+```
+
+### 🧠 Meaning:
+
+* `os.Args` gives us **all the words** typed after `go run .`.
+* The first one is the program’s name, so we use `[1:]` to skip it.
+
+**Example:**
+
+```
+go run . --insert=4321 asdad
+```
+
+➡️ `args = ["--insert=4321", "asdad"]`
+
+---
+
+## 🔹 Step 2: Handle the Help Case
+
+```go
+if len(args) == 0 || contains(args, "--help") || contains(args, "-h") {
+	printHelp()
+	return
+}
+```
+
+### 🧠 Meaning:
+
+If there are:
+
+* No arguments, OR
+* `--help` or `-h` is typed,
+
+👉 Then we print the help message and stop the program (`return`).
+
+---
+
+## 🔹 Step 3: Prepare Variables
+
+```go
+insert := ""
+order := false
+mainStr := ""
+```
+
+These will store:
+
+* `insert`: the text we want to add
+* `order`: true/false flag if we should sort
+* `mainStr`: the main string (like “asdad”)
+
+---
+
+## 🔹 Step 4: Parse the Arguments
+
+We loop through each argument:
+
+```go
+for i := 0; i < len(args); i++ {
+	arg := args[i]
+```
+
+### 🔍 Inside the loop
+
+#### a️⃣ Check for `--insert=VALUE`
+
+```go
+if startsWith(arg, "--insert=") {
+	insert = arg[len("--insert="):]
+	continue
+}
+```
+
+**Example:**
+If `arg` is `"--insert=4321"`,
+then `insert = "4321"`
+
+---
+
+#### b️⃣ Check for `-i=VALUE`
+
+```go
+if startsWith(arg, "-i=") {
+	insert = arg[len("-i="):]
+	continue
+}
+```
+
+Same idea, but short form (`-i=`).
+
+---
+
+#### c️⃣ Check for `-i VALUE`
+
+```go
+if arg == "-i" {
+	if i+1 < len(args) {
+		insert = args[i+1]
+		i++
+	}
+	continue
+}
+```
+
+✅ Here, we handle when `-i` and the value are **separate**.
+For example:
+`go run . -i 4321 asdad`
+→ we take the next item as the insert value and skip it in the loop (`i++`).
+
+---
+
+#### d️⃣ Handle `--order` or `-o`
+
+```go
+if arg == "--order" || arg == "-o" {
+	order = true
+	continue
+}
+```
+
+Marks that we must **sort** the final text later.
+
+---
+
+#### e️⃣ Handle the main argument (the normal string)
+
+```go
+if mainStr == "" {
+	mainStr = arg
+} else if insert == "" {
+	insert = arg
+}
+```
+
+* The first *normal word* becomes the **main string**.
+* If a second string appears and we haven’t set an insert value yet, we take it as insert (this is a backup behavior).
+
+---
+
+## 🔹 Step 5: Build the Result
+
+```go
+result := mainStr
+if insert != "" {
+	result = mainStr + insert
+}
+```
+
+🧩 If there’s something to insert, we join both.
+Otherwise, we just keep the main string.
+
+---
+
+## 🔹 Step 6: Sort if Requested
+
+```go
+if order {
+	result = asciiSort(result)
+}
+```
+
+If the user used `--order` or `-o`,
+we rearrange letters using a small sorting function.
+
+---
+
+### 📘 The Sorting Function
+
+```go
+func asciiSort(s string) string {
+	r := []rune(s)
+	n := len(r)
+	for i := 0; i < n; i++ {
+		for j := i + 1; j < n; j++ {
+			if r[j] < r[i] {
+				r[i], r[j] = r[j], r[i]
+			}
+		}
+	}
+	return string(r)
+}
+```
+
+#### Visual Example:
+
+If we sort `"43a21"`:
+
+```
+Start: [4, 3, a, 2, 1]
+Step 1: [3, 4, a, 2, 1]
+Step 2: [3, 2, 4, a, 1]
+Step 3: [1, 2, 3, 4, a]
+✅ Final: "1234a"
+```
+
+It’s a **simple bubble-sort** using rune comparison (ASCII order).
+
+---
+
+## 🔹 Step 7: Print Output
+
+```go
+for _, r := range result {
+	z01.PrintRune(r)
+}
+z01.PrintRune('\n')
+```
+
+🧠 Why use `PrintRune`?
+Because the 01-edu exercises **forbid `fmt`** or other helpers —
+so we print one character at a time.
+
+---
+
+## 🔹 Step 8: The Helper Functions
+
+### `contains()`
+
+Checks if an argument exists in the list.
+
+```go
+func contains(ss []string, v string) bool {
+	for _, s := range ss {
+		if s == v {
+			return true
+		}
+	}
+	return false
+}
+```
+
+### `startsWith()`
+
+Checks if a string begins with a certain prefix.
+
+```go
+func startsWith(s, prefix string) bool {
+	if len(prefix) > len(s) {
+		return false
+	}
+	for i := 0; i < len(prefix); i++ {
+		if s[i] != prefix[i] {
+			return false
+		}
+	}
+	return true
+}
+```
+
+---
+
+## 🔹 Step 9: Help Message Function
+
+```go
+func printHelp() {
+	helpLines := []string{
+		"--insert",
+		"  -i",
+		"\t This flag inserts the string into the string passed as argument.",
+		"--order",
+		"  -o",
+		"\t This flag will behave like a boolean, if it is called it will order the argument.",
+	}
+	for _, line := range helpLines {
+		for _, ch := range line {
+			z01.PrintRune(ch)
+		}
+		z01.PrintRune('\n')
+	}
+}
+```
+
+🧠 This ensures the **exact spacing** the test expects:
+
+* 2 spaces before short flag
+* a tab (`\t`) + space before description
+
+---
+
+## ⚙️ VISUAL FLOW SUMMARY
+
+```
+┌────────────────────────────┐
+│ User runs program with args│
+└─────────────┬──────────────┘
+              │
+       ┌──────▼──────┐
+       │ Read args[] │
+       └──────┬──────┘
+              │
+   ┌──────────▼───────────┐
+   │ Check for --help/-h  │─────▶ Print help & exit
+   └──────────┬───────────┘
+              │
+      ┌───────▼────────┐
+      │ Parse flags     │
+      │ --insert, -i,   │
+      │ --order, -o     │
+      └───────┬────────┘
+              │
+      ┌───────▼────────┐
+      │ Build result    │
+      │ main + insert   │
+      └───────┬────────┘
+              │
+      ┌───────▼────────┐
+      │ Order if asked  │
+      └───────┬────────┘
+              │
+      ┌───────▼────────┐
+      │ Print result    │
+      └────────────────┘
+```
+
+---
+
+## 🧪 Test Examples
+
+| Command                                | Output          |
+| -------------------------------------- | --------------- |
+| `go run . --insert=4321 asdad`         | asdad4321       |
+| `go run . --order 43a21`               | 1234a           |
+| `go run . --insert=4321 --order asdad` | 1234aadds       |
+| `go run . -i=v2 v1`                    | v1v2            |
+| `go run . -h`                          | shows help text |
+
+---
+
+## 💡 Takeaways
+
+* Command-line arguments are stored in `os.Args`.
+* Flags can come in different formats: `--flag=value` or `-f value`.
+* ASCII sorting = arranging by character number.
+* Always check base cases first (`--help`, empty input).
+* You can write helper functions like `contains` and `startsWith` instead of importing banned libraries.
+
+---
+ ## rotate vowels
+ **the problem understanding**, then I’ll show you a clean and **beginner-friendly `rotatevowels` solution**, followed by a **simple line-by-line explanation** 
+
+---
+
+## 🧠 Understanding the Problem
+
+We’re asked to:
+
+* Take all program arguments (excluding the command name itself).
+* **Reverse (mirror)** the positions of *vowels only* across *all arguments combined*.
+* Keep every other letter in its place.
+* Then print the result with spaces separating the arguments.
+
+💡 **Note:**
+
+* Only `a, e, i, o, u, A, E, I, O, U` are vowels.
+* `y` and `Y` are **not vowels** here.
+* If no arguments are provided → just print a newline.
+* If there are vowels, reverse their order in the full string, then reinsert them into their positions.
+
+---
+
+## ✅ Full Code (rotatevowels/main.go)
+
+```go
+package main
+
+import (
+	"os"
+	"github.com/01-edu/z01"
+)
+
+func main() {
+	// If no arguments, just print a newline
+	if len(os.Args) < 2 {
+		z01.PrintRune('\n')
+		return
+	}
+
+	// Combine all arguments into one long string with spaces
+	args := os.Args[1:]
+	var fullStr []rune
+	for i, arg := range args {
+		for _, ch := range arg {
+			fullStr = append(fullStr, ch)
+		}
+		// Add a space between arguments (except after the last one)
+		if i < len(args)-1 {
+			fullStr = append(fullStr, ' ')
+		}
+	}
+
+	// Step 1: Collect all vowels in the full string
+	vowels := []rune{}
+	for _, ch := range fullStr {
+		if isVowel(ch) {
+			vowels = append(vowels, ch)
+		}
+	}
+
+	// Step 2: Replace vowels from the end of the collected list (reverse order)
+	vowelIndex := len(vowels) - 1
+	for i, ch := range fullStr {
+		if isVowel(ch) {
+			fullStr[i] = vowels[vowelIndex]
+			vowelIndex--
+		}
+	}
+
+	// Step 3: Print the final result
+	for _, ch := range fullStr {
+		z01.PrintRune(ch)
+	}
+	z01.PrintRune('\n')
+}
+
+// Helper function to check if a character is a vowel
+func isVowel(ch rune) bool {
+	return ch == 'a' || ch == 'e' || ch == 'i' || ch == 'o' || ch == 'u' ||
+		ch == 'A' || ch == 'E' || ch == 'I' || ch == 'O' || ch == 'U'
+}
+```
+
+---
+
+## 🧩 Step-by-Step Breakdown (like a visual map)
+
+### 1️⃣ Checking arguments
+
+```go
+if len(os.Args) < 2 {
+	z01.PrintRune('\n')
+	return
+}
+```
+
+* `os.Args` holds all command-line arguments.
+* If there’s only one (the program name), we stop early.
+
+---
+
+### 2️⃣ Combine all arguments into one slice of runes (`fullStr`)
+
+```go
+args := os.Args[1:]
+var fullStr []rune
+for i, arg := range args {
+	for _, ch := range arg {
+		fullStr = append(fullStr, ch)
+	}
+	if i < len(args)-1 {
+		fullStr = append(fullStr, ' ')
+	}
+}
+```
+
+* `os.Args[1:]` skips the program name.
+* We use **`rune`** to handle letters properly (Go treats runes as Unicode-safe characters).
+* Add a space between words.
+
+🧠 Example:
+
+```
+args = ["Hello", "World"]
+fullStr = ['H','e','l','l','o',' ','W','o','r','l','d']
+```
+
+---
+
+### 3️⃣ Collect all vowels
+
+```go
+vowels := []rune{}
+for _, ch := range fullStr {
+	if isVowel(ch) {
+		vowels = append(vowels, ch)
+	}
+}
+```
+
+* Go through every letter in `fullStr`.
+* If it’s a vowel (using `isVowel`), save it into `vowels`.
+
+🧠 Example:
+
+```
+vowels = ['e', 'o', 'o']
+```
+
+---
+
+### 4️⃣ Reverse (mirror) the vowels across positions
+
+```go
+vowelIndex := len(vowels) - 1
+for i, ch := range fullStr {
+	if isVowel(ch) {
+		fullStr[i] = vowels[vowelIndex]
+		vowelIndex--
+	}
+}
+```
+
+* Start replacing vowels from the **end** of the `vowels` list.
+* Each time we find a vowel in the main string, replace it with the **last** unused vowel.
+* Decrease the index after each replacement.
+
+🧠 Example walk:
+
+```
+Original: Hello World
+Vowels collected: [e, o, o]
+Replace in reverse → o, o, e
+Result: Hollo Werld
+```
+
+---
+
+### 5️⃣ Print the result
+
+```go
+for _, ch := range fullStr {
+	z01.PrintRune(ch)
+}
+z01.PrintRune('\n')
+```
+
+* We print each character one by one.
+
+---
+
+### 6️⃣ Helper: `isVowel`
+
+```go
+func isVowel(ch rune) bool {
+	return ch == 'a' || ch == 'e' || ch == 'i' || ch == 'o' || ch == 'u' ||
+		ch == 'A' || ch == 'E' || ch == 'I' || ch == 'O' || ch == 'U'
+}
+```
+
+* Simple boolean check that returns `true` if the letter is a vowel.
+
+---
+
+## 🧪 Example Runs
+
+**Input:**
+
+```
+$ go run . "Hello World"
+```
+
+**Output:**
+
+```
+Hollo Werld
+```
+
+---
+
+**Input:**
+
+```
+$ go run . "happy thoughts" "good luck"
+```
+
+**Output:**
+
+```
+huppy thooghts guod lack
+```
+
+---
+
+**Input:**
+
+```
+$ go run .
+```
+
+**Output:**
+
+```
+(new line)
+```
+
+
