@@ -170,18 +170,23 @@ Expected output:
 ```
 ### 🧩 Visualization — how the code runs
 
-Let’s see how it works with `nb = 4`, `power = 3`
 
-| Loop | i | result (before) | result × nb | result (after) |
-| ---- | - | --------------- | ----------- | -------------- |
-| 1st  | 1 | 1               | 1×4         | 4              |
-| 2nd  | 2 | 4               | 4×4         | 16             |
-| 3rd  | 3 | 16              | 16×4        | 64             |
+**Goal:** Calculate `n! = 1 × 2 × 3 × ... × n`
 
-🌀 The loop *turns 3 times*, multiplying each time.
-Final result = **64**
+**Example:** `4! = 1 × 2 × 3 × 4`
+
+| Loop | i | result (before) | result × i | result (after) |
+|------|---|-----------------|------------|----------------|
+| 1st  | 1 | 1               | 1 × 1      | 1              |
+| 2nd  | 2 | 1               | 1 × 2      | 2              |
+| 3rd  | 3 | 2               | 2 × 3      | 6              |
+| 4th  | 4 | 6               | 6 × 4      | **24** ✅      |
+
+**Final answer:** `4! = 24`
+
 
 ---
+
 
 ### 🗂️ Files to Submit
 
