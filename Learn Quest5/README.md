@@ -1,16 +1,4 @@
 
-You can explore **animations, visual code flows, and interactive examples** here:
-👉 **[LearnQuests Visuals — Live Site](https://learnquestsvisuals.netlify.app/)**
-
-Each lesson includes:
-
-* 🧠 Step-by-step line explanations
-* 🎨 Animated flow visualizations
-* 💻 Example outputs
-* 🧩 Task links and beginner-friendly commentary
-
----
-
 ## Do not be in a hurry to finish, make sure you rehearse and understand the code!
 
 
@@ -2723,3 +2711,252 @@ func main() {
 > ✅ **trimatoi.go**
 
 ---
+Perfect — let’s continue your **Go learning log** the right way — full explanation, visualization, and a ready-to-submit file.
+This lesson covers **`BasicJoin`**, a function that joins multiple strings together.
+
+---
+
+## 🧩 **Task: BasicJoin**
+
+### 🎯 Goal
+
+Write a function that takes a **slice of strings** (`[]string`) and returns **one long string** that combines (concatenates) them all.
+
+---
+
+## 🧠 **Concept Explanation**
+
+* In Go, strings can be joined by **using the `+` operator** or **`strings.Join()`**.
+* However, for this exercise, you’ll **manually build the string** using simple concatenation.
+* You’ll loop through all the elements in the slice and **add each string to a final result** variable.
+
+---
+
+## 🧱 **Step-by-Step Code (with Visualization)**
+
+```go
+package piscine
+
+// BasicJoin takes a slice of strings and returns them joined together
+func BasicJoin(elems []string) string {
+	// Step 1: Create an empty string to store the result
+	result := ""
+
+	// Step 2: Loop through each string in the slice
+	for i := 0; i < len(elems); i++ {
+		// Step 3: Add the current string to the result
+		result += elems[i]
+	}
+
+	// Step 4: Return the final concatenated string
+	return result
+}
+```
+
+---
+
+## 🧩 **Visualization: How it Works**
+
+| Step | `i` | `elems[i]` | `result` after iteration |
+| ---- | --- | ---------- | ------------------------ |
+| 1    | 0   | `"Hello!"` | `"Hello!"`               |
+| 2    | 1   | `" How"`   | `"Hello! How"`           |
+| 3    | 2   | `" are"`   | `"Hello! How are"`       |
+| 4    | 3   | `" you?"`  | `"Hello! How are you?"`  |
+
+🎬 **Final Output:**
+👉 `"Hello! How are you?"`
+
+---
+
+## 🧮 **Example Program to Test**
+
+```go
+package main
+
+import (
+	"fmt"
+	"piscine"
+)
+
+func main() {
+	elems := []string{"Hello!", " How", " are", " you?"}
+	fmt.Println(piscine.BasicJoin(elems))
+}
+```
+
+### 🖥️ **Output**
+
+```
+Hello! How are you?
+```
+
+---
+
+## 💡 **Why This Works**
+
+* Go treats strings like arrays of bytes — when you do `result += elems[i]`, it builds up the string step by step.
+* The function is simple but efficient for small slices.
+* For large lists, you might later learn to use **`strings.Builder`** (more memory-friendly).
+
+---
+
+## 🧭 **Mini Visualization (Animated Concept)**
+
+Imagine boxes being combined:
+
+```
+[ "Hello!" ] + [ " How" ] + [ " are" ] + [ " you?" ]
+                ↓
+         "Hello! How are you?"
+```
+
+---
+
+## 🗂️ **File to Submit**
+
+📄 **Filename:** `basicjoin.go`
+
+```go
+package piscine
+
+func BasicJoin(elems []string) string {
+	result := ""
+	for i := 0; i < len(elems); i++ {
+		result += elems[i]
+	}
+	return result
+}
+```
+
+---
+# Task: Join
+
+---
+
+## ✅ What the function must do
+
+`Join(strs []string, sep string) string`
+Return all strings from `strs` concatenated together, with `sep` inserted **between** elements (not after the last one). If `strs` is empty, return an empty string.
+
+---
+
+## 🧩 Final code (file to submit: `join.go`)
+
+Save this exact content in `join.go` under `package piscine`.
+
+```go
+package piscine
+
+// Join concatenates the strings in 'strs' separated by 'sep'.
+func Join(strs []string, sep string) string {
+	// If there are no elements, return an empty string immediately.
+	if len(strs) == 0 {
+		return ""
+	}
+
+	// Start with the first element to avoid adding a separator before it.
+	result := strs[0]
+
+	// Add each following element prefixed by the separator.
+	for i := 1; i < len(strs); i++ {
+		result += sep
+		result += strs[i]
+	}
+
+	return result
+}
+```
+
+---
+
+## 🔎 Line-by-line explanation (simple)
+
+1. `package piscine`
+
+   * Declares the package name. Your exercises live in package `piscine`.
+
+2. `// Join concatenates the strings in 'strs' separated by 'sep'.`
+
+   * A short comment explaining the function purpose.
+
+3. `func Join(strs []string, sep string) string {`
+
+   * Defines the function `Join`. It accepts:
+
+     * `strs` — a slice of strings to join,
+     * `sep` — the separator string to insert between elements,
+     * returns a single `string`.
+
+4. `if len(strs) == 0 {`
+
+   * Checks if the input slice is empty.
+
+5. `return ""`
+
+   * If empty, return an empty string — nothing to join.
+
+6. `result := strs[0]`
+
+   * Initialize `result` with the **first** element.
+   * This avoids placing a separator before the first element (so we only add separators **before** subsequent elements).
+
+7. `for i := 1; i < len(strs); i++ {`
+
+   * A `for` loop starting at index 1 (the second element), iterating through the remaining strings.
+
+8. `result += sep`
+
+   * Append the separator to `result`. This happens before adding each subsequent element.
+
+9. `result += strs[i]`
+
+   * Append the current element to `result`.
+
+10. `}`
+
+    * End of the loop.
+
+11. `return result`
+
+    * Return the fully concatenated string.
+
+12. `}`
+
+    * End of function.
+
+---
+
+## 🧪 Example (same as your usage)
+
+If you run:
+
+```go
+package main
+
+import (
+	"fmt"
+	"piscine"
+)
+
+func main() {
+	toConcat := []string{"Hello!", " How", " are", " you?"}
+	fmt.Println(piscine.Join(toConcat, ":"))
+}
+```
+
+Output:
+
+```
+Hello!: How: are: you?
+```
+
+---
+
+## 💡 Notes / Alternatives
+
+* This implementation is clear and works fine for moderate sizes.
+* For very large slices or when performance matters, use `strings.Builder` to avoid repeated allocations. If you want, I can provide a `strings.Builder` version and explain it line-by-line as well.
+
+---
+
