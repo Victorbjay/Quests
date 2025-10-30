@@ -2959,4 +2959,213 @@ Hello!: How: are: you?
 * For very large slices or when performance matters, use `strings.Builder` to avoid repeated allocations. If you want, I can provide a `strings.Builder` version and explain it line-by-line as well.
 
 ---
+**Task `PrintNbrBase`** 
+
+---
+
+## ✅ Final Code (`printnbrbase.go`)
+
+```go
+package piscine
+
+import "github.com/01-edu/z01"
+
+// PrintNbrBase prints an integer 'nbr' using the digits from the string 'base'.
+// If the base is invalid, it prints "NV".
+func PrintNbrBase(nbr int, base string) {
+	// --- Step 1: Validate the base ---
+	if !isValidBase(base) {
+		z01.PrintRune('N')
+		z01.PrintRune('V')
+		return
+	}
+
+	// --- Step 2: Handle negative numbers ---
+	if nbr < 0 {
+		z01.PrintRune('-')
+		// Convert to positive (watch out for overflow)
+		if nbr == -9223372036854775808 { // handle MinInt edge case
+			PrintNbrBase(922337203685477580, base)
+			z01.PrintRune(rune(base[8]))
+			return
+		}
+		nbr = -nbr
+	}
+
+	// --- Step 3: Convert number into the base recursively ---
+	baseLen := len(base)
+	if nbr >= baseLen {
+		PrintNbrBase(nbr/baseLen, base)
+	}
+	z01.PrintRune(rune(base[nbr%baseLen]))
+}
+
+// Helper function to check if base is valid
+func isValidBase(base string) bool {
+	// A base must have at least two characters
+	if len(base) < 2 {
+		return false
+	}
+
+	// Create a map to detect duplicates
+	seen := make(map[rune]bool)
+
+	for _, ch := range base {
+		// A base cannot contain '+' or '-'
+		if ch == '+' || ch == '-' {
+			return false
+		}
+
+		// Each character must be unique
+		if seen[ch] {
+			return false
+		}
+		seen[ch] = true
+	}
+
+	return true
+}
+```
+
+---
+
+## 🧩 Step-by-Step Explanation
+
+### 🧠 Step 1 — Validate the base
+
+```go
+if !isValidBase(base) {
+	z01.PrintRune('N')
+	z01.PrintRune('V')
+	return
+}
+```
+
+* Before doing anything, we must ensure the base string follows the rules:
+
+  * It has **at least 2 characters**.
+  * It **doesn’t contain `+` or `-`**.
+  * All characters are **unique**.
+* If the base is invalid, we print `"NV"` (Not Valid) and stop the function.
+
+---
+
+### ⚙️ Step 2 — Handle negative numbers
+
+```go
+if nbr < 0 {
+	z01.PrintRune('-')
+	nbr = -nbr
+}
+```
+
+* If the number is negative, print a minus sign `-`.
+* Then convert `nbr` to its positive version, so we can handle the conversion easily.
+
+> ⚠️ Note: We also check for the **minimum integer** edge case (since `-MinInt` can overflow).
+
+---
+
+### 🔢 Step 3 — Recursive conversion
+
+```go
+baseLen := len(base)
+if nbr >= baseLen {
+	PrintNbrBase(nbr/baseLen, base)
+}
+z01.PrintRune(rune(base[nbr%baseLen]))
+```
+
+* We divide `nbr` by the base length (`baseLen`) to move through digits recursively.
+* `nbr % baseLen` gives the remainder (i.e., the digit to print).
+* Example:
+
+  * Base `"0123456789"` and `nbr = 125`
+  * 125 / 10 = 12 → recursive call prints `1`
+  * 125 % 10 = 5 → prints `5`
+  * Final result = `125`.
+
+---
+
+### 🧮 Helper — Check base validity
+
+```go
+func isValidBase(base string) bool {
+	if len(base) < 2 {
+		return false
+	}
+
+	seen := make(map[rune]bool)
+	for _, ch := range base {
+		if ch == '+' || ch == '-' {
+			return false
+		}
+		if seen[ch] {
+			return false
+		}
+		seen[ch] = true
+	}
+	return true
+}
+```
+
+* This helper ensures all rules are met before conversion begins.
+* Using a `map[rune]bool` ensures that each character appears **only once**.
+
+---
+
+## 🧪 Example Test Program
+
+```go
+package main
+
+import (
+	"piscine"
+	"github.com/01-edu/z01"
+)
+
+func main() {
+	piscine.PrintNbrBase(125, "0123456789")
+	z01.PrintRune('\n')
+
+	piscine.PrintNbrBase(-125, "01")
+	z01.PrintRune('\n')
+
+	piscine.PrintNbrBase(125, "0123456789ABCDEF")
+	z01.PrintRune('\n')
+
+	piscine.PrintNbrBase(-125, "choumi")
+	z01.PrintRune('\n')
+
+	piscine.PrintNbrBase(125, "aa")
+	z01.PrintRune('\n')
+}
+```
+
+---
+
+## 🖥️ Output
+
+```
+125
+-1111101
+7D
+-uoi
+NV
+```
+
+---
+
+## 🧠 Visual Explanation
+
+| Step | Input | Base                 | Recursive Output     |
+| ---- | ----- | -------------------- | -------------------- |
+| 1    | 125   | `"0123456789"`       | Print `125`          |
+| 2    | -125  | `"01"`               | Print `-1111101`     |
+| 3    | 125   | `"0123456789ABCDEF"` | Print `7D`           |
+| 4    | -125  | `"choumi"`           | Print `-uoi`         |
+| 5    | 125   | `"aa"`               | Invalid → Print `NV` |
+
+---
+
 
