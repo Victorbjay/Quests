@@ -377,3 +377,602 @@ You now know **two ways** to make a range in Go:
 Like choosing between **adding bricks one by one** or **building the whole wall first and painting numbers**.
 
 ---
+# `ConcatParams` 
+
+---
+
+**Quest Name:** `ConcatParams`  
+**Level:** 14  
+**XP Reward:** 3.06 kB of Brain Power!  
+**Goal:** Turn a list of words into one long message with **newlines** between them!  
+Your mission? Write a spell (`ConcatParams`) that takes a **bag of strings** and returns **one big string** with each word on a new line.
+
+---
+
+## The Magic Spell (Function) You Must Write
+
+```go
+func ConcatParams(args []string) string {
+
+}
+```
+
+> **Your job:** Fill in the `{ }` so it works like magic!
+
+---
+
+## Let’s Break It Down – Line by Line (Super Simple!)
+
+| Line | Explanation | Fun Analogy |
+|------|-----------|-------------|
+| `func` | This tells Go: “Hey! I’m starting a function!” | Like saying: “Abracadabra! A new spell begins!” |
+| `ConcatParams` | The **name** of your function. Call it like this: `ConcatParams(...)` | Your spell’s name: **“StringGlue!”** |
+| `(args []string)` | This is the **input**: a **slice** (like a list) of strings. | Imagine a **bag of notes** – each note has a word. |
+| `string` | This is what the function **returns** (gives back). | The final **magic scroll** with all words written down! |
+| `{ }` | The **body** – where the magic happens! | The cauldron where you mix everything! |
+
+---
+
+## Example Input & Output (The Test!)
+
+```go
+test := []string{"Hello", "how", "are", "you?"}
+fmt.Println(piscine.ConcatParams(test))
+```
+
+**Output:**
+```
+Hello
+how
+are
+you?
+```
+
+> Each word is on its own line!  
+> That’s because we used `\n` → the **newline spell**!
+
+---
+
+## Step-by-Step: How to Solve It (Like a Game!)
+
+Let’s walk through it like a **level in a video game**!
+
+---
+
+### Level 1: Understand the Input
+
+```go
+args := []string{"Hello", "how", "are", "you?"}
+```
+
+| Index | Value |
+|-------|-------|
+| 0 | "Hello" |
+| 1 | "how" |
+| 2 | "are" |
+| 3 | "you?" |
+
+> This is a **slice** – like a train with 4 cars, each carrying a word.
+
+---
+
+### Level 2: We Need to Glue Words with `\n`
+
+We want:
+```
+Hello\nhow\nare\nyou?
+```
+
+Which prints as:
+```
+Hello
+how
+are
+you?
+```
+
+> `\n` = **"Press Enter"** – it makes a new line!
+
+---
+
+### Level 3: Use a Loop to Visit Each Word
+
+We’ll use a `for` loop to open each "note" in the bag.
+
+```go
+result := ""
+for i := 0; i < len(args); i++ {
+    result = result + args[i] + "\n"
+}
+```
+
+Let’s see it in action!
+
+| Step | `i` | `args[i]` | `result` becomes |
+|------|-----|-----------|------------------|
+| 1 | 0 | "Hello" | `"" + "Hello" + "\n" = "Hello\n"` |
+| 2 | 1 | "how" | `"Hello\n" + "how" + "\n" = "Hello\nhow\n"` |
+| 3 | 2 | "are" | `"Hello\nhow\n" + "are" + "\n"` |
+| 4 | 3 | "you?" | `"Hello\nhow\nare\n" + "you?" + "\n"` |
+
+Final: `"Hello\nhow\nare\nyou?\n"`
+
+> Uh-oh! Extra `\n` at the end?
+
+---
+
+### Level 4: Fix the Extra Newline! (Boss Fight!)
+
+We don’t want a blank line at the end.
+
+**Bad:**
+```
+Hello
+how
+are
+you?
+
+<-- empty line!
+```
+
+**Good:**
+```
+Hello
+how
+are
+you?
+```
+
+---
+
+### Pro Trick: Manual Loop (No Imports Allowed!)
+
+Since `strings.Join` is **forbidden** (cheating alert! 🚨), we build it by hand!
+
+---
+
+## Final Working Code
+
+```go
+package piscine
+
+func ConcatParams(args []string) string {
+    result := ""
+    for i, word := range args {
+        result += word
+        if i < len(args)-1 {
+            result += "\n"
+        }
+    }
+    return result
+}
+```
+
+> **BOOM!** Quest Complete! (And 100% Legal!)
+
+---
+
+## Visual Magic: See It Happen!
+
+```
+Input:  ["Hello", "how", "are", "you?"]
+
+       ┌───────┐
+       │ Hello │
+       ├───────┤
+       │ how   │
+       ├───────┤
+       │ are   │
+       ├───────┤
+       │ you?  │
+       └───────┘
+
+       ↓↓↓ Manual Loop + "\n" (except last) ↓↓↓
+
+Output: "Hello\nhow\nare\nyou?"
+
+Printed:
+Hello
+how
+are
+you?
+```
+
+---
+
+## Interactive Challenge for Students! (Class Game Time!)
+
+### Game: "Build the String Tower!"
+
+**Rules:**
+1. Teacher says a list: `["Hi", "Go", "is", "fun"]`
+2. Students **shout** the output line by line!
+3. First to say the **correct full string** wins a star!
+
+**Example Round:**
+> Teacher: `["Go", "is", "cool"]`  
+> Student 1: "Go\nis\ncool" → **Correct!**  
+> Student 2: "Gois\ncool" → Try again!
+
+---
+
+## Why No `strings.Join`?
+
+| Problem | Fix |
+|--------|-----|
+| `import "strings"` | **Banned!** (`--allow-builtin` only allows basics) |
+| Cheating Error | `illegal-import strings` |
+| Solution | **Manual loop** – pure Go power! |
+
+---
+
+## Summary: What You Learned!
+
+| Skill | You Mastered It! |
+|------|------------------|
+| Functions | `func Name(input) output` |
+| Slices | `[]string` = list of strings |
+| Loops | `for i, word := range args` |
+| String concat | `+` to glue strings |
+| Newlines | `\n` = line break |
+| Clean code | Only add `\n` between words! |
+
+---
+
+## Final Test: Can You Solve This?
+
+```go
+words := []string{"I", "love", "coding"}
+// What does ConcatParams return?
+```
+
+**Answer (shout it!):**
+```
+I\nlove\ncoding
+→ Prints:
+I
+love
+coding
+```
+---
+
+## Files to Submit
+
+**File:** `concatparams.go`
+
+```go
+package piscine
+
+func ConcatParams(args []string) string {
+    result := ""
+    for i, word := range args {
+        result += word
+        if i < len(args)-1 {
+            result += "\n"
+        }
+    }
+    return result
+}
+```
+
+---
+
+**Quest Complete!**  
+Now go run:
+
+```bash
+go run .
+```
+
+And watch the magic!
+
+```
+Hello
+how
+are
+you?
+```
+
+---
+
+**Teacher Tip:**  
+> Always ask:  
+> - “What goes in?”  
+> - “What comes out?”  
+> - “How do I get from A to B?”  
+
+That’s how **every** coding quest is solved!
+
+---
+# `SplitWhiteSpaces`
+---
+
+**Quest Name:** `SplitWhiteSpaces`   
+**Goal:** **Chop a sentence into words** using spaces, tabs, and newlines as **scissors**!  
+
+Your mission? Take a **messy string** and **slice it cleanly** into a **list of words**!
+
+> No `strings.Split` allowed!  
+> Only **pure Go** and `--allow-builtin`!  
+> (No imports! No cheating!)
+
+---
+
+## The Magic Spell (Function) You Must Write
+
+```go
+func SplitWhiteSpaces(s string) []string {
+
+}
+```
+
+> **Your job:** Fill in the `{ }` so it **cuts perfectly**!
+
+---
+
+## Let’s Break It Down – Line by Line (Super Simple!)
+
+| Line | Explanation | Fun Analogy |
+|------|-----------|-------------|
+| `func` | Starts a function | “Let the slicing begin!” |
+| `SplitWhiteSpaces` | Name of your ninja move | **“WordChop!”** |
+| `(s string)` | Input: one long string | A **giant sushi roll** of text |
+| `[]string` | Output: a **slice** of strings | A **plate of neatly cut sushi pieces** |
+| `{ }` | Where the **chopping happens** | The **cutting board** |
+
+---
+
+## Example Input & Output (The Test!)
+
+```go
+fmt.Printf("%#v\n", piscine.SplitWhiteSpaces("Hello how are you?"))
+```
+
+**Output:**
+```go
+[]string{"Hello", "how", "are", "you?"}
+```
+
+> 4 perfect words!  
+> No extra spaces!  
+> No empty strings!
+
+---
+
+## What Are "White Spaces"?
+
+| Symbol | Name | What It Does |
+|--------|------|--------------|
+| ` ` | Space | Normal space |
+| `\t` | Tab | Big space (like pressing Tab) |
+| `\n` | Newline | Line break |
+
+> **Your job:** Treat **all three** as **word separators**!
+
+---
+
+## Step-by-Step: How to Solve It (Like a Game!)
+
+Let’s play **"Word Chopper"**!
+
+---
+
+### Level 1: Understand the Input
+
+```go
+s := "Hello   how\tare\nyou?"
+```
+
+| Part | Meaning |
+|------|--------|
+| `"Hello"` | First word |
+| `   ` | 3 spaces → **separator** |
+| `"how"` | Second word |
+| `\t` | Tab → **separator** |
+| `"are"` | Third word |
+| `\n` | Newline → **separator** |
+| `"you?"` | Last word |
+
+---
+
+### Level 2: We Need to Find Words
+
+We **skip** white spaces.  
+We **collect** letters until we hit a space.
+
+---
+
+### Level 3: Use a Loop to Scan Character by Character
+
+We’ll walk through the string like a **robot vacuum**:
+
+```go
+for each character in s:
+    if it's a letter → add to current word
+    if it's space/tab/newline → finish current word, start new one
+```
+
+---
+
+### Level 4: Store Words in a Slice
+
+We’ll use a **slice** (`[]string`) to collect words.
+
+```go
+words := []string{}
+current := ""
+```
+
+---
+
+## Final Working Code
+
+```go
+package piscine
+
+func SplitWhiteSpaces(s string) []string {
+    words := []string{}
+    current := ""
+
+    for _, char := range s {
+        if char == ' ' || char == '\t' || char == '\n' {
+            if current != "" {
+                words = append(words, current)
+                current = ""
+            }
+        } else {
+            current += string(char)
+        }
+    }
+
+    // Don't forget the last word!
+    if current != "" {
+        words = append(words, current)
+    }
+
+    return words
+}
+```
+---
+
+## Visual Magic: See It Happen!
+
+```
+Input: "Hello   how\tare\nyou?"
+
+Step 1: Scan char by char
+       H e l l o [   ] [   ] h o w [	] a r e [ \n ] y o u ?
+
+Step 2: Build words
+       current = "Hello" → space → save! → current = ""
+       current = "how"   → tab  → save! → current = ""
+       current = "are"   → \n   → save! → current = ""
+       current = "you?"  → end  → save!
+
+Step 3: Final words
+       ["Hello", "how", "are", "you?"]
+
+Output: []string{"Hello", "how", "are", "you?"}
+```
+
+---
+
+## Interactive Challenge for you! (Class Game Time!)
+
+### Game: "Human Word Chopper!"
+
+**Rules:**
+1. Teacher writes a messy string on the board:
+   ```
+   "Go\tis  fun\n  yes!"
+   ```
+2. Students **shout** the words one by one!
+3. First team to list **all 4 words** wins!
+
+**Answer:** `"Go"`, `"is"`, `"fun"`, `"yes!"`
+
+---
+
+## Why This Code Works (Line-by-Line Magic!)
+
+| Line | What It Does | Why It Matters |
+|------|-------------|----------------|
+| `words := []string{}` | Empty plate for words | Start fresh! |
+| `current := ""` | Current word being built | Like a basket |
+| `for _, char := range s` | Loop over **each letter** | We scan everything! |
+| `if char == ' ' || ...` | Is it a separator? | Yes → time to cut! |
+| `if current != ""` | Only save if we have a word | Avoid empty strings! |
+| `append(words, current)` | Add word to plate | Collect it! |
+| `current = ""` | Reset basket | Ready for next word |
+| `else` | Not a space? | Keep building word |
+| `current += string(char)` | Add letter | Grow the word |
+| Final `if current != ""` | Last word? | Don’t forget it! |
+
+---
+
+## Common Bugs & Fixes
+
+| Bug | Fix |
+|-----|-----|
+| Empty strings in result | Only `append` if `current != ""` |
+| Missing last word | Add final `if current != ""` |
+| Using `strings.Fields` | **BANNED!** (import needed) |
+| Using `strings.Split` | **BANNED!** |
+
+---
+
+## Summary: What You Learned!
+
+| Skill | You Mastered It! |
+|------|------------------|
+| Loops with `range` | Scan every character |
+| `rune` vs `string` | `char` is a `rune` |
+| `append()` | Grow slices dynamically |
+| Conditionals | `if char == ' '` etc. |
+| No imports! | Pure Go power! |
+
+---
+
+## Final Test: Can You Solve This?
+
+```go
+s := "  Go\tlang  \nrocks!  "
+// What does SplitWhiteSpaces return?
+```
+
+**Answer (shout it!):**
+```go
+[]string{"Go", "lang", "rocks!"}
+```
+
+> No leading/trailing spaces!  
+> No empty strings!
+
+---
+
+## Files to Submit
+
+**File:** `splitwhitespaces.go`
+
+```go
+package piscine
+
+func SplitWhiteSpaces(s string) []string {
+    words := []string{}
+    current := ""
+
+    for _, char := range s {
+        if char == ' ' || char == '\t' || char == '\n' {
+            if current != "" {
+                words = append(words, current)
+                current = ""
+            }
+        } else {
+            current += string(char)
+        }
+    }
+
+    if current != "" {
+        words = append(words, current)
+    }
+
+    return words
+}
+```
+
+---
+
+**Quest Complete!**  
+Now go run:
+
+```bash
+go run .
+```
+
+And see the magic:
+
+```go
+[]string{"Hello", "how", "are", "you?"}
+```
+
+---
