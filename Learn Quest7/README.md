@@ -1,6 +1,6 @@
 ### Task 1-Understanding the Problem
 
-Hi! I'm here to help you with this Go programming challenge. The task is to create a function called `AppendRange` that takes two numbers (integers): a starting number called `min` and an ending number called `max`. The function should give back a list (in Go, we call this a "slice") of all the whole numbers starting from `min` up to but not including `max`.
+The task is to create a function called `AppendRange` that takes two numbers (integers): a starting number called `min` and an ending number called `max`. The function should give back a list (in Go, we call this a "slice") of all the whole numbers starting from `min` up to but not including `max`.
 
 Imagine you're counting apples in a basket:
 - If min is 5 and max is 10, you count: 5, 6, 7, 8, 9 (that's 5 apples, stopping before 10).
