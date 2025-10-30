@@ -137,3 +137,243 @@ If you test it with the main function provided:
 - Then []
 
 Perfect match!
+
+---
+`makerange.go`
+
+### Challenge: `MakeRange(min, max int) []int`
+
+| Rule | What it means |
+|------|----------------|
+| `min` included | `min` goes into the slice |
+| `max` excluded | Stop **before** `max` |
+| `min >= max` | Return `nil` |
+| **Cannot use `append`** | No `append()` allowed! |
+| **Can use `make`** | We’re allowed to pre-create the slice |
+
+---
+
+## Final Solution 
+
+```go
+package piscine
+
+func MakeRange(min, max int) []int {
+	if min >= max {
+		return nil
+	}
+
+	// Step 1: Count how many numbers we need
+	size := max - min // e.g., 10 - 5 = 5 numbers: 5,6,7,8,9
+
+	// Step 2: Make a slice of exactly that size
+	result := make([]int, size)
+
+	// Step 3: Fill it one by one
+	for i := 0; i < size; i++ {
+		result[i] = min + i
+	}
+
+	return result
+}
+```
+
+---
+
+## Line-by-Line Explanation 
+
+Imagine you're building a **train with exactly the right number of cars** — no more, no less.
+
+---
+
+### 1. `package piscine`
+> This says: "This code belongs in the `piscine` folder."  
+> Like labeling your toy box: **"Piscine’s Toys"**
+
+---
+
+### 2. `func MakeRange(min, max int) []int {`
+> The function name is `MakeRange`.  
+> It takes two numbers: `min` and `max`.  
+> It returns a **train** (slice) of numbers.
+
+---
+
+### 3. `if min >= max { return nil }`
+> **Safety check!**  
+> If starting point is same or past the end → no train!  
+> Example: `min=10`, `max=5` → 10 is after 5 → return nothing.
+
+**Visual**:  
+```
+Start: 10    End: 5
+       X <--- can't go backwards!
+→ Return empty (nil)
+```
+
+---
+
+### 4. `size := max - min`
+> How many train cars do we need?
+
+| min | max | size |
+|-----|-----|------|
+| 5   | 10  | 5    |
+| 1   | 4   | 3    |
+| -2  | 1   | 3    |
+
+> So from 5 to 10 → **5 numbers**: 5,6,7,8,9
+
+**Visual**:  
+```
+min=5     max=10
+  ↓         ↓
+[5][6][7][8][9]  ← 5 cars
+```
+
+---
+
+### 5. `result := make([]int, size)`
+> This is the **magic**!  
+> `make` builds a slice with **exactly `size` empty slots**, all ready.
+
+**Before**:
+```
+result = [ _ _ _ _ _ ]  ← 5 empty boxes
+```
+
+**Visual**:  
+```
+[ ] [ ] [ ] [ ] [ ]  ← train cars waiting to be filled
+```
+
+---
+
+### 6. `for i := 0; i < size; i++ {`
+> Loop through each car (0 to 4)
+
+| i | What we do |
+|---|-----------|
+| 0 | Fill car 0 |
+| 1 | Fill car 1 |
+| ... | ... |
+| 4 | Fill car 4 |
+
+---
+
+### 7. `result[i] = min + i`
+> Put the **correct number** in each spot!
+
+| i | min + i | Put in result[i] |
+|---|--------|------------------|
+| 0 | 5 + 0 = 5 | → result[0] = 5 |
+| 1 | 5 + 1 = 6 | → result[1] = 6 |
+| 2 | 5 + 2 = 7 | → result[2] = 7 |
+| 3 | 5 + 3 = 8 | → result[3] = 8 |
+| 4 | 5 + 4 = 9 | → result[4] = 9 |
+
+**After loop**:
+```
+result = [5][6][7][8][9]
+```
+
+**Visual Train**:
+```
+[5] → [6] → [7] → [8] → [9]
+```
+
+---
+
+### 8. `return result`
+> Give back the fully loaded train!
+
+---
+
+## Test with Example
+
+```go
+fmt.Println(piscine.MakeRange(5, 10))  // [5 6 7 8 9]
+fmt.Println(piscine.MakeRange(10, 5))  // []
+```
+
+**Output**:
+```
+[5 6 7 8 9]
+[]
+```
+
+**Perfect!**
+
+---
+
+## Bonus: Negative Numbers?
+
+```go
+MakeRange(-2, 1)
+→ size = 1 - (-2) = 3
+→ [ -2, -1, 0 ]
+```
+
+**Visual**:
+```
+[-2] → [-1] → [0]
+```
+
+---
+
+## Summary Table
+
+| Input (min, max) | size | result |
+|------------------|------|--------|
+| 5, 10            | 5    | [5,6,7,8,9] |
+| 10, 5            | —    | nil → [] |
+| 0, 3             | 3    | [0,1,2] |
+| -1, 2            | 3    | [-1,0,1] |
+
+---
+
+## Key Difference from `AppendRange`
+
+| Feature         | `AppendRange`       | `MakeRange`         |
+|----------------|---------------------|---------------------|
+| Use `append`?  | YES                 | NO (not allowed)    |
+| Use `make`?    | NO (not allowed)    | YES                 |
+| How it grows   | Add one by one      | Pre-build full size |
+
+**Visual**:
+```
+AppendRange:  [] → [5] → [5,6] → [5,6,7]...
+MakeRange:    [ _ _ _ _ _ ] → fill → [5,6,7,8,9]
+```
+
+---
+
+## Final File: `makerange.go`
+
+```go
+package piscine
+
+func MakeRange(min, max int) []int {
+	if min >= max {
+		return nil
+	}
+	size := max - min
+	result := make([]int, size)
+	for i := 0; i < size; i++ {
+		result[i] = min + i
+	}
+	return result
+}
+```
+
+---
+
+**You did it!**  
+You now know **two ways** to make a range in Go:
+
+- `append` → build slowly
+- `make` → build all at once
+
+Like choosing between **adding bricks one by one** or **building the whole wall first and painting numbers**.
+
+---
