@@ -976,3 +976,915 @@ And see the magic:
 ```
 
 ---
+# `PrintWordsTables` 
+
+---
+
+**Quest Name:** `PrintWordsTables`  
+**Level:** 14 (Optional – Extra XP!)  
+**XP Reward:** 2.45 kB of Brain Power!  
+**Goal:** **Print each word on its own line** using **only `z01.PrintRune`**!  
+  
+Your mission? Take a **list of words** and **print them one per line** – like a magical typewriter!
+
+> **Allowed Magic:**  
+> - `z01.PrintRune` (to print **one letter at a time**)  
+> - `--allow-builtin`  
+> - **No `fmt.Println`!**  
+> - **No `strings` package!**
+
+---
+
+## The Magic Spell (Function) You Must Write
+
+```go
+func PrintWordsTables(a []string) {
+
+}
+```
+
+> **Your job:** Fill in the `{ }` so it **prints perfectly**!
+
+---
+
+## Let’s Break It Down – Line by Line (Super Simple!)
+
+| Line | Explanation | Fun Analogy |
+|------|-----------|-------------|
+| `func` | Start the spell | “Let’s cast PrintWords!” |
+| `PrintWordsTables` | Name of your function | **“WordPrinter 3000!”** |
+| `(a []string)` | Input: a **slice** of words | A **stack of note cards** |
+| `{ }` | Where the **printing happens** | The **typewriter station** |
+
+---
+
+## Example Input & Output (The Test!)
+
+```go
+a := piscine.SplitWhiteSpaces("Hello how are you?")
+piscine.PrintWordsTables(a)
+```
+
+**Output:**
+```
+Hello
+how
+are
+you?
+```
+
+> Each word on its **own line**!  
+> Powered by `z01.PrintRune`!
+
+---
+
+## What is `z01.PrintRune`?
+
+| Function | What It Does |
+|---------|---------------|
+| `z01.PrintRune('A')` | Prints **one letter** (`A`) |
+| `z01.PrintRune('\n')` | Prints a **newline** (line break) |
+
+> You are a **letter-by-letter printer**!
+
+---
+
+## Step-by-Step: How to Solve It (Like a Game!)
+
+Let’s play **"Typewriter Challenge"**!
+
+---
+
+### Level 1: Understand the Input
+
+```go
+a := []string{"Hello", "how", "are", "you?"}
+```
+
+| Index | Word |
+|-------|------|
+| 0 | "Hello" |
+| 1 | "how" |
+| 2 | "are" |
+| 3 | "you?" |
+
+---
+
+### Level 2: Print Each Word
+
+For **each word**:
+1. Print **each letter** using `z01.PrintRune`
+2. Print a **newline** `\n`
+
+---
+
+### Level 3: Loop Through Words & Letters
+
+```go
+for each word in a:
+    for each letter in word:
+        z01.PrintRune(letter)
+    z01.PrintRune('\n')
+```
+
+---
+
+## Final Working Code
+
+```go
+package piscine
+
+import "github.com/01-edu/z01"
+
+func PrintWordsTables(a []string) {
+    for _, word := range a {
+        for _, char := range word {
+            z01.PrintRune(char)
+        }
+        z01.PrintRune('\n')
+    }
+}
+```
+
+> **BOOM!** Quest Complete!  
+> **No `fmt`!**  
+> **Only `z01.PrintRune`!**
+
+---
+
+## Visual Magic: See It Happen!
+
+```
+Input: ["Hello", "how", "are", "you?"]
+
+Step 1: Loop over words
+       word = "Hello" → print H e l l o → \n
+       word = "how"   → print h o w     → \n
+       word = "are"   → print a r e     → \n
+       word = "you?"  → print y o u ?   → \n
+
+Output:
+Hello
+how
+are
+you?
+```
+
+---
+
+## Interactive Challenge for Students! (Class Game Time!)
+
+### Game: "Human Typewriter!"
+
+**Rules:**
+1. Teacher says a word: `"Go"`
+2. Students **shout** each letter **one by one**:
+   - Student 1: `G`
+   - Student 2: `o`
+   - Student 3: **NEWLINE!**
+3. Next word: `"lang"` → repeat!
+
+**Winner:** Team that prints **all words perfectly**!
+
+---
+
+## Why This Code Works (Line-by-Line Magic!)
+
+| Line | What It Does | Why It Matters |
+|------|-------------|----------------|
+| `for _, word := range a` | Loop over **each word** | Visit every note card |
+| `for _, char := range word` | Loop over **each letter** | Print one by one |
+| `z01.PrintRune(char)` | Print **one rune** | Like typing on a keyboard |
+| `z01.PrintRune('\n')` | **New line** after word | Each word gets its own line |
+
+---
+
+## Common Bugs & Fixes
+
+| Bug | Fix |
+|-----|-----|
+| No newline at end | You **want** it! (Each word on own line) |
+| Using `fmt.Println` | **BANNED!** |
+| Forgetting inner loop | Only prints first letter! |
+| Using `string(char)` | Wrong! `char` is already a `rune` |
+
+---
+
+## Summary: What You Learned!
+
+| Skill | You Mastered It! |
+|------|------------------|
+| Nested loops | `for` inside `for` |
+| `z01.PrintRune` | Print **one character** |
+| `rune` type | `char` in `range` = `rune` |
+| Slices | `[]string` = list of words |
+| No `fmt`! | Pure `z01` power! |
+
+---
+
+## Final Test: Can You Predict This?
+
+```go
+words := []string{"I", "love", "Go"}
+PrintWordsTables(words)
+```
+
+**Output (shout it!):**
+```
+I
+love
+Go
+```
+
+---
+
+## Badge Earned!
+
+```
+TYPEWRITER WIZARD – LEVEL 14
+"You print letters like a pro!"
+```
+
+---
+
+## Files to Submit
+
+**File:** `printwordstables.go`
+
+```go
+package piscine
+
+import "github.com/01-edu/z01"
+
+func PrintWordsTables(a []string) {
+    for _, word := range a {
+        for _, char := range word {
+            z01.PrintRune(char)
+        }
+        z01.PrintRune('\n')
+    }
+}
+```
+
+---
+
+**Quest Complete!**  
+Now go run:
+
+```bash
+go run .
+```
+
+And watch the magic:
+
+```
+Hello
+how
+are
+you?
+```
+
+---
+
+**Teacher Tip:**  
+> Always ask:  
+> - “How do I print **one letter**?” → `z01.PrintRune`  
+> - “How do I go to the **next line**?” → `'\n'`  
+> - “How do I visit **every word and letter**?” → **nested loops**  
+---
+# `Split` 
+---
+
+**Quest Name:** `Split`  
+**Level:** 14 (Optional – Extra XP!)  
+**XP Reward:** 3.06 kB of Brain Power!  
+**Goal:** **Chop a string into pieces** using a **custom separator** (like a magic knife)!  
+Your mission?  
+> Take a string and a **separator**, and **cut** the string **every time** the separator appears!
+
+> **Allowed Magic:**  
+> - `make`  
+> - `--allow-builtin`  
+> - **No `strings.Split`!**  
+> - **No imports!**
+
+---
+
+## The Magic Spell (Function) You Must Write
+
+```go
+func Split(s, sep string) []string {
+
+}
+```
+
+> **Your job:** Fill in the `{ }` so it **slices perfectly**!
+
+---
+
+## Let’s Break It Down – Line by Line (Super Simple!)
+
+| Line | Explanation | Fun Analogy |
+|------|-----------|-------------|
+| `func` | Start the spell | “Let the cutting begin!” |
+| `Split` | Name of your function | **“StringSlicer!”** |
+| `(s, sep string)` | Two inputs: **text** and **separator** | A **cake** and a **knife pattern** |
+| `[]string` | Output: **list of pieces** | **Plates of cake slices** |
+| `{ }` | Where the **slicing happens** | The **kitchen counter** |
+
+---
+
+## Example Input & Output (The Test!)
+
+```go
+s := "HelloHAhowHAareHAyou?"
+fmt.Printf("%#v\n", piscine.Split(s, "HA"))
+```
+
+**Output:**
+```go
+[]string{"Hello", "how", "are", "you?"}
+```
+
+> `"HA"` is the **separator**!  
+> Every time `"HA"` appears → **cut**!
+
+---
+
+## Visual Magic: See the Cuts!
+
+```
+Original: HelloHAhowHAareHAyou?
+
+Knife:    "HA"
+
+Cuts at:      ↑     ↑     ↑
+
+Result:   ["Hello", "how", "are", "you?"]
+```
+
+---
+
+## Step-by-Step: How to Solve It (Like a Game!)
+
+Let’s play **"Find the Knife!"**
+
+---
+
+### Level 1: Understand the Input
+
+```go
+s   = "HelloHAhowHAareHAyou?"
+sep = "HA"
+```
+
+We need to **find every `"HA"`** in `s` and **split there**.
+
+---
+
+### Level 2: Scan the String
+
+We’ll walk through `s` **character by character**, looking for **full matches** of `sep`.
+
+> Can’t just split on `'H'` or `'A'` — must be **both together**!
+
+---
+
+### Level 3: Use a Loop + Index Tracking
+
+```go
+result := []string{}
+start := 0
+
+for i := 0; i < len(s); i++ {
+    if i+len(sep) <= len(s) && s[i:i+len(sep)] == sep {
+        // Found separator!
+        word := s[start:i]
+        result = append(result, word)
+        i += len(sep) - 1  // Skip the separator
+        start = i + 1
+    }
+}
+
+// Don't forget the last piece!
+if start < len(s) {
+    result = append(result, s[start:])
+}
+```
+
+---
+
+## Final Working Code (The Spell is Complete!)
+
+```go
+package piscine
+
+func Split(s, sep string) []string {
+    result := []string{}
+    start := 0
+    seplen := len(sep)
+
+    for i := 0; i < len(s); i++ {
+        if seplen > 0 && i+seplen <= len(s) && s[i:i+seplen] == sep {
+            // Found full separator
+            word := s[start:i]
+            result = append(result, word)
+            i += seplen - 1 // Skip the entire sep
+            start = i + 1
+        }
+    }
+
+    // Add the last part
+    if start < len(s) {
+        result = append(result, s[start:])
+    }
+
+    return result
+}
+```
+
+> **BOOM!** Quest Complete!  
+> **No imports!**  
+> **Handles any separator!**
+
+---
+
+## Visual Step-by-Step (With Example!)
+
+```go
+s   = "HelloHAhowHAareHAyou?"
+sep = "HA"
+```
+
+| `i` | `s[i:i+2]` | Match? | Action |
+|-----|------------|--------|-------|
+| 0 | "He" | No | — |
+| 1 | "el" | No | — |
+| ... | ... | ... | ... |
+| 5 | "HA" | YES! | Cut: `"Hello"` → add to result |
+| 6 | "Ah" | No | — |
+| ... | ... | ... | ... |
+| 10 | "HA" | YES! | Cut: `"how"` |
+| 14 | "HA" | YES! | Cut: `"are"` |
+| 17 | "yo" | No | — |
+| End | — | — | Add last: `"you?"` |
+
+**Final result:** `["Hello", "how", "are", "you?"]`
+
+---
+
+## Interactive Challenge for Students! (Class Game Time!)
+
+### Game: "Knife Hunt!"
+
+**Rules:**
+1. Teacher writes: `AppleXXBananaXXCherry`
+2. Separator: `XX`
+3. Students **shout** the cuts:
+   - “Cut at position 5!”
+   - “Cut at position 12!”
+4. Final answer: `["Apple", "Banana", "Cherry"]`
+
+**Winner:** First team to get all pieces!
+
+---
+
+## Edge Cases (Boss Fights!)
+
+| Case | Input | Expected | Code Handles? |
+|------|-------|----------|---------------|
+| Empty string | `""`, `"HA"` | `[]` | YES |
+| No separator | `"Hello"`, `"HA"` | `["Hello"]` | YES |
+| Separator at start | `"HAHello"`, `"HA"` | `["", "Hello"]` | YES |
+| Separator at end | `"HelloHA"`, `"HA"` | `["Hello", ""]` | YES |
+| Multiple sep | `"HAHAA"`, `"HA"` | `["", "", "A"]` | YES |
+| Empty sep | `"abc"`, `""` | **Don’t crash!** | We check `seplen > 0` |
+
+---
+
+## Why This Code Works (Line-by-Line Magic!)
+
+| Line | What It Does | Why It Matters |
+|------|-------------|----------------|
+| `result := []string{}` | Empty list | Start collecting pieces |
+| `start := 0` | Where current word begins | Track start of slice |
+| `seplen := len(sep)` | Length of separator | Avoid recalculating |
+| `i+seplen <= len(s)` | Bounds check | Prevent panic |
+| `s[i:i+seplen] == sep` | Full match? | Only split on **exact** sep |
+| `i += seplen - 1` | Skip entire sep | Don’t recheck same letters |
+| Final `if start < len(s)` | Last piece | Don’t forget it! |
+
+---
+
+## Summary: What You Learned!
+
+| Skill | You Mastered It! |
+|------|------------------|
+| String slicing | `s[i:j]` |
+| Bounds checking | `i+len <= len(s)` |
+| Index tracking | `start` and `i` |
+| `append()` | Grow slice |
+| Edge cases | Empty, start/end, multiple |
+| No imports! | Pure Go! |
+
+---
+
+## Final Test: Can You Predict This?
+
+```go
+Split("++A++B++", "++")
+```
+
+**Answer (shout it!):**
+```go
+[]string{"", "A", "B", ""}
+```
+
+> Empty at start, middle, and end!
+
+---
+
+## Badge Earned!
+
+```
+STRING SLICER MASTER – LEVEL 14
+"You cut strings like a sushi chef!"
+```
+
+---
+
+## Files to Submit
+
+**File:** `split.go`
+
+```go
+package piscine
+
+func Split(s, sep string) []string {
+    result := []string{}
+    start := 0
+    seplen := len(sep)
+
+    for i := 0; i < len(s); i++ {
+        if seplen > 0 && i+seplen <= len(s) && s[i:i+seplen] == sep {
+            word := s[start:i]
+            result = append(result, word)
+            i += seplen - 1
+            start = i + 1
+        }
+    }
+
+    if start < len(s) {
+        result = append(result, s[start:])
+    }
+
+    return result
+}
+```
+
+---
+
+**Quest Complete!**  
+Now go run:
+
+```bash
+go run .
+```
+
+And see the magic:
+
+```go
+[]string{"Hello", "how", "are", "you?"}
+```
+
+---
+
+**Teacher Tip:**  
+> Always ask:  
+> - “Where does the **separator start**?”  
+> - “Did I **skip** the whole separator?”  
+> - “Did I add the **last piece**?”  
+---
+# `ConvertBase` 
+
+---
+
+**Quest Name:** `ConvertBase`  
+**Level:** 14 (BONUS – Ultimate XP!)  
+**XP Reward:** 3.67 kB of Brain Power!  
+**Goal:** **Transform numbers from ANY base to ANY base** – like a **number wizard**!  
+
+Your mission?  
+> Take a number in **one base** (like binary `101011`)  
+> Convert it to **another base** (like decimal `43`)  
+> **No negative numbers**  
+> **Only valid bases**
+
+> **Allowed Magic:**  
+> - `--allow-builtin`  
+> - **No imports!**  
+> - **No `strconv`**  
+> - **Pure Go logic only!**
+
+---
+
+## The Magic Spell (Function) You Must Write
+
+```go
+func ConvertBase(nbr, baseFrom, baseTo string) string {
+
+}
+```
+
+> **Your job:** Fill in the `{ }` so it **transmutes perfectly**!
+
+---
+
+## Let’s Break It Down – Line by Line (Super Simple!)
+
+| Line | Explanation | Fun Analogy |
+|------|-----------|-------------|
+| `func` | Start the spell | “Let the alchemy begin!” |
+| `ConvertBase` | Name of your function | **“BaseTransmuter!”** |
+| `(nbr, baseFrom, baseTo string)` | 3 inputs | **Potion**, **Old Flask**, **New Flask** |
+| `string` | Output: number in **new base** | **Final Elixir** |
+| `{ }` | Where the **conversion happens** | The **cauldron** |
+
+---
+
+## Example Input & Output (The Test!)
+
+```go
+result := piscine.ConvertBase("101011", "01", "0123456789")
+fmt.Println(result)
+```
+
+**Output:**
+```
+43
+```
+
+> `"101011"` in **base 2 (binary)** → `43` in **base 10 (decimal)**!
+
+---
+
+## The 3-Step Alchemy Formula
+
+| Step | Name | What You Do |
+|------|------|-------------|
+| 1 | **Parse** | Turn `nbr` (in `baseFrom`) → **decimal** |
+| 2 | **Convert** | Turn **decimal** → `baseTo` |
+| 3 | **Return** | Give back as **string** |
+
+---
+
+## Step 1: Parse – From Any Base → Decimal
+
+```go
+value := 0
+for each digit in nbr:
+    value = value * len(baseFrom) + position_of(digit)
+```
+
+### Example: `"101011"` in base `"01"`
+
+| Digit | Position in `"01"` | Calculation |
+|-------|---------------------|-----------|
+| `1` | 1 | `0*2 + 1 = 1` |
+| `0` | 0 | `1*2 + 0 = 2` |
+| `1` | 1 | `2*2 + 1 = 5` |
+| `0` | 0 | `5*2 + 0 = 10` |
+| `1` | 1 | `10*2 + 1 = 21` |
+| `1` | 1 | `21*2 + 1 = 43` |
+
+→ **Decimal = 43**
+
+---
+
+## Step 2: Convert – From Decimal → Any Base
+
+```go
+result := ""
+while value > 0:
+    digit = value % len(baseTo)
+    result = baseTo[digit] + result
+    value = value / len(baseTo)
+```
+
+### Example: `43` → base `"0123456789"`
+
+| Step | `value` | `digit = 43 % 10` | `baseTo[digit]` | `result` |
+|------|--------|-------------------|------------------|----------|
+| 1 | 43 | 3 | `'3'` | `"3"` |
+| 2 | 4 | 4 | `'4'` | `"43"` |
+| 3 | 0 | — | — | **Done!** |
+
+→ **Result = `"43"`**
+
+---
+
+## Final Working Code
+
+```go
+package piscine
+
+func ConvertBase(nbr, baseFrom, baseTo string) string {
+    // Step 1: Parse to decimal
+    decimal := 0
+    for i := 0; i < len(nbr); i++ {
+        digit := nbr[i]
+        pos := 0
+        for j := 0; j < len(baseFrom); j++ {
+            if baseFrom[j] == digit {
+                pos = j
+                break
+            }
+        }
+        decimal = decimal*len(baseFrom) + pos
+    }
+
+    // Step 2: Convert decimal to baseTo
+    if decimal == 0 {
+        return "0"
+    }
+
+    result := ""
+    for decimal > 0 {
+        digit := decimal % len(baseTo)
+        result = string(baseTo[digit]) + result
+        decimal /= len(baseTo)
+    }
+
+    return result
+}
+```
+
+> **BOOM!** Quest Complete!  
+> **No imports!**  
+> **Works for ANY valid base!**
+
+---
+
+## Visual Magic: Full Conversion Flow
+
+```
+Input:
+nbr       = "101011"
+baseFrom  = "01"        (base 2)
+baseTo    = "0123456789" (base 10)
+
+Step 1: Parse → Decimal
+"1" → 1
+"0" → 0 ×2 +1 = 2
+"1" → 1 ×2 +0 = 5
+"0" → 0 ×2 +1 = 10
+"1" → 1 ×2 +0 = 21
+"1" → 1 ×2 +1 = 43
+
+Step 2: Convert 43 → base 10
+43 % 10 = 3 → '3'
+43 / 10 = 4
+4  % 10 = 4 → '4'
+4  / 10 = 0 → stop
+
+Result: "43"
+```
+
+---
+
+## Interactive Challenge for you (Class Game Time!)
+
+### Game: "Base Wizard Duel!"
+
+**Rules:**
+1. Teacher says: `Convert "FF" from "0123456789ABCDEF" to "0123456789"`
+2. Students **race** to shout:
+   - Step 1: `"FF" = 15×16 + 15 = 255`
+   - Step 2: `255 → 2×100 + 5×10 + 5 = "255"`
+3. First correct answer wins a **potion**!
+
+---
+
+## Edge Cases (Boss Fights!)
+
+| Case | Input | Expected | Code Handles? |
+|------|-------|----------|---------------|
+| Zero | `"0"`, any bases | `"0"` | YES |
+| Base 2 → 16 | `"1111"`, `"01"`, `"0123456789ABCDEF"` | `"F"` | YES |
+| Base 10 → 2 | `"10"`, `"0123456789"`, `"01"` | `"1010"` | YES |
+| Single digit | `"A"`, `"0123456789ABCDEF"`, `"0123456789"` | `"10"` | YES |
+
+---
+
+## Why This Code Works 
+
+| Line | What It Does | Why It Matters |
+|------|-------------|----------------|
+| `decimal := 0` | Start at zero | Clean slate |
+| Outer loop | Go through each digit | Left to right |
+| Inner loop | Find digit position | `baseFrom[j] == digit` |
+| `decimal = decimal*len + pos` | **Horner’s method** | Efficient parsing |
+| `if decimal == 0` | Special case | Return `"0"` |
+| `decimal % len(baseTo)` | Get digit | Remainder |
+| `string(baseTo[digit])` | Get symbol | `'A'`, `'B'`, etc. |
+| Prepend | `result = char + result` | Build **right to left** |
+
+---
+
+## Summary: What You Learned!
+
+| Skill | You Mastered It! |
+|------|------------------|
+| Base conversion | Any → Decimal → Any |
+| String indexing | `baseFrom[j]` |
+| Nested loops | Find digit position |
+| Modulo & division | `%` and `/` |
+| String building | `+` prepend |
+| Edge cases | Zero, single digit |
+
+---
+
+## Final Test: Can You Solve This?
+
+```go
+ConvertBase("1010", "01", "0123456789ABCDEF")
+```
+
+**Answer (shout it!):**
+```
+A
+```
+
+> `1010` in binary = `10` in decimal = `A` in hex!
+
+---
+
+## Badge Earned!
+
+```
+BASE ALCHEMIST SUPREME – LEVEL 14
+"You transmute numbers like a god!"
+```
+
+---
+
+## Files to Submit
+
+**File:** `convertbase.go`
+
+```go
+package piscine
+
+func ConvertBase(nbr, baseFrom, baseTo string) string {
+    // Step 1: Parse to decimal
+    decimal := 0
+    for i := 0; i < len(nbr); i++ {
+        digit := nbr[i]
+        pos := 0
+        for j := 0; j < len(baseFrom); j++ {
+            if baseFrom[j] == digit {
+                pos = j
+                break
+            }
+        }
+        decimal = decimal*len(baseFrom) + pos
+    }
+
+    // Step 2: Convert to baseTo
+    if decimal == 0 {
+        return "0"
+    }
+
+    result := ""
+    for decimal > 0 {
+        digit := decimal % len(baseTo)
+        result = string(baseTo[digit]) + result
+        decimal /= len(baseTo)
+    }
+
+    return result
+}
+```
+
+---
+
+**Quest Complete!**  
+Now go run:
+
+```bash
+go run .
+```
+
+And see the magic:
+
+```
+43
+```
+
+---
+
+**Teacher Tip:**  
+> Always ask:  
+> - “How do I **read** the number?” → **Parse to decimal**  
+> - “How do I **write** the number?” → **Divide & mod**  
+> - “What if it’s **zero**?” → **Special case!**  
