@@ -251,8 +251,11 @@ If `nb` = 0 or `nb` = 1 → factorial is **1**.
 If `nb` < 0 → return **0** (invalid).
 
 ---
+Alright 😊 let’s go **line by line** and explain it **like I’m teaching a 10-year-old**.
 
-### ✅ Final Code (`recursivefactorial.go`)
+---
+
+### 🧩 The full code:
 
 ```go
 package piscine
@@ -272,21 +275,104 @@ func RecursiveFactorial(nb int) int {
 
 ---
 
-### 🧪 Test Program (`main.go`)
+### 👣 Line-by-line explanation: of the code (practice by typing along)
 
-```go
-package main
+#### 🟢 `package piscine`
 
-import (
-	"fmt"
-	"piscine"
-)
+* This line just says:
+  “Hey Go! This file belongs to a group of files called **piscine**.”
+  Think of it like putting your toy inside a box labeled *piscine* so Go knows where it belongs.
 
-func main() {
-	arg := 4
-	fmt.Println(piscine.RecursiveFactorial(arg)) // expected: 24
-}
-```
+---
+
+#### 🟢 `// RecursiveFactorial returns the factorial of nb using recursion.`
+
+#### 🟢 `// If nb < 0 or too large, it returns 0.`
+
+* These are **comments** (they start with `//`), meaning they’re just notes for humans.
+  Go ignores them when running the program.
+  They explain what the function does — it finds the **factorial** of a number.
+
+---
+
+#### 🟢 `func RecursiveFactorial(nb int) int {`
+
+* This line starts a **function** named `RecursiveFactorial`.
+* It takes **one input** called `nb` (which is an integer).
+* It will **give back** (or *return*) another integer after doing its job.
+
+So:
+🗣️ “Hey, I’m a function that takes a number and gives back its factorial!”
+
+---
+
+#### 🟢 `if nb < 0 || nb > 20 { // prevent overflow`
+
+* This line checks:
+  👉 “Is the number less than 0 OR bigger than 20?”
+* The `||` means **OR**.
+* Why? Because factorial grows *super fast*, and very big numbers can break Go’s brain (called *overflow*).
+* If it’s smaller than 0 or too large (more than 20), we stop right there.
+
+---
+
+#### 🟢 `return 0`
+
+* If that “bad” situation happens, we just give back **0** to say,
+  “Sorry, I can’t handle that number!”
+
+---
+
+#### 🟢 `if nb == 0 || nb == 1 { // base case`
+
+* Now we check another thing:
+  👉 “Is the number 0 or 1?”
+* If yes, we stop the repeating process (called recursion) because we know:
+
+  * 0! = 1
+  * 1! = 1
+
+This is called the **base case** — it’s like the stop sign in a loop.
+
+---
+
+#### 🟢 `return 1`
+
+* If the number was 0 or 1, we just return 1 and end there.
+
+---
+
+#### 🟢 `return nb * RecursiveFactorial(nb-1)`
+
+* This is the **magic recursive part** ✨
+  It means:
+  “Take this number and multiply it by the factorial of the number just before it.”
+
+Let’s see it in action 👇
+
+Example:
+If you call `RecursiveFactorial(4)`
+→ It does
+`4 * RecursiveFactorial(3)`
+→ which becomes
+`4 * (3 * RecursiveFactorial(2))`
+→ which becomes
+`4 * (3 * (2 * RecursiveFactorial(1)))`
+→ and we already know `RecursiveFactorial(1)` = 1
+→ So it’s `4 * 3 * 2 * 1 = 24`
+
+🎉 The factorial of 4 is **24**!
+
+---
+
+### 🧠 Summary in simple words:
+
+| Step | What it checks/does                                    | Example        |
+| ---- | ------------------------------------------------------ | -------------- |
+| 1    | If number < 0 or > 20 → return 0                       | 25 → returns 0 |
+| 2    | If number is 0 or 1 → return 1                         | 1 → returns 1  |
+| 3    | Otherwise multiply number by factorial of (number - 1) | 5 → 5×4×3×2×1  |
+
 
 ---
 
