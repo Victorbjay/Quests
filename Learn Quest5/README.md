@@ -606,11 +606,6 @@ $ go run .
 * `compare.go`
 
 ---
-Perfect ✅ Got it — we’ll keep using the **Go Learning Log format** (with full documentation, explanations, diagrammatic step-by-step visual of code flow, and example output).
-
-Here’s your **Go Learning Log entry for `AlphaCount`** 👇
-
----
 
 ## 🧩 `AlphaCount`**
 
@@ -722,18 +717,6 @@ func main() {
 * **Runes** represent Unicode characters (not just bytes).
 * Checking ASCII ranges ensures only **Latin letters** are counted.
 * Efficient since it loops only once through the string.
-
----
-
-Would you like me to include **a mini ASCII diagram** showing ASCII ranges (`A–Z` = 65–90, `a–z` = 97–122`) at the end of each similar exercise for quick reference?
-
-Perfect ✅ — we’ll go **back to your preferred full learning format**, where I:
-1️⃣ Explain what the task means in simple English
-2️⃣ Build it step by step (like teaching)
-3️⃣ Add a **visual illustration** of how the code runs (with loops and variable updates)
-4️⃣ Then finish with the **final full code** and **file to submit** last.
-
-Let’s redo the `Index` task exactly like that 👇
 
 ---
 
@@ -937,11 +920,6 @@ $ go run .
 
 ---
 
-Would you like me to continue this same deep-visual format with the next task (`Concat`)?
-Perfect 😎 Let’s go through this **step-by-step, visual, beginner-friendly** like our previous Go lessons — you’ll understand **exactly how `Concat` works** from inside out.
-
----
-
 ## 🧩 Task Name: `Concat`
 
 ---
@@ -1097,9 +1075,6 @@ Hello! How are you?
 ### 🗂️ File to Submit
 
 > ✅ **concat.go**
-
----
-Perfect 👏 Let’s break this **Go Lang `IsUpper` task** down like we always do — with full explanation, diagram-style visualization, and example testing.
 
 ---
 
@@ -1271,9 +1246,6 @@ false
 > ✅ **isupper.go**
 
 ---
-Perfect 😎 — now let’s continue your Go learning journey with **`IsLower`**, using the *same step-by-step + visualization* style you requested!
-
----
 
 ## 🧩 Task Name: `IsLower`
 
@@ -1434,10 +1406,6 @@ false
 
 > ✅ **islower.go**
 
----
-Excellent 👏 We’re now moving into **Level 12’s** `IsAlpha` — a slightly more interesting function that combines what we learned in **IsLower**, **IsUpper**, and a bit more logic!
-
-Let’s walk through it step-by-step, visually, and in full beginner-friendly detail.
 
 ---
 
@@ -1625,15 +1593,7 @@ true
 ## 🗂️ File to Submit
 
 > ✅ **isalpha.go**
-
 ---
-
-Perfect 👍 We’re moving smoothly through Level 12 — this time with **`IsNumeric`**, a close cousin of `IsAlpha`, but much simpler to reason about!
-
-Let’s go through it in your preferred **detailed documentation format** — full explanation, line-by-line logic, and visual walkthrough 👇
-
----
-
 ## 🧩 Task Name: `IsNumeric`
 
 ---
@@ -1801,12 +1761,7 @@ true
 
 ---
 
-Perfect 🧩
-We’re now on **Level 13 — `IsPrintable`**, one of the easiest to understand *conceptually*, but quite powerful in text validation.
 
-Let’s go through it in our **standard learning + visualization format** — full explanation, line-by-line logic, and examples 👇
-
----
 
 ## 🧩 Task Name: `IsPrintable`
 
@@ -1985,12 +1940,6 @@ false
 
 > ✅ **isprintable.go**
 
----
-
-Perfect 👏 We’re moving deeper into **string transformations** now — specifically the `ToUpper` function, which converts lowercase letters into uppercase.
-
-Let’s follow our complete learning pattern again:
-**concept → logic → visualization → code → test → explanation of output → file to submit.**
 
 ---
 
@@ -2166,11 +2115,6 @@ GOPHERS 2025!
 ## 🗂️ File to Submit
 
 > ✅ **toupper.go**
-
----
-
-Perfect 👏 You’re now doing the **ToLower** task — it’s the *opposite* of `ToUpper`.
-We’ll follow the same learning pattern again: **concept → step-by-step logic → code → visualization → test → output**.
 
 ---
 
