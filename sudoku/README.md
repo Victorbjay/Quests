@@ -653,3 +653,138 @@ A: No — match the expected format: exactly 9 lines, each containing `9` number
 
 ---
 
+## 🧩 1️⃣ How to Run the Sudoku Solver Program on your own
+
+You’ll be working in a Go environment (like VS Code, terminal, or online Go playground that supports packages).
+
+Make sure your file structure looks like this:
+
+```
+sudoku/ # This is the folder already cloned from the group leader's repo
+ ├── main.go
+ └── piscine/
+     └── sudoku.go
+```
+
+Inside `main.go`, you have your `package main` and it calls the Sudoku solver (that’s where your full code from the first response goes).
+
+---
+
+## 🧠 2️⃣ How to Execute It
+
+In your terminal, move into the project folder:
+
+```bash
+cd sudoku
+```
+
+Then run the program with **9 arguments** — each representing one Sudoku row.
+Example (the dots `.` are empty spaces):
+
+```bash
+go run . ".96.4...1" "1...6...4" "5.481.39." "..795..43" ".3..8...." "4.5.23.18" ".1.63..59" ".59.7.83." "..359...7"
+```
+
+---
+
+## 🧾 3️⃣ Expected Output (for a valid Sudoku)
+
+If the Sudoku is **valid** and solvable, you should see this (each number separated by spaces):
+
+```
+3 9 6 2 4 5 7 8 1
+1 7 8 3 6 9 5 2 4
+5 2 4 8 1 7 3 9 6
+2 8 7 9 5 1 6 4 3
+9 3 1 4 8 6 2 7 5
+4 6 5 7 2 3 9 1 8
+7 1 2 6 3 8 4 5 9
+6 5 9 1 7 4 8 3 2
+8 4 3 5 9 2 1 6 7
+```
+
+✅ This means your Sudoku was solved successfully.
+
+---
+
+## 🚫 4️⃣ Expected Output for Invalid Input
+
+If you make a mistake (for example, not 9 rows, invalid characters, or conflicting numbers), you should get:
+
+```
+Error
+```
+
+Example tests:
+
+```bash
+go run . 1 2 3 4
+```
+
+Output:
+
+```
+Error
+```
+
+or
+
+```bash
+go run .
+```
+
+Output:
+
+```
+Error
+```
+
+or if two of the same numbers exist in the same row/column:
+
+```bash
+go run . ".96.4...1" "1...6.1.4" "5.481.39." "..795..43" ".3..8...." "4.5.23.18" ".1.63..59" ".59.7.83." "..359...7"
+```
+
+Output:
+
+```
+Error
+```
+
+---
+
+## 🧩 5️⃣ Quick Practical Visualization (for Memory Retention)
+
+Think of Sudoku like a **9×9 classroom grid** where:
+
+* Each row = a row of chairs 🪑🪑🪑
+* Each column = a vertical line of students
+* Each 3×3 block = a smaller group of 9 students
+
+Your task (the algorithm) is like a teacher walking through the classroom:
+
+1. 👀 Check who’s sitting (the numbers already filled in).
+2. ✏️ Find an empty chair (`.`).
+3. 🧠 Try numbers 1–9 in that chair:
+
+   * If no one else in the row, column, or small group already has that number — it’s okay to sit there.
+4. If the teacher reaches a mistake (someone else has the same number):
+
+   * 🧹 Erase it (backtrack).
+   * Try the next possible number.
+
+When all chairs are filled — Sudoku solved 🎉.
+
+---
+
+## 🧩 6️⃣ Common Beginner Questions
+
+| Question                               | Simple Explanation                                                                                                                                 |
+| -------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Why do we use recursion?**           | Because Sudoku is a step-by-step trial process — recursion “remembers” the previous steps and backtracks automatically when something doesn’t fit. |
+| **Why check 3×3 subgrids separately?** | Sudoku rules say each smaller 3×3 box must also have unique numbers (1–9).                                                                         |
+| **Why dots `.` for blanks?**           | Dots make it easier to read and pass as strings; they mean “empty cell.”                                                                           |
+| **Why print with spaces?**             | To make the grid clean and human-readable.                                                                                                         |
+| **Why print `Error` sometimes?**       | To warn that either your input was invalid or the Sudoku can’t be solved.                                                                          |
+
+---
