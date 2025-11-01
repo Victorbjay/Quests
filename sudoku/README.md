@@ -370,8 +370,10 @@ END
 <img width="1024" height="1536" alt="image" src="https://github.com/user-attachments/assets/b60d8c6f-a665-44b4-8104-2d86a1ae5a03" />
 
 
-copy and paste this in your browser to watch along this on youtube `https://youtu.be/6fS0srk4dH4?si=IxCsBVAJorTF2waw`
+copy and paste this in your browser to watch along this on youtube 
 ---
+https://youtu.be/6fS0srk4dH4?si=IxCsBVAJorTF2waw
+
 Great — this is the fun part. 
 
 # 1) Quick summary of the task (one-liner)
@@ -379,7 +381,8 @@ Great — this is the fun part.
 Write a program that takes **nine command-line strings** (each length 9, characters `1`–`9` or `.` for empty), validates them, solves the Sudoku by backtracking, ensures the solution is **unique**, prints the 9×9 solved grid (numbers separated by single spaces, one row per line) — or prints `Error` for any invalid input or if the puzzle is unsolvable or has more than one solution.
 
 # 2) Full, ready-to-run `main.go`
-sudoku/ # This is the folder already cloned from the group leader's repo
+
+sudoku/ # This is the folder already cloned from the group leader's repo 
  ├── main.go
  └─go.mod
      
