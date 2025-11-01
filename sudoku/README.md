@@ -370,7 +370,7 @@ END
 <img width="1024" height="1536" alt="image" src="https://github.com/user-attachments/assets/b60d8c6f-a665-44b4-8104-2d86a1ae5a03" />
 
 
-
+copy and paste this in your browser to watch along this on youtube `https://youtu.be/6fS0srk4dH4?si=IxCsBVAJorTF2waw`
 ---
 Great — this is the fun part. 
 
