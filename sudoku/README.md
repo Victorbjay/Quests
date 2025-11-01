@@ -655,6 +655,8 @@ A: No — match the expected format: exactly 9 lines, each containing `9` number
 
 ## 🧱 Project Folder Structure
 
+
+
 ```
 sudoku/
 │
@@ -664,7 +666,10 @@ sudoku/
 ├── go.mod             ← (optional) Go module file if needed
 
 ```
-
+```bash
+cd piscine
+go mod init piscine
+```
 ---
 
 ### 🔹 1. `main.go` — Main Program (Entry Point)
