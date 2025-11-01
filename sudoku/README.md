@@ -666,10 +666,6 @@ sudoku/
 ├── go.mod             ← (optional) Go module file if needed
 
 ```
-```bash
-cd piscine
-go mod init piscine
-```
 ---
 
 ### 🔹 1. `main.go` — Main Program (Entry Point)
