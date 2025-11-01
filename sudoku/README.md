@@ -787,4 +787,216 @@ When all chairs are filled — Sudoku solved 🎉.
 | **Why print with spaces?**             | To make the grid clean and human-readable.                                                                                                         |
 | **Why print `Error` sometimes?**       | To warn that either your input was invalid or the Sudoku can’t be solved.                                                                          |
 
+
+
 ---
+
+## 🧱 Project Folder Structure
+
+```
+sudoku/
+│
+├── main.go          ← main program (entry point)
+├── piscine/
+│   └── sudoku.go      ← contains the Sudoku solver logic (functions)
+├── go.mod             ← (optional) Go module file if needed
+
+```
+
+---
+
+### 🔹 1. `sudoku.go` — Main Program (Entry Point)
+
+This file handles:
+
+* Reading command-line input (the 9 rows)
+* Validating that there are 9 arguments
+* Passing the puzzle to the solver
+* Printing the solved Sudoku or an error
+
+Here’s the **full beginner-friendly version**:
+
+```go
+package main
+
+import (
+	"fmt"
+	"os"
+	"sudoku/piscine" // import your solver package
+)
+
+func main() {
+	// Check if we have exactly 9 arguments (rows of the Sudoku)
+	if len(os.Args) != 10 {
+		fmt.Println("Error")
+		return
+	}
+
+	// Create a 9x9 Sudoku grid
+	var grid [9][9]int
+	for i := 0; i < 9; i++ {
+		row := os.Args[i+1]
+		if len(row) != 9 {
+			fmt.Println("Error")
+			return
+		}
+
+		for j := 0; j < 9; j++ {
+			if row[j] == '.' {
+				grid[i][j] = 0 // empty cell
+			} else if row[j] >= '1' && row[j] <= '9' {
+				grid[i][j] = int(row[j] - '0')
+			} else {
+				fmt.Println("Error")
+				return
+			}
+		}
+	}
+
+	// Solve Sudoku using the piscine package
+	if piscine.SolveSudoku(&grid) {
+		piscine.PrintSudoku(grid)
+	} else {
+		fmt.Println("Error")
+	}
+}
+```
+
+---
+
+### 🔹 2. `piscine/sudoku.go` — The Solver Logic
+
+This file contains:
+
+* The `isValid` checker function
+* The recursive `SolveSudoku` function (the “brain”)
+* The `PrintSudoku` helper to print the result nicely
+
+```go
+package piscine
+
+import "fmt"
+
+// Checks if placing num in grid[row][col] is allowed
+func isValid(grid *[9][9]int, row, col, num int) bool {
+	for i := 0; i < 9; i++ {
+		// Check row and column
+		if grid[row][i] == num || grid[i][col] == num {
+			return false
+		}
+	}
+
+	// Check 3x3 subgrid
+	startRow := (row / 3) * 3
+	startCol := (col / 3) * 3
+	for i := startRow; i < startRow+3; i++ {
+		for j := startCol; j < startCol+3; j++ {
+			if grid[i][j] == num {
+				return false
+			}
+		}
+	}
+	return true
+}
+
+// Recursive backtracking Sudoku solver
+func SolveSudoku(grid *[9][9]int) bool {
+	for row := 0; row < 9; row++ {
+		for col := 0; col < 9; col++ {
+			if grid[row][col] == 0 { // empty cell
+				for num := 1; num <= 9; num++ {
+					if isValid(grid, row, col, num) {
+						grid[row][col] = num
+						if SolveSudoku(grid) {
+							return true
+						}
+						grid[row][col] = 0 // backtrack
+					}
+				}
+				return false // no valid number found
+			}
+		}
+	}
+	return true // solved
+}
+
+// Prints the Sudoku grid
+func PrintSudoku(grid [9][9]int) {
+	for i := 0; i < 9; i++ {
+		for j := 0; j < 9; j++ {
+			fmt.Print(grid[i][j])
+			if j != 8 {
+				fmt.Print(" ")
+			}
+		}
+		fmt.Println()
+	}
+}
+```
+
+---
+
+### 🧠 How It Works (Recap)
+
+* **`sudoku.go`**: Handles input, validation, and prints results.
+* **`piscine/sudoku.go`**: Contains the **logic** — recursion, validation, and printing.
+---
+
+### 🧩 How to Run the Program
+
+#### 1️⃣ In your terminal:
+
+```bash
+cd sudoku
+```
+
+#### 2️⃣ Run with a valid Sudoku input:
+
+```bash
+go run . ".96.4...1" "1...6...4" "5.481.39." "..795..43" ".3..8...." "4.5.23.18" ".1.63..59" ".59.7.83." "..359...7"
+```
+
+#### 3️⃣ ✅ Expected Output:
+
+```
+3 9 6 2 4 5 7 8 1
+1 7 8 3 6 9 5 2 4
+5 2 4 8 1 7 3 9 6
+2 8 7 9 5 1 6 4 3
+9 3 1 4 8 6 2 7 5
+4 6 5 7 2 3 9 1 8
+7 1 2 6 3 8 4 5 9
+6 5 9 1 7 4 8 3 2
+8 4 3 5 9 2 1 6 7
+```
+
+---
+
+### ⚠️ Error Cases
+
+Try these to understand error handling:
+
+```bash
+go run . ".96.4...1" "1...6.1.4" "5.481.39." "..795..43" ".3..8...." "4.5.23.18" ".1.63..59" ".59.7.83." "..359...7"
+```
+
+👉 Output:
+
+```
+Error
+```
+
+Or if you pass less/more arguments:
+
+```bash
+go run . 1 2 3 4
+```
+
+👉 Output:
+
+```
+Error
+```
+
+---
+
