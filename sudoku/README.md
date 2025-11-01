@@ -379,7 +379,11 @@ Great — this is the fun part.
 Write a program that takes **nine command-line strings** (each length 9, characters `1`–`9` or `.` for empty), validates them, solves the Sudoku by backtracking, ensures the solution is **unique**, prints the 9×9 solved grid (numbers separated by single spaces, one row per line) — or prints `Error` for any invalid input or if the puzzle is unsolvable or has more than one solution.
 
 # 2) Full, ready-to-run `main.go`
-
+sudoku/ # This is the folder already cloned from the group leader's repo
+ ├── main.go
+ └─go.mod
+     
+```
 Save this file as `main.go` in your project root. It handles parsing, validation, solving, uniqueness checking, printing, and error output exactly as required.
 
 ```go
@@ -653,7 +657,7 @@ A: No — match the expected format: exactly 9 lines, each containing `9` number
 
 ---
 
-## 🧱 Project Folder Structure
+## 🧱 Project Folder Structure if you want to separate the main folder from the functions in piscine
 
 
 
@@ -663,7 +667,7 @@ sudoku/
 ├── main.go          ← main program (entry point)
 ├── piscine/
 │   └── sudoku.go      ← contains the Sudoku solver logic (functions)
-├── go.mod             ← (optional) Go module file if needed
+├── go.mod             ← from `go mod init piscine`
 
 ```
 ---
@@ -677,7 +681,7 @@ This file handles:
 * Passing the puzzle to the solver
 * Printing the solved Sudoku or an error
 
-Here’s the **full beginner-friendly version**:
+Here’s the `main.go`
 
 ```go
 package main
@@ -862,22 +866,6 @@ Error
 ```
 
 ---
-
-OR THIS 
-## 🧩 1️⃣ How to Run the Sudoku Solver Program on your own
-
-You’ll be working in a Go environment (like VS Code, terminal, or online Go playground that supports packages).
-
-Make sure your file structure looks like this:
-
-```
-sudoku/ # This is the folder already cloned from the group leader's repo
- ├── main.go
- └── piscine/
-     └── sudoku.go
-```
-
-Inside `main.go`, you have your `package main` and it calls the Sudoku solver (that’s where your full code from the first response goes).
 
 ---
 
