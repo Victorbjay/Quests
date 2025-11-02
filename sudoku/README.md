@@ -386,8 +386,8 @@ sudoku/ # This is the folder already cloned from the group leader's repo
  ├── main.go
  └─go.mod
      
-```
 Save this file as `main.go` in your project root. It handles parsing, validation, solving, uniqueness checking, printing, and error output exactly as required.
+
 
 ```go
 package main
