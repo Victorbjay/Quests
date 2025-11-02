@@ -141,7 +141,7 @@ box := (row/3)*3 + (col/3)
 
 Example:
 
-* Cell (4,5) → box (4/3)*3 + (5/3) = 1*3 + 1 = box 4 (middle)
+* Cell (4,5) → box (4/3)*3 + (5/3) = 1x3 + 1 = box 4 (middle)
 
 ---
 
