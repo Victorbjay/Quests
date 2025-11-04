@@ -471,3 +471,218 @@ Then `showNum` prints 42 by:
 
 ---
 
+# 3
+---
+**Full code**
+```go
+package main
+
+import (
+	"fmt"
+	"os"
+)
+
+func main() {
+	args := os.Args[1:] // skip program name at index [0]
+	// condition 1 - no argument
+	if len(args) == 0 {
+		fmt.Println("File name missing")
+		return
+	}
+
+	if len(args) > 1 { // condition 2 - more than 1 argument
+		fmt.Println("Too many arguments")
+		return
+	}
+
+	filename := args[0]
+	content, err := os.ReadFile(filename)
+	if err != nil {
+		return
+	}
+
+	fmt.Print(string(content))
+}
+
+```
+# **Line-by-Line Explanation: `displayfile`  
+
+---
+
+```go
+package main
+```
+> **This is the program’s name.**  
+> It says: “I am a **main program** (not a library).”  
+> Like putting a **title** on your quest scroll!
+
+---
+
+```go
+import (
+	"fmt"
+	"os"
+)
+```
+> **We bring in two magic tools:**  
+> - `fmt` → to **print** things  
+> - `os` → to **read files** and **get arguments**  
+> Like grabbing your **pen** and **scroll opener** from the shelf!
+
+---
+
+```go
+func main() {
+```
+> **This is where the adventure begins!**  
+> `main()` is the **first spell** Go casts when you run the program.  
+> Everything inside `{ }` is your **quest code**.
+
+---
+
+```go
+	args := os.Args[1:]
+```
+> **Get the user’s words (arguments):**  
+> - `os.Args` = full list: `["./main", "quest8.txt"]`  
+> - `[1:]` = **skip the first one** (the program name)  
+> - So `args` = `["quest8.txt"]`  
+>  
+> Like opening the **bag of notes** the user gave you — and **ignoring your own name tag**!
+
+---
+
+```go
+	if len(args) == 0 {
+		fmt.Println("File name missing")
+		return
+	}
+```
+> **Check: Did the user forget to give a file?**  
+> - `len(args) == 0` → no arguments  
+> - Print: `"File name missing"`  
+> - `return` → **STOP the program here**  
+>  
+> Like saying:  
+> > “You didn’t give me a scroll to read! I quit!”
+
+---
+
+```go
+	if len(args) > 1 {
+		fmt.Println("Too many arguments")
+		return
+	}
+```
+> **Check: Did the user give too many files?**  
+> - `len(args) > 1` → more than one argument  
+> - Print: `"Too many arguments"`  
+> - `return` → **STOP again**  
+>  
+> Like saying:  
+> > “You gave me 3 scrolls! I can only read one! I quit!”
+
+---
+
+```go
+	filename := args[0]
+```
+> **We now know: exactly 1 argument**  
+> - `args[0]` = the **first (and only)** argument  
+> - Save it as `filename`  
+>  
+> Like pulling out the **one scroll** from the bag and reading its label.
+
+---
+
+```go
+	content, err := os.ReadFile(filename)
+```
+> **Open the scroll and read everything inside:**  
+> - `os.ReadFile()` → reads **entire file** into memory  
+> - Returns two things:  
+>   - `content` → the **text** (as bytes)  
+>   - `err` → an **error** if something went wrong  
+>  
+> Like unrolling the scroll and **copying all the words**.
+
+---
+
+```go
+	if err != nil {
+		return
+	}
+```
+> **Check: Did reading fail?**  
+> - `err != nil` → file not found, permission denied, etc.  
+> - `return` → **do nothing and exit**  
+>  
+> Like saying:  
+> > “The scroll is missing or locked. I won’t say anything.”
+
+> **Note:** The quest says **don’t print error** → just be silent!
+
+---
+
+```go
+	fmt.Print(string(content))
+```
+> **Recite the scroll aloud — exactly as written!**  
+> - `string(content)` → turn **bytes** into **text**  
+> - `fmt.Print()` → print **exactly** that text  
+> - **No `ln` → no extra newline!**  
+>  
+> Like reading the scroll **word for word**, including line breaks.
+
+---
+
+```go
+}
+```
+> **End of the quest!**  
+> Program finishes.
+
+---
+
+## Full Flow – Visual Map
+
+```text
+User runs: go run . quest8.txt
+        ↓
+os.Args = ["./main", "quest8.txt"]
+        ↓
+args = os.Args[1:] → ["quest8.txt"]
+        ↓
+len(args) == 0? → No
+len(args) > 1?  → No
+        ↓
+filename = "quest8.txt"
+        ↓
+content, err = os.ReadFile("quest8.txt")
+        ↓
+err == nil → Yes
+        ↓
+fmt.Print("Almost there!!\n")
+        ↓
+Terminal shows:
+Almost there!!
+```
+
+---
+
+## Summary Table: Every Line
+
+| Line | What It Does | Why It Matters |
+|------|-------------|----------------|
+| `package main` | Names the program | Required for executable |
+| `import (...)` | Brings in tools | `fmt` + `os` |
+| `func main()` | Starts program | Entry point |
+| `args := os.Args[1:]` | Get user args | Skip program name |
+| `if len(args) == 0` | No file? | Print error + stop |
+| `if len(args) > 1` | Too many? | Print error + stop |
+| `filename := args[0]` | Get filename | Safe now |
+| `content, err := os.ReadFile(...)` | Read file | All at once |
+| `if err != nil { return }` | File missing? | Silent fail |
+| `fmt.Print(string(content))` | Print exactly | No extra `\n` |
+
+---
