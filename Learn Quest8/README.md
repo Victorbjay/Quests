@@ -351,6 +351,278 @@ func main() {
 | `printStr("x = ") ...`               | Prints the output exactly how we want it.                |
 
 ---
+# 🧩 LINE BY LINE EXPLANATION
+
+---
+
+### 🟢 `package main`
+
+Every Go program starts with a **package** declaration.
+
+* Think of a **package** as a “folder” or “group of code”.
+* `main` is special — it means:
+  👉 “This is the file where the program starts running.”
+
+🧠 Analogy:
+It’s like saying, “This is the main gate of the house; start entering from here.”
+
+---
+
+### 🟢 `import "github.com/01-edu/z01"`
+
+This **imports** (brings in) a small library called `z01`.
+
+* We use `z01.PrintRune()` to print **characters (runes)** one by one.
+* It’s the only allowed printing function in your exercises — we **cannot** use `fmt`.
+
+🧠 Analogy:
+It’s like bringing a tiny printer machine from a friend’s toolbox that can only print *one letter at a time*.
+
+---
+
+### 🟢 `type point struct { x int; y int }`
+
+Let’s break it down carefully.
+
+#### 🧱 `type`
+
+In Go, `type` means you are **creating your own data type** — like making a new “box shape” that can hold things.
+
+#### 🧱 `struct`
+
+A **struct** (short for *structure*) is like a **custom container** that can store multiple related values together.
+
+Here we’re creating a **`point`** type that can hold two integers — one for `x`, and one for `y`.
+
+#### 📦 Visualization:
+
+```
+point
+ ├── x : int
+ └── y : int
+```
+
+🧠 Analogy:
+Think of `point` as a **labelled box**:
+
+* one label for `x` (horizontal coordinate)
+* one label for `y` (vertical coordinate)
+
+It’s like making a container:
+
+> “Hey Go, I want a new type of thing called `point` that always has two numbers: one called x, one called y.”
+
+---
+
+### 🟢 `func setPoint(ptr *point) { ... }`
+
+#### `func`
+
+Means we are **defining a function** — a reusable set of instructions.
+
+#### `ptr *point`
+
+This means:
+
+> “I’m receiving a pointer (→) to a `point` box.”
+
+🧠 Wait — what’s a **pointer**?
+
+A **pointer** is like a “remote control” that lets you **access and change** a box that lives somewhere in memory.
+
+If you pass a pointer to a function, the function can open that box and **change its contents directly**.
+
+---
+
+### 🔹 Inside `setPoint`:
+
+```go
+ptr.x = 42
+ptr.y = 21
+```
+
+That means:
+
+* Open the box that `ptr` is pointing to.
+* Put `42` inside its `x` slot.
+* Put `21` inside its `y` slot.
+
+🧠 Visualization:
+
+```
+Before:
+point { x: 0, y: 0 }
+
+After:
+point { x: 42, y: 21 }
+```
+
+---
+
+### 🟢 `func printStr(s string)`
+
+This function **prints out a string** one character at a time.
+
+```go
+for _, r := range s {
+	z01.PrintRune(r)
+}
+```
+
+* `for _, r := range s` means:
+  → “For every character (called `r`) in the string `s`…”
+
+* `z01.PrintRune(r)` means:
+  → “Print that character.”
+
+🧠 Analogy:
+You’re telling Go:
+
+> “Read this sentence letter by letter, and say each one out loud.”
+
+Example:
+
+```
+printStr("Hi")
+Output: H
+         i
+```
+
+---
+
+### 🟢 `func printNbr(n int)`
+
+This prints a **number** digit by digit.
+
+#### Why we need this:
+
+Since we can’t use `fmt.Print()`, we must manually break numbers into characters like `'4'`, `'2'`, `'1'`.
+
+Let’s break it:
+
+```go
+if n == 0 {
+	z01.PrintRune('0')
+	return
+}
+```
+
+✅ If the number is zero — just print `'0'`.
+
+---
+
+```go
+if n < 0 {
+	z01.PrintRune('-')
+	n = -n
+}
+```
+
+✅ If the number is negative, print the minus sign and make it positive.
+
+---
+
+```go
+var digits []rune
+for n > 0 {
+	digits = append(digits, rune('0' + (n % 10)))
+	n /= 10
+}
+```
+
+✅ This part extracts digits one by one:
+
+* `(n % 10)` gives us the **last digit**.
+* `'0' + digit` converts it to its **character version** (e.g. 4 → '4').
+* We save it inside a slice called `digits`.
+
+🧠 Example:
+
+```
+n = 42
+→ digits = ['2', '4']  (in reverse order)
+```
+
+---
+
+```go
+for i := len(digits) - 1; i >= 0; i-- {
+	z01.PrintRune(digits[i])
+}
+```
+
+✅ Now we print the digits **backwards** so it looks normal.
+
+🧠 Final output: `42`
+
+---
+
+### 🟢 `func main()`
+
+This is where the program **starts**.
+
+```go
+points := &point{}
+```
+
+✅ Create an **empty box** of type `point`, and get its **pointer** (address in memory).
+
+🧠 Visualization:
+
+```
+points ──► [ x = 0 , y = 0 ]
+```
+
+---
+
+```go
+setPoint(points)
+```
+
+✅ Call the function to set the values:
+
+```
+points ──► [ x = 42 , y = 21 ]
+```
+
+---
+
+```go
+printStr("x = ")
+printNbr(points.x)
+printStr(", y = ")
+printNbr(points.y)
+z01.PrintRune('\n')
+```
+
+✅ Finally, print it exactly as:
+
+```
+x = 42, y = 21
+```
+
+---
+
+# 🎨 Summary Visualization
+
+```
+      ┌──────────────────────┐
+      │    points (pointer)  │────┐
+      └──────────────────────┘    │
+                                  ▼
+                          ┌─────────────────┐
+                          │  point struct   │
+                          │  x = 42         │
+                          │  y = 21         │
+                          └─────────────────┘
+
+printStr → prints letters
+printNbr → prints numbers
+z01.PrintRune → prints single characters
+```
+
+---
+
 
 ## 🧩 Step 4: Visualization
 
