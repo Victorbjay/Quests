@@ -241,7 +241,7 @@ printStr(EvenMsg)
 finally checker pitied me.
 ---
 
-## The code we’re explaining (reference)
+## The code
 
 ```go
 package main
