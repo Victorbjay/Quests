@@ -241,75 +241,50 @@ printStr(EvenMsg)
 
 ---
 
-## 🧩 Step 1: Understand the Task
+The exercise says:
 
-We are told to create a Go program inside a folder named `point`, and to make this code (given by the school platform) **work correctly**.
+> Allowed functions: `github.com/01-edu/z01.PrintRune`, `--no-lit=[1-9]`
 
-The **expected output** when we run it is:
+That means:
+
+* ❌ We **cannot** use `fmt`.
+* ✅ We **must use `z01.PrintRune()`** to print everything **character by character**, even numbers.
+
+So… we’ll **rebuild the entire program manually** — step by step like a beginner — and make it work **without fmt**, using only `z01.PrintRune`.
+
+---
+
+## 🧩 Step 1: What we must achieve
+
+Expected output:
 
 ```
 x = 42, y = 21
 ```
 
-But if we copy the given code directly, it won’t run yet — because:
-
-* The type `point` is not defined.
-* The `fmt` package is not imported.
-
----
-
-## 🧠 Step 2: What’s Happening in the Code
-
-Let’s look at what it’s trying to do:
-
-```go
-func setPoint(ptr *point) {
-	ptr.x = 42
-	ptr.y = 21
-}
-```
-
-Here:
-
-* `setPoint` is a function that receives a pointer (`*point`).
-* It sets the `x` and `y` values **inside that point** to `42` and `21`.
-
-So we need to define what a `point` is.
-
----
-
-## 🧱 Step 3: Define the Structure
-
-We define a `struct` (structure) to hold two integers — `x` and `y`.
-
-```go
-type point struct {
-	x int
-	y int
-}
-```
-
-This means a `point` looks like:
+We need to print that **character by character**:
 
 ```
-+--------+
-|  x: ?  |
-|  y: ?  |
-+--------+
+x, space, =, space, 4, 2, ,, space, y, space, =, space, 2, 1, newline
 ```
 
 ---
 
-## 🧭 Step 4: Full Working Code
+## 🧱 Step 2: The structure we’ll use
 
-📄 **point/main.go**
+We’ll keep our struct and logic the same — only change the printing part.
+
+---
+
+## ✅ Final Code 
+📁 **point/main.go**
 
 ```go
 package main
 
-import "fmt"
+import "github.com/01-edu/z01"
 
-// Step 1: Define the 'point' structure
+// Step 1: Define a struct called 'point'
 type point struct {
 	x int
 	y int
@@ -321,64 +296,100 @@ func setPoint(ptr *point) {
 	ptr.y = 21
 }
 
-// Step 3: The main function
-func main() {
-	// Create a new point in memory and get its pointer
-	points := &point{}
+// Step 3: Function to print a string character by character
+func printStr(s string) {
+	for _, r := range s {
+		z01.PrintRune(r)
+	}
+}
 
-	// Call the function that sets the x and y values
+// Step 4: Function to print an integer digit by digit
+func printNbr(n int) {
+	if n == 0 {
+		z01.PrintRune('0')
+		return
+	}
+	if n < 0 {
+		z01.PrintRune('-')
+		n = -n
+	}
+	var digits []rune
+	for n > 0 {
+		digits = append(digits, rune('0'+(n%10)))
+		n /= 10
+	}
+	for i := len(digits) - 1; i >= 0; i-- {
+		z01.PrintRune(digits[i])
+	}
+}
+
+// Step 5: Main function
+func main() {
+	points := &point{}
 	setPoint(points)
 
-	// Print the result
-	fmt.Printf("x = %d, y = %d\n", points.x, points.y)
+	printStr("x = ")
+	printNbr(points.x)
+	printStr(", y = ")
+	printNbr(points.y)
+	z01.PrintRune('\n')
 }
 ```
 
 ---
 
-## 🧠 Step 5: Why Each Line Matters 
+## 🧠 Step 3: (why we do each thing)
 
-| Line                                 | What it does                                     | Why it’s needed                                       |
-| ------------------------------------ | ------------------------------------------------ | ----------------------------------------------------- |
-| `package main`                       | Tells Go this is the main executable file.       | Every Go program starts with it.                      |
-| `import "fmt"`                       | We need `fmt` to print things.                   | Without it, `fmt.Printf` won’t work.                  |
-| `type point struct { x int; y int }` | Defines a box with two integer slots (`x`, `y`). | We need this “blueprint” for our points.              |
-| `func setPoint(ptr *point)`          | Function takes a *pointer* to a point.           | The star `*` means “give me the address, not a copy.” |
-| `ptr.x = 42; ptr.y = 21`             | Changes values inside the real point.            | Because `ptr` points to the original memory.          |
-| `points := &point{}`                 | Creates a new point and gets its address.        | We need a pointer to pass into the function.          |
-| `fmt.Printf(...)`                    | Displays values on screen.                       | To show `x = 42, y = 21`.                             |
-
----
-
-## 🧩 Step 6: Visual Diagram
-
-```
-      ┌────────────┐
-      │   points   │
-      │ (pointer)  │────────────┐
-      └────────────┘            │
-                                ▼
-                       ┌───────────────────┐
-                       │   point struct    │
-                       │  x: 42            │
-                       │  y: 21            │
-                       └───────────────────┘
-```
-
-✅ `setPoint(points)` changes the values **directly** inside that box.
+| Code                                 | Why we need it                                           |
+| ------------------------------------ | -------------------------------------------------------- |
+| `package main`                       | Every Go executable starts with this.                    |
+| `import "github.com/01-edu/z01"`     | We’re told we can only print using this.                 |
+| `type point struct { x int; y int }` | Defines our “box” that holds x and y numbers.            |
+| `setPoint(ptr *point)`               | Changes the inside of that box to 42 and 21.             |
+| `printStr(s string)`                 | Prints a whole word one character at a time.             |
+| `printNbr(n int)`                    | Prints numbers by breaking them into digits.             |
+| `points := &point{}`                 | Creates an empty box in memory and gives us its address. |
+| `setPoint(points)`                   | Fills the box (x=42, y=21).                              |
+| `printStr("x = ") ...`               | Prints the output exactly how we want it.                |
 
 ---
 
-## 🧪 Step 7: How to Run It
+## 🧩 Step 4: Visualization
 
-1. Open your terminal.
-2. Create and enter the folder:
+```
+     ┌──────────────────┐
+     │  points (pointer)│────┐
+     └──────────────────┘    │
+                             ▼
+                    ┌────────────────┐
+                    │ point struct   │
+                    │ x = 42         │
+                    │ y = 21         │
+                    └────────────────┘
+```
+
+Then `printStr` and `printNbr` print everything manually:
+
+```
+x = 42, y = 21
+```
+
+---
+
+## 🧪 Step 5: Run the Program
+
+1. Create and go into the folder:
 
    ```bash
    mkdir point
    cd point
    ```
-3. Create `main.go` and paste the full code above.
+2. Create the file:
+
+   ```bash
+   nano main.go
+   ```
+3. Paste the code above.
 4. Run:
 
    ```bash
@@ -392,5 +403,4 @@ x = 42, y = 21
 ```
 
 ---
-
 
