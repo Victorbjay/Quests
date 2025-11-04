@@ -1,4 +1,4 @@
-
+## 1
 ## 🧩 Step 1: Understanding the Goal
 
 We’re building a small Go program that:
@@ -237,4 +237,160 @@ printStr(EvenMsg)
 | `boolean` type    | Custom true/false (yes/no)  |
 
 ---
+## 2
+
+---
+
+## 🧩 Step 1: Understand the Task
+
+We are told to create a Go program inside a folder named `point`, and to make this code (given by the school platform) **work correctly**.
+
+The **expected output** when we run it is:
+
+```
+x = 42, y = 21
+```
+
+But if we copy the given code directly, it won’t run yet — because:
+
+* The type `point` is not defined.
+* The `fmt` package is not imported.
+
+---
+
+## 🧠 Step 2: What’s Happening in the Code
+
+Let’s look at what it’s trying to do:
+
+```go
+func setPoint(ptr *point) {
+	ptr.x = 42
+	ptr.y = 21
+}
+```
+
+Here:
+
+* `setPoint` is a function that receives a pointer (`*point`).
+* It sets the `x` and `y` values **inside that point** to `42` and `21`.
+
+So we need to define what a `point` is.
+
+---
+
+## 🧱 Step 3: Define the Structure
+
+We define a `struct` (structure) to hold two integers — `x` and `y`.
+
+```go
+type point struct {
+	x int
+	y int
+}
+```
+
+This means a `point` looks like:
+
+```
++--------+
+|  x: ?  |
+|  y: ?  |
++--------+
+```
+
+---
+
+## 🧭 Step 4: Full Working Code
+
+📄 **point/main.go**
+
+```go
+package main
+
+import "fmt"
+
+// Step 1: Define the 'point' structure
+type point struct {
+	x int
+	y int
+}
+
+// Step 2: Function to set the values of a point
+func setPoint(ptr *point) {
+	ptr.x = 42
+	ptr.y = 21
+}
+
+// Step 3: The main function
+func main() {
+	// Create a new point in memory and get its pointer
+	points := &point{}
+
+	// Call the function that sets the x and y values
+	setPoint(points)
+
+	// Print the result
+	fmt.Printf("x = %d, y = %d\n", points.x, points.y)
+}
+```
+
+---
+
+## 🧠 Step 5: Why Each Line Matters 
+
+| Line                                 | What it does                                     | Why it’s needed                                       |
+| ------------------------------------ | ------------------------------------------------ | ----------------------------------------------------- |
+| `package main`                       | Tells Go this is the main executable file.       | Every Go program starts with it.                      |
+| `import "fmt"`                       | We need `fmt` to print things.                   | Without it, `fmt.Printf` won’t work.                  |
+| `type point struct { x int; y int }` | Defines a box with two integer slots (`x`, `y`). | We need this “blueprint” for our points.              |
+| `func setPoint(ptr *point)`          | Function takes a *pointer* to a point.           | The star `*` means “give me the address, not a copy.” |
+| `ptr.x = 42; ptr.y = 21`             | Changes values inside the real point.            | Because `ptr` points to the original memory.          |
+| `points := &point{}`                 | Creates a new point and gets its address.        | We need a pointer to pass into the function.          |
+| `fmt.Printf(...)`                    | Displays values on screen.                       | To show `x = 42, y = 21`.                             |
+
+---
+
+## 🧩 Step 6: Visual Diagram
+
+```
+      ┌────────────┐
+      │   points   │
+      │ (pointer)  │────────────┐
+      └────────────┘            │
+                                ▼
+                       ┌───────────────────┐
+                       │   point struct    │
+                       │  x: 42            │
+                       │  y: 21            │
+                       └───────────────────┘
+```
+
+✅ `setPoint(points)` changes the values **directly** inside that box.
+
+---
+
+## 🧪 Step 7: How to Run It
+
+1. Open your terminal.
+2. Create and enter the folder:
+
+   ```bash
+   mkdir point
+   cd point
+   ```
+3. Create `main.go` and paste the full code above.
+4. Run:
+
+   ```bash
+   go run .
+   ```
+
+✅ Expected Output:
+
+```
+x = 42, y = 21
+```
+
+---
+
 
