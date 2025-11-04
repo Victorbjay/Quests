@@ -272,8 +272,6 @@ x, space, =, space, 4, 2, ,, space, y, space, =, space, 2, 1, newline
 
 ## 🧱 Step 2: The structure we’ll use
 
-We’ll keep our struct and logic the same — only change the printing part.
-
 ---
 
 ## ✅ Final Code 
