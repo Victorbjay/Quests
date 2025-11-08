@@ -1,39 +1,4 @@
 
-## 🎯 What is this program supposed to do?
-
-You're building a **pattern detector**! 
-
-There are 5 different "quad" functions (quadA, quadB, quadC, quadD, quadE) that draw rectangles using special characters. Your job is to:
-1. Read a pattern (rectangle) from input
-2. Figure out which quad function(s) could have made it
-3. Tell the user which one(s) match
-
-## 📚 Simple Example
-
-Imagine quadA draws this when given 3 width and 3 height:
-```
-o-o
-| |
-o-o
-```
-
-When someone runs `./quadA 3 3 | go run .`, your program reads that pattern and says: "Hey! This looks like quadA with size 3x3!"
-
-## 🔍 Understanding the Requirements
-
-**Input:** A text pattern (like a rectangle made of characters)
-
-**Output:** 
-- If it matches a quad: `[quadA] [3] [3]`
-- If multiple quads match: `[quadC] [1] [1] || [quadD] [1] [1] || [quadE] [1] [1]`
-- If nothing matches: `Not a quad function`
-
-Perfect 👏 — we’ll make this *super beginner-friendly* so you’ll understand **what’s going on step-by-step**, visually, and know **how to test it** in VS Code easily.
-
-Here’s the full breakdown:
-
----
-
 # 🧩 Project: `quadchecker` — Beginner Guide
 
 ---
@@ -315,8 +280,101 @@ func main() {
 	}
 }
 ```
+---
+Here’s the correct setup — step by step — for your folder and Go module.
 
 ---
+
+### 🧱 STEP 1: Create the folder
+
+In your terminal:
+
+```bash
+gitclone *repoURL.git*
+cd quadchecker
+```
+
+---
+
+### ⚙️ STEP 2: Initialize your Go module
+
+You should **use `go mod init`**
+The command should look like this:
+
+```bash
+go mod init quadchecker
+```
+
+✅ This creates a `go.mod` file inside your `quadchecker` directory — it tells Go “this is a module” and allows you to run and import things properly.
+
+---
+
+### 📄 STEP 3: Create your main file
+
+In the same folder:
+
+```bash
+touch main.go
+```
+
+Now you’ll have:
+
+```
+quadchecker/
+├── go.mod
+└── main.go
+```
+
+---
+
+### 🧰 STEP 4: Write your code
+
+Open the folder in VS Code:
+
+```bash
+code .
+```
+
+Then open `main.go` and paste your code there.
+
+---
+
+### ▶️ STEP 5: Run and test
+
+You can test your program by piping (sending) the output of a quad function (like `quadA`) into your `quadchecker`.
+
+Example:
+
+```bash
+./quadA 3 3 | go run .
+```
+
+Output should be:
+
+```
+[quadA] [3] [3]
+```
+
+Or, if you have multiple matches:
+
+```
+[quadC] [1] [1] || [quadD] [1] [1] || [quadE] [1] [1]
+```
+
+If it’s not a valid quad:
+
+```bash
+echo "random text" | go run .
+```
+
+Output:
+
+```
+Not a quad function
+```
+
+---
+
 
 ## 🧪 Step 4: Testing It
 
@@ -396,5 +454,15 @@ Not a quad function
 | **`io.ReadAll()`**           | Reads everything from input until end (useful for multi-line data).            |                                                                                    |                                                 |
 | **Alphabetical order**       | Sorting results by name (A → Z).                                               |                                                                                    |                                                 |
 
----
 
+| Word          | Meaning                                                                             |                                                                            |                                                                                    |
+| ------------- | ----------------------------------------------------------------------------------- | -------------------------------------------------------------------------- | ---------------------------------------------------------------------------------- |
+| **Pipe (      | )**                                                                                 | Sends the output of one program as input to another. Example: `./quadA 3 3 | go run .` means “take what quadA prints and give it to the program we’re running.” |
+| **Module**    | A Go project with its own `go.mod` file — like a package with its own dependencies. |                                                                            |                                                                                    |
+| **Import**    | Tells Go what other code you need to use (like `fmt`).                              |                                                                            |                                                                                    |
+| **Compile**   | When Go converts your code into an executable program.                              |                                                                            |                                                                                    |
+| **Run**       | Executes your Go code directly (`go run .`).                                        |                                                                            |                                                                                    |
+| **Directory** | A folder on your computer that holds files like `main.go`.                          |                                                                            |                                                                                    |
+| **Tree**      | A command that shows your folder structure neatly.                                  |                                                                            |                                                                                    |
+
+---
