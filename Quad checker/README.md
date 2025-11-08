@@ -214,6 +214,7 @@ fmt.Println(ages["Alice"])  // Prints: 25
 ```
 
 
+```go
 // package main tells Go this is a standalone program (not a library)
 // Think of it like saying "This is the MAIN program, start here!"
 package main
@@ -486,9 +487,7 @@ func main() {
 		input += "\n"
 	}
 	
-	// ============================================
 	// STEP 6: TRY EACH QUAD FUNCTION
-	// ============================================
 	
 	// This list will hold all the matching quad functions
 	var matches []string
@@ -531,10 +530,7 @@ func main() {
 			matches = append(matches, match)
 		}
 	}
-	
-	// ============================================
 	// STEP 7: PRINT THE RESULTS
-	// ============================================
 	
 	// Did we find any matches?
 	if len(matches) == 0 {
