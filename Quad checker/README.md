@@ -88,7 +88,7 @@ We’ll use a Go project structure that matches what the checker expects.
 Open your terminal in VS Code and type:
 
 ```bash
-mkdir quadchecker
+git clone your repo
 cd quadchecker
 go mod init quadchecker
 ```
