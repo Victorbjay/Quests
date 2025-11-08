@@ -339,108 +339,319 @@ Then open `main.go` and paste your code there.
 
 ---
 
-### ▶️ STEP 5: Run and test
+## 🧩 1. Overview — How the Project Works
 
-You can test your program by piping (sending) the output of a quad function (like `quadA`) into your `quadchecker`.
-
-Example:
+When you run:
 
 ```bash
 ./quadA 3 3 | go run .
 ```
 
-Output should be:
+this means:
 
 ```
-[quadA] [3] [3]
+[quadA output] → [pipe →] → [quadchecker reads from stdin]
 ```
 
-Or, if you have multiple matches:
+Your `quadchecker` doesn’t take file names — it just reads the shape text and decides which `quadX` it matches.
+
+---
+
+## 🧱 2. Folder Structure
+
+You should have this layout:
 
 ```
-[quadC] [1] [1] || [quadD] [1] [1] || [quadE] [1] [1]
-```
-
-If it’s not a valid quad:
-
-```bash
-echo "random text" | go run .
-```
-
-Output:
-
-```
-Not a quad function
+quadchecker/
+├── go.mod
+├── main.go
+├── quadA/
+│   └── main.go
+├── quadB/
+│   └── main.go
+├── quadC/
+│   └── main.go
+├── quadD/
+│   └── main.go
+└── quadE/
+    └── main.go
 ```
 
 ---
 
+## 🚀 3. Quad Programs (Generators)
 
-## 🧪 Step 4: Testing It
+Each program takes **two integers** (`width`, `height`) and prints a rectangle using specific corner and border rules.
 
-### 1️⃣ Make sure your `quadA`, `quadB`, etc. binaries exist
+---
 
-If you still have your quad files, compile one like this:
+### 🅰️ `quadA/main.go`
 
-```bash
-go run path/to/quadA.go 3 3
-```
+```go
+package main
 
-You’ll see something like:
+import (
+	"fmt"
+	"os"
+	"strconv"
+)
 
-```
-o--o
-|  |
-o--o
+func main() {
+	if len(os.Args) != 3 {
+		return
+	}
+	w, _ := strconv.Atoi(os.Args[1])
+	h, _ := strconv.Atoi(os.Args[2])
+
+	for y := 0; y < h; y++ {
+		for x := 0; x < w; x++ {
+			if (y == 0 && x == 0) || (y == 0 && x == w-1) {
+				fmt.Print("o")
+			} else if (y == h-1 && x == 0) || (y == h-1 && x == w-1) {
+				fmt.Print("o")
+			} else if y == 0 || y == h-1 {
+				fmt.Print("-")
+			} else if x == 0 || x == w-1 {
+				fmt.Print("|")
+			} else {
+				fmt.Print(" ")
+			}
+		}
+		fmt.Println()
+	}
+}
 ```
 
 ---
 
-### 2️⃣ Pipe the output into quadchecker
+### 🅱️ `quadB/main.go`
 
-From inside your `quadchecker` folder:
+```go
+package main
+
+import (
+	"fmt"
+	"os"
+	"strconv"
+)
+
+func main() {
+	if len(os.Args) != 3 {
+		return
+	}
+	w, _ := strconv.Atoi(os.Args[1])
+	h, _ := strconv.Atoi(os.Args[2])
+
+	for y := 0; y < h; y++ {
+		for x := 0; x < w; x++ {
+			if y == 0 && (x == 0 || x == w-1) {
+				fmt.Print("/")
+			} else if y == h-1 && (x == 0 || x == w-1) {
+				fmt.Print("\\")
+			} else if y == 0 || y == h-1 {
+				fmt.Print("*")
+			} else if x == 0 || x == w-1 {
+				fmt.Print("*")
+			} else {
+				fmt.Print(" ")
+			}
+		}
+		fmt.Println()
+	}
+}
+```
+
+---
+
+### 🅲 `quadC/main.go`
+
+```go
+package main
+
+import (
+	"fmt"
+	"os"
+	"strconv"
+)
+
+func main() {
+	if len(os.Args) != 3 {
+		return
+	}
+	w, _ := strconv.Atoi(os.Args[1])
+	h, _ := strconv.Atoi(os.Args[2])
+
+	for y := 0; y < h; y++ {
+		for x := 0; x < w; x++ {
+			if y == 0 && x == 0 {
+				fmt.Print("A")
+			} else if y == 0 && x == w-1 {
+				fmt.Print("A")
+			} else if y == h-1 && x == 0 {
+				fmt.Print("C")
+			} else if y == h-1 && x == w-1 {
+				fmt.Print("C")
+			} else if y == 0 || y == h-1 {
+				fmt.Print("B")
+			} else if x == 0 || x == w-1 {
+				fmt.Print("B")
+			} else {
+				fmt.Print(" ")
+			}
+		}
+		fmt.Println()
+	}
+}
+```
+
+---
+
+### 🅳 `quadD/main.go`
+
+```go
+package main
+
+import (
+	"fmt"
+	"os"
+	"strconv"
+)
+
+func main() {
+	if len(os.Args) != 3 {
+		return
+	}
+	w, _ := strconv.Atoi(os.Args[1])
+	h, _ := strconv.Atoi(os.Args[2])
+
+	for y := 0; y < h; y++ {
+		for x := 0; x < w; x++ {
+			if y == 0 && x == 0 {
+				fmt.Print("A")
+			} else if y == 0 && x == w-1 {
+				fmt.Print("C")
+			} else if y == h-1 && x == 0 {
+				fmt.Print("A")
+			} else if y == h-1 && x == w-1 {
+				fmt.Print("C")
+			} else if y == 0 || y == h-1 {
+				fmt.Print("B")
+			} else if x == 0 || x == w-1 {
+				fmt.Print("B")
+			} else {
+				fmt.Print(" ")
+			}
+		}
+		fmt.Println()
+	}
+}
+```
+
+---
+
+### 🅴 `quadE/main.go`
+
+```go
+package main
+
+import (
+	"fmt"
+	"os"
+	"strconv"
+)
+
+func main() {
+	if len(os.Args) != 3 {
+		return
+	}
+	w, _ := strconv.Atoi(os.Args[1])
+	h, _ := strconv.Atoi(os.Args[2])
+
+	for y := 0; y < h; y++ {
+		for x := 0; x < w; x++ {
+			if y == 0 && x == 0 {
+				fmt.Print("A")
+			} else if y == 0 && x == w-1 {
+				fmt.Print("C")
+			} else if y == h-1 && x == 0 {
+				fmt.Print("C")
+			} else if y == h-1 && x == w-1 {
+				fmt.Print("A")
+			} else if y == 0 || y == h-1 {
+				fmt.Print("B")
+			} else if x == 0 || x == w-1 {
+				fmt.Print("B")
+			} else {
+				fmt.Print(" ")
+			}
+		}
+		fmt.Println()
+	}
+}
+```
+
+---
+
+## 🧪 4. Build & Test
+
+Inside each quad folder, run:
+
+```bash
+go build -o ../quadA main.go
+```
+
+Repeat for each (`quadB`, `quadC`, etc.), changing the output name.
+
+Now test one:
+
+```bash
+./quadA 3 3
+```
+
+Expected:
+
+```
+o-o
+| |
+o-o
+```
+
+Then try:
 
 ```bash
 ./quadA 3 3 | go run .
 ```
 
-Expected output:
-
-```
-[quadA] [3] [3]
-```
+Once your `quadchecker` logic is complete, it will detect which quad it matches.
 
 ---
 
-### 3️⃣ Test multiple matches
+## 🧭 5. VS Code Quick Setup
 
-```bash
-./quadC 1 1 | go run .
-```
+1. Open the parent folder `quadchecker` in VS Code.
+2. Make sure each subfolder has its own `main.go`.
+3. Run builds in the **VS Code terminal** using the commands above.
+4. To test easily:
 
-Expected output:
+   * In VS Code, open a terminal and run:
 
-```
-[quadC] [1] [1] || [quadD] [1] [1] || [quadE] [1] [1]
-```
-
----
-
-### 4️⃣ Test invalid input
-
-```bash
-echo "random text" | go run .
-```
-
-Output:
-
-```
-Not a quad function
-```
+     ```bash
+     ./quadC 1 2 | go run .
+     ```
 
 ---
 
-## 📘 Vocabulary
+## 📘 6. Vocabulary for Beginners
+
+| Word                     | Meaning                                                          |                                                      |
+| ------------------------ | ---------------------------------------------------------------- | ---------------------------------------------------- |
+| **Pipe (                 | )**                                                              | Sends the output of one command as input to another. |
+| **Executable (./quadA)** | A program file you can run directly.                             |                                                      |
+| **Tree**                 | A command that shows folder structure visually.                  |                                                      |
+| **Build**                | Compiles your Go code into a runnable program.                   |                                                      |
+| **Args (arguments)**     | Extra values you pass to your program when you run it.           |                                                      |
+| **Module (go.mod)**      | A Go file that tells Go how to handle your project dependencies. |                                                      |
+| **Run (go run .)**       | Compiles and runs your Go program from the current directory.    |                                                      |
 
 | Word                         | Meaning                                                                        |                                                                                    |                                                 |
 | ---------------------------- | ------------------------------------------------------------------------------ | ---------------------------------------------------------------------------------- | ----------------------------------------------- |
