@@ -365,16 +365,15 @@ You should have this layout:
 quadchecker/
 ├── go.mod
 ├── main.go
-├── quadA/
-│   └── main.go
-├── quadB/
-│   └── main.go
-├── quadC/
-│   └── main.go
-├── quadD/
-│   └── main.go
-└── quadE/
-    └── main.go
+├── quadA.go
+│ 
+├── quadB.go
+│  
+├── quadC.go
+│  
+├── quadD.go
+│   
+└── quadE.go
 ```
 
 ---
@@ -385,7 +384,7 @@ Each program takes **two integers** (`width`, `height`) and prints a rectangle u
 
 ---
 
-### 🅰️ `quadA/main.go`
+### 🅰️ `quadA.go`
 
 ```go
 package main
@@ -424,7 +423,7 @@ func main() {
 
 ---
 
-### 🅱️ `quadB/main.go`
+### 🅱️ `quadB.go`
 
 ```go
 package main
@@ -463,7 +462,7 @@ func main() {
 
 ---
 
-### 🅲 `quadC/main.go`
+### 🅲 `quadC.go`
 
 ```go
 package main
@@ -506,7 +505,7 @@ func main() {
 
 ---
 
-### 🅳 `quadD/main.go`
+### 🅳 `quadD.go`
 
 ```go
 package main
@@ -549,7 +548,7 @@ func main() {
 
 ---
 
-### 🅴 `quadE/main.go`
+### 🅴 `quadE.go`
 
 ```go
 package main
@@ -597,7 +596,7 @@ func main() {
 Inside each quad folder, run:
 
 ```bash
-go build -o ../quadA main.go
+go build -o quadA quadA.go
 ```
 
 Repeat for each (`quadB`, `quadC`, etc.), changing the output name.
@@ -623,6 +622,7 @@ Then try:
 ```
 
 Once your `quadchecker` logic is complete, it will detect which quad it matches.
+`go build -o quadchecker main.go` -  this creates the quadchecker executable file expected in the output so now you can go ahead and delete all quadA.go - E files.
 
 ---
 
