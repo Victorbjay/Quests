@@ -652,42 +652,514 @@ Once your `quadchecker` logic is complete, it will detect which quad it matches.
 
 ---
 
-# ✅ **HIGH-LEVEL STEPS (5 points)**
+# ✅ COMPLETE LINE-BY-LINE BREAKDOWN OF YOUR QUADCHECKER PROGRAM
 
-1️⃣ Read the entire input from stdin using `bufio` + `io.ReadAll`.
-2️⃣ Check if the input is empty — print *Not a quad function*.
-3️⃣ Split the drawing into lines → `y = number of lines`, `x = characters per line`.
-4️⃣ Generate quadA, quadB, quadC, quadD, quadE using the same `x` and `y`.
-5️⃣ Compare input with each generated quad → print all matches.
+Let me explain **every single word and symbol** so you understand exactly what's happening!
 
 ---
 
-# ✅ **FUNCTIONS EXPLAINED IN 1-LINE EACH**
+## 🔷 1️⃣ THE PACKAGE DECLARATION
 
-* **quadA–quadE**: Each function creates the expected quad shape using nested loops and returns it as a string.
-* **`strings.Builder`**: Used to build each quad string efficiently.
-* **`WriteRune`**: Writes one character at a time.
+```go
+package main
+```
 
----
-
-# ✅ **MAIN LOGIC IN SIMPLE WORDS**
-
-* **Read input** → store it as `content`.
-* **Remove extra newline** → avoid extra empty lines.
-* **Split by newline** → to count rows (`y`).
-* **Count characters on first line** → width (`x`).
-* **Make an empty slice** → store matches.
-* **Compare input to each quad generator** using `content == quadX(x, y)`.
-* **If matches exist** → print them separated by `||`.
-* **If no match** → print *Not a quad function*.
+**What it means:**
+- `package` = a keyword that says "this code belongs to a group"
+- `main` = the special package name that tells Go "this is a runnable program, not just a library"
+- **Think of it like:** Putting a label on a folder saying "This is the main application"
 
 ---
 
-# ✅ **SUPER-SHORT EXPLANATION OF LOOPS**
+## 🔷 2️⃣ THE IMPORTS
 
-> “Two loops: the outer loop draws each row, the inner loop draws each column. Characters change depending on whether we are on a corner, border, or middle.”
+```go
+import (
+    "bufio"
+    "fmt"
+    "io"
+    "os"
+    "strings"
+)
+```
+
+**What each import does:**
+
+- `"bufio"` = **Buffered Input/Output** - helps read data efficiently (like reading text line by line)
+- `"fmt"` = **Format** - used for printing output to the screen (`fmt.Println`)
+- `"io"` = **Input/Output** - basic tools for reading and writing data
+- `"os"` = **Operating System** - lets you interact with the computer (like reading from keyboard input)
+- `"strings"` = **String tools** - helps manipulate text (like joining, splitting, trimming)
+
+**The parentheses `( )`** = lets you import multiple packages at once instead of writing `import "bufio"` five times
 
 ---
+
+## 🔷 3️⃣ FUNCTION: `quadA`
+
+```go
+func quadA(x, y int) string {
+```
+
+**Breaking it down:**
+- `func` = keyword that means "I'm defining a function"
+- `quadA` = the name of this function
+- `(x, y int)` = this function takes **two inputs**, both are integers (whole numbers)
+  - `x` = width (number of columns)
+  - `y` = height (number of rows)
+- `string` = this function will **return text** as output
+- `{` = opening brace, the function's code starts here
+
+---
+
+```go
+if x <= 0 || y <= 0 {
+    return ""
+}
+```
+
+**What this checks:**
+- `if` = start of a condition
+- `x <= 0` = "if x is less than or equal to zero"
+- `||` = **OR** operator (either condition can be true)
+- `y <= 0` = "if y is less than or equal to zero"
+- `return ""` = give back an empty string (nothing) and exit the function
+- **Purpose:** If width or height is zero or negative, we can't draw a rectangle, so return nothing
+
+---
+
+```go
+var res strings.Builder
+```
+
+**What this does:**
+- `var` = keyword to declare a variable
+- `res` = short for "result", the name we chose
+- `strings.Builder` = a special tool that efficiently builds strings piece by piece
+- **Think of it like:** An empty canvas where we'll paint our rectangle character by character
+
+---
+
+```go
+for row := 1; row <= y; row++ {
+```
+
+**Breaking down the loop:**
+- `for` = keyword that starts a loop (repeating code)
+- `row := 1` = create a variable called `row` and set it to 1 (we start at row 1)
+- `;` = separator
+- `row <= y` = **condition**: keep looping while row is less than or equal to y
+- `;` = separator
+- `row++` = **increment**: after each loop, add 1 to row (`row = row + 1`)
+- `{` = loop body starts here
+
+**In simple terms:** "Do this code for row 1, then row 2, then row 3... until you reach row y"
+
+---
+
+```go
+for col := 1; col <= x; col++ {
+```
+
+**Same structure as above but for columns:**
+- This is a **nested loop** (a loop inside another loop)
+- `col` = column number, starting at 1
+- Goes from column 1 to column x
+
+**In simple terms:** "For each row, go through each column from 1 to x"
+
+---
+
+```go
+if row == 1 || row == y {
+```
+
+**What this checks:**
+- `if` = condition starts
+- `row == 1` = "if we're on the first row"
+- `||` = OR
+- `row == y` = "if we're on the last row"
+- **In simple terms:** "If we're on the top edge or bottom edge..."
+
+---
+
+```go
+if col == 1 || col == x {
+    res.WriteRune('o')
+```
+
+**Breaking it down:**
+- `col == 1` = if we're in the first column
+- `col == x` = if we're in the last column
+- `res.WriteRune('o')` = write the character 'o' to our result builder
+  - `WriteRune` = method to add a single character
+  - `'o'` = a single character (the letter o)
+- **In simple terms:** "If we're at a corner (top/bottom edge AND left/right edge), draw an 'o'"
+
+---
+
+```go
+} else {
+    res.WriteRune('-')
+}
+```
+
+**What this means:**
+- `else` = "otherwise" (if the previous condition was false)
+- `res.WriteRune('-')` = write a dash character
+- **In simple terms:** "If we're on the top or bottom edge but NOT at a corner, draw a '-'"
+
+---
+
+```go
+} else {
+    if col == 1 || col == x {
+        res.WriteRune('|')
+```
+
+**What this means:**
+- This `else` matches the outer `if` (the one checking if `row == 1 || row == y`)
+- **In simple terms:** "If we're NOT on top/bottom edge..."
+- Then check: "Are we on the left or right edge?"
+- If yes: draw a vertical bar `'|'`
+
+---
+
+```go
+} else {
+    res.WriteRune(' ')
+}
+```
+
+**What this means:**
+- **In simple terms:** "If we're not on any edge, draw a space (empty space inside the rectangle)"
+
+---
+
+```go
+}
+res.WriteRune('\n')
+```
+
+**What this does:**
+- `}` = ends the inner `for` loop (the column loop)
+- `res.WriteRune('\n')` = add a newline character
+  - `'\n'` = special character that means "go to the next line"
+- **In simple terms:** "After finishing all columns in a row, move to the next line"
+
+---
+
+```go
+}
+return res.String()
+```
+
+**What this does:**
+- `}` = ends the outer `for` loop (the row loop)
+- `return res.String()` = convert the `strings.Builder` to a regular string and give it back
+- **In simple terms:** "We're done building the rectangle, now return it as text"
+
+---
+
+## 🔷 4️⃣ FUNCTION: `quadB`
+
+```go
+func quadB(x, y int) string {
+```
+
+**Same structure as quadA**, but draws a different pattern.
+
+---
+
+```go
+if row == 1 && col == 1 {
+    res.WriteRune('/')
+```
+
+**What this checks:**
+- `&&` = **AND** operator (both conditions must be true)
+- `row == 1 && col == 1` = "if we're on row 1 AND column 1"
+- **In simple terms:** "If we're at the top-left corner, draw a forward slash `/`"
+
+---
+
+```go
+} else if row == 1 && col == x {
+    res.WriteRune('\\')
+```
+
+**What this checks:**
+- `else if` = "otherwise, if this condition is true..."
+- `row == 1 && col == x` = top-right corner
+- `'\\'` = backslash character (we need two `\\` because one `\` is an escape character in Go)
+- **In simple terms:** "If we're at the top-right corner, draw a backslash `\`"
+
+---
+
+```go
+} else if row == y && col == 1 {
+    res.WriteRune('\\')
+```
+
+**In simple terms:** "Bottom-left corner gets a backslash `\`"
+
+---
+
+```go
+} else if row == y && col == x {
+    res.WriteRune('/')
+```
+
+**In simple terms:** "Bottom-right corner gets a forward slash `/`"
+
+---
+
+```go
+} else if row == 1 || row == y || col == 1 || col == x {
+    res.WriteRune('*')
+```
+
+**What this checks:**
+- **In simple terms:** "If we're on ANY edge but NOT at a corner, draw an asterisk `*`"
+
+---
+
+```go
+} else {
+    res.WriteRune(' ')
+}
+```
+
+**In simple terms:** "If we're inside the rectangle (not on any edge), draw a space"
+
+---
+
+## 🔷 5️⃣ FUNCTIONS: `quadC`, `quadD`, `quadE`
+
+These follow the **exact same structure** as quadA and quadB, but use different characters:
+
+- **quadC:** Uses `'A'`, `'B'`, `'C'` characters
+- **quadD:** Uses `'A'`, `'B'`, `'C'` characters in different positions
+- **quadE:** Uses `'A'`, `'B'`, `'C'` characters in yet another pattern
+
+The logic is identical, just the character placement changes!
+
+---
+
+## 🔷 6️⃣ THE MAIN FUNCTION
+
+```go
+func main() {
+```
+
+**What this is:**
+- `main` = the special function that runs when your program starts
+- **Every Go program must have a main function**
+
+---
+
+```go
+reader := bufio.NewReader(os.Stdin)
+```
+
+**Breaking it down:**
+- `reader` = variable name we chose
+- `:=` = shorthand for "create variable and assign value"
+- `bufio.NewReader` = creates a new buffered reader
+- `os.Stdin` = **Standard Input** - the keyboard input
+- **In simple terms:** "Create a tool that can read text from the keyboard efficiently"
+
+---
+
+```go
+input, _ := io.ReadAll(reader)
+```
+
+**Breaking it down:**
+- `input` = variable to store what we read
+- `_` = underscore means "ignore this value" (in this case, ignoring any error)
+- `io.ReadAll(reader)` = read everything from the input until it ends
+- **In simple terms:** "Read all the text the user types and store it in `input`"
+
+---
+
+```go
+content := string(input)
+```
+
+**What this does:**
+- `content` = new variable
+- `string(input)` = convert the input (which is bytes) into a string (text)
+- **In simple terms:** "Convert the raw data into readable text"
+
+---
+
+```go
+if strings.TrimSpace(content) == "" {
+    fmt.Println("Not a quad function")
+    return
+}
+```
+
+**Breaking it down:**
+- `strings.TrimSpace(content)` = remove any spaces, tabs, newlines from the beginning and end
+- `== ""` = check if it equals an empty string
+- `fmt.Println` = print a line of text to the screen
+- `return` = exit the main function (end the program)
+- **In simple terms:** "If the user didn't type anything (just empty space), print an error message and quit"
+
+---
+
+```go
+lines := strings.Split(strings.TrimRight(content, "\n"), "\n")
+```
+
+**Breaking it down (from inside out):**
+- `strings.TrimRight(content, "\n")` = remove newlines from the right side of the content
+- `strings.Split(..., "\n")` = split the text into pieces wherever there's a newline
+- `lines` = variable holding an array (list) of strings
+- **In simple terms:** "Break the input into separate lines and store them in a list"
+
+**Example:** If input is:
+```
+o-o
+| |
+o-o
+```
+Then `lines` becomes: `["o-o", "| |", "o-o"]`
+
+---
+
+```go
+y := len(lines)
+```
+
+**What this does:**
+- `len(lines)` = get the length (number of items) in the lines array
+- `y` = store that number
+- **In simple terms:** "Count how many lines there are - that's the height"
+
+---
+
+```go
+x := len([]rune(lines[0]))
+```
+
+**Breaking it down:**
+- `lines[0]` = get the first line (arrays start at index 0)
+- `[]rune(...)` = convert the string to an array of runes (characters)
+- `len(...)` = count how many characters
+- `x` = store that number
+- **In simple terms:** "Count how many characters are in the first line - that's the width"
+
+**Note:** We use `rune` instead of just counting the string length because some characters (like emojis) take up multiple bytes
+
+---
+
+```go
+matches := []string{}
+```
+
+**What this does:**
+- `matches` = variable name
+- `[]string` = the type: a slice (list/array) of strings
+- `{}` = create an empty slice
+- **In simple terms:** "Create an empty list to store which quad functions match the input"
+
+---
+
+```go
+if content == quadA(x, y) {
+    matches = append(matches, fmt.Sprintf("[quadA] [%d] [%d]", x, y))
+}
+```
+
+**Breaking it down:**
+- `content == quadA(x, y)` = call the quadA function with width x and height y, then check if it exactly matches the input
+- `fmt.Sprintf("[quadA] [%d] [%d]", x, y)` = create a formatted string
+  - `Sprintf` = "String print formatted" - creates a string instead of printing
+  - `[quadA]` = literal text
+  - `[%d]` = placeholder for an integer (decimal number)
+  - The first `%d` gets replaced by `x`
+  - The second `%d` gets replaced by `y`
+  - **Example result:** `"[quadA] [5] [3]"`
+- `append(matches, ...)` = add this string to the end of the matches list
+- **In simple terms:** "If the input matches what quadA would draw, add 'quadA with these dimensions' to our matches list"
+
+---
+
+The next four `if` statements do **exactly the same thing** but for quadB, quadC, quadD, and quadE.
+
+---
+
+```go
+if len(matches) == 0 {
+    fmt.Println("Not a quad function")
+```
+
+**What this checks:**
+- `len(matches)` = count how many items are in the matches list
+- `== 0` = equals zero
+- **In simple terms:** "If no quad functions matched the input, print an error message"
+
+---
+
+```go
+} else {
+    fmt.Println(strings.Join(matches, " || "))
+}
+```
+
+**Breaking it down:**
+- `strings.Join(matches, " || ")` = combine all strings in the matches list into one string
+  - The second parameter `" || "` is the separator to put between each item
+  - **Example:** If matches has `["[quadA] [3] [3]", "[quadC] [3] [3]"]`
+  - Result: `"[quadA] [3] [3] || [quadC] [3] [3]"`
+- `fmt.Println(...)` = print that combined string
+- **In simple terms:** "If we found matches, print them all separated by ' || '"
+
+---
+
+```go
+}
+```
+
+**Final closing brace** - ends the main function.
+
+---
+
+## 🎯 SUMMARY: WHAT THE WHOLE PROGRAM DOES
+
+1. **Reads input** from the user (a pattern made of characters)
+2. **Figures out the dimensions** (width and height)
+3. **Tests if the input matches** any of the 5 quad patterns (A, B, C, D, E)
+4. **Prints which quad function(s)** created that pattern
+5. If **no match is found**, prints "Not a quad function"
+
+**Real-world example:**
+- User types:
+```
+o-o
+| |
+o-o
+```
+- Program calculates: width=3, height=3
+- Program generates quadA(3,3), quadB(3,3), etc.
+- Finds that quadA(3,3) matches!
+- Prints: `[quadA] [3] [3]`
+
+---
+
+## 🔑 KEY CONCEPTS YOU LEARNED
+
+1. **Functions** - reusable blocks of code
+2. **Loops** - repeating code multiple times
+3. **Conditions** - making decisions in code (if/else)
+4. **Strings** - working with text
+5. **Arrays/Slices** - lists of items
+6. **Input/Output** - reading from keyboard, printing to screen
+
+You now understand **every single word** in this program! 🎉---
 
 # ✅ **AUDIT QUICK ANSWERS**
 
