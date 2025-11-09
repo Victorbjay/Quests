@@ -639,9 +639,90 @@ Once your `quadchecker` logic is complete, it will detect which quad it matches.
      ./quadC 1 2 | go run .
      ```
 
+
 ---
 
-## 📘 6. Vocabulary for Beginners
+# ✅ **MEMORIZE THIS 2-MINUTE EXPLANATION**
+
+---
+
+## 🔹 **What the program does (1 sentence)**
+
+> “The program reads the quad drawing from stdin, figures out its width and height, generates all five quad types of the same size, compares them, and prints which one matches.”
+
+---
+
+# ✅ **HIGH-LEVEL STEPS (5 points)**
+
+1️⃣ Read the entire input from stdin using `bufio` + `io.ReadAll`.
+2️⃣ Check if the input is empty — print *Not a quad function*.
+3️⃣ Split the drawing into lines → `y = number of lines`, `x = characters per line`.
+4️⃣ Generate quadA, quadB, quadC, quadD, quadE using the same `x` and `y`.
+5️⃣ Compare input with each generated quad → print all matches.
+
+---
+
+# ✅ **FUNCTIONS EXPLAINED IN 1-LINE EACH**
+
+* **quadA–quadE**: Each function creates the expected quad shape using nested loops and returns it as a string.
+* **`strings.Builder`**: Used to build each quad string efficiently.
+* **`WriteRune`**: Writes one character at a time.
+
+---
+
+# ✅ **MAIN LOGIC IN SIMPLE WORDS**
+
+* **Read input** → store it as `content`.
+* **Remove extra newline** → avoid extra empty lines.
+* **Split by newline** → to count rows (`y`).
+* **Count characters on first line** → width (`x`).
+* **Make an empty slice** → store matches.
+* **Compare input to each quad generator** using `content == quadX(x, y)`.
+* **If matches exist** → print them separated by `||`.
+* **If no match** → print *Not a quad function*.
+
+---
+
+# ✅ **SUPER-SHORT EXPLANATION OF LOOPS**
+
+> “Two loops: the outer loop draws each row, the inner loop draws each column. Characters change depending on whether we are on a corner, border, or middle.”
+
+---
+
+# ✅ **AUDIT QUICK ANSWERS**
+
+### **Why use rune instead of byte?**
+
+> To correctly count characters in Go’s UTF-8 strings.
+
+### **Why read from stdin?**
+
+> Because quad executables send their drawing through a pipe into quadchecker.
+
+### **Why use strings.Builder?**
+
+> It's faster and avoids creating multiple temporary strings.
+
+### **Why TrimRight?**
+
+> Prevents an extra empty line when splitting by newline.
+
+### **Why compare string to string?**
+
+> Because the exact character layout (shape) determines which quad it is.
+
+---
+
+# ✅ **CRISIS MODE (If auditor asks you to summarize in 10 seconds)**
+
+Just say this:
+
+> “We read the input drawing, calculate its width and height, generate all quads with the same size, compare them to the input, and print whichever ones match. If none match, we print Not a quad function.”
+
+---
+
+
+## 📘  Vocabulary for Beginners
 
 | Word                     | Meaning                                                          |                                                      |
 | ------------------------ | ---------------------------------------------------------------- | ---------------------------------------------------- |
@@ -650,12 +731,6 @@ Once your `quadchecker` logic is complete, it will detect which quad it matches.
 | **Tree**                 | A command that shows folder structure visually.                  |                                                      |
 | **Build**                | Compiles your Go code into a runnable program.                   |                                                      |
 | **Args (arguments)**     | Extra values you pass to your program when you run it.           |                                                      |
-| **Module (go.mod)**      | A Go file that tells Go how to handle your project dependencies. |                                                      |
-| **Run (go run .)**       | Compiles and runs your Go program from the current directory.    |                                                      |
-
-| Word                         | Meaning                                                                        |                                                                                    |                                                 |
-| ---------------------------- | ------------------------------------------------------------------------------ | ---------------------------------------------------------------------------------- | ----------------------------------------------- |
-| **Pipe (`                    | `)**                                                                           | Sends the *output* of one program as the *input* of another. Example: `./quadA 3 3 | go run .` sends quadA’s drawing to quadchecker. |
 | **stdin (Standard Input)**   | What your program reads when something is typed or piped into it.              |                                                                                    |                                                 |
 | **stdout (Standard Output)** | Where your program prints messages (usually your terminal).                    |                                                                                    |                                                 |
 | **strings.Builder**          | A Go tool to build long strings efficiently instead of concatenating with `+`. |                                                                                    |                                                 |
@@ -664,12 +739,7 @@ Once your `quadchecker` logic is complete, it will detect which quad it matches.
 | **Module (`go.mod`)**        | File that defines your Go project’s name and dependencies.                     |                                                                                    |                                                 |
 | **`io.ReadAll()`**           | Reads everything from input until end (useful for multi-line data).            |                                                                                    |                                                 |
 | **Alphabetical order**       | Sorting results by name (A → Z).                                               |                                                                                    |                                                 |
-
-
-| Word          | Meaning                                                                             |                                                                            |                                                                                    |
-| ------------- | ----------------------------------------------------------------------------------- | -------------------------------------------------------------------------- | ---------------------------------------------------------------------------------- |
-| **Pipe (      | )**                                                                                 | Sends the output of one program as input to another. Example: `./quadA 3 3 | go run .` means “take what quadA prints and give it to the program we’re running.” |
-| **Module**    | A Go project with its own `go.mod` file — like a package with its own dependencies. |                                                                            |                                                                                    |
+                                        |
 | **Import**    | Tells Go what other code you need to use (like `fmt`).                              |                                                                            |                                                                                    |
 | **Compile**   | When Go converts your code into an executable program.                              |                                                                            |                                                                                    |
 | **Run**       | Executes your Go code directly (`go run .`).                                        |                                                                            |                                                                                    |
