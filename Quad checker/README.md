@@ -429,34 +429,40 @@ func main() {
 package main
 
 import (
-	"fmt"
-	"os"
-	"strconv"
+    "fmt"
+    "os"
+    "strconv"
 )
 
 func main() {
-	if len(os.Args) != 3 {
-		return
-	}
-	w, _ := strconv.Atoi(os.Args[1])
-	h, _ := strconv.Atoi(os.Args[2])
+    if len(os.Args) != 3 {
+        return
+    }
 
-	for y := 0; y < h; y++ {
-		for x := 0; x < w; x++ {
-			if y == 0 && (x == 0 || x == w-1) {
-				fmt.Print("/")
-			} else if y == h-1 && (x == 0 || x == w-1) {
-				fmt.Print("\\")
-			} else if y == 0 || y == h-1 {
-				fmt.Print("*")
-			} else if x == 0 || x == w-1 {
-				fmt.Print("*")
-			} else {
-				fmt.Print(" ")
-			}
-		}
-		fmt.Println()
-	}
+    w, err1 := strconv.Atoi(os.Args[1])
+    h, err2 := strconv.Atoi(os.Args[2])
+    if err1 != nil || err2 != nil || w <= 0 || h <= 0 {
+        return
+    }
+
+    for y := 0; y < h; y++ {
+        for x := 0; x < w; x++ {
+            if y == 0 && x == 0 { // top-left
+                fmt.Print("/")
+            } else if y == 0 && x == w-1 { // top-right
+                fmt.Print("\\")
+            } else if y == h-1 && x == 0 { // bottom-left
+                fmt.Print("\\")
+            } else if y == h-1 && x == w-1 { // bottom-right
+                fmt.Print("/")
+            } else if y == 0 || y == h-1 || x == 0 || x == w-1 { // borders
+                fmt.Print("*")
+            } else {
+                fmt.Print(" ")
+            }
+        }
+        fmt.Println()
+    }
 }
 ```
 
@@ -554,40 +560,39 @@ func main() {
 package main
 
 import (
-	"fmt"
-	"os"
-	"strconv"
+    "fmt"
+    "os"
+    "strconv"
 )
 
 func main() {
-	if len(os.Args) != 3 {
-		return
-	}
-	w, _ := strconv.Atoi(os.Args[1])
-	h, _ := strconv.Atoi(os.Args[2])
+    if len(os.Args) != 3 {
+        return
+    }
 
-	for y := 0; y < h; y++ {
-		for x := 0; x < w; x++ {
-			if y == 0 && x == 0 {
-				fmt.Print("A")
-			} else if y == 0 && x == w-1 {
-				fmt.Print("C")
-			} else if y == h-1 && x == 0 {
-				fmt.Print("C")
-			} else if y == h-1 && x == w-1 {
-				fmt.Print("A")
-			} else if y == 0 || y == h-1 {
-				fmt.Print("B")
-			} else if x == 0 || x == w-1 {
-				fmt.Print("B")
-			} else {
-				fmt.Print(" ")
-			}
-		}
-		fmt.Println()
-	}
-}
-```
+    w, err1 := strconv.Atoi(os.Args[1])
+    h, err2 := strconv.Atoi(os.Args[2])
+    if err1 != nil || err2 != nil || w <= 0 || h <= 0 {
+        return
+    }
+
+    for y := 0; y < h; y++ {
+        for x := 0; x < w; x++ {
+            if y == 0 && (x == 0 || x == w-1) {        // top corners
+                fmt.Print("A")
+            } else if y == h-1 && (x == 0 || x == w-1) { // bottom corners
+                fmt.Print("C")
+            } else if y == 0 || y == h-1 {              // top & bottom borders
+                fmt.Print("B")
+            } else if x == 0 || x == w-1 {              // side borders
+                fmt.Print("B")
+            } else {
+                fmt.Print(" ")
+            }
+        }
+        fmt.Println()
+    }
+}```
 
 ---
 
