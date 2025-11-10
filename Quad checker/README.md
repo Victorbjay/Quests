@@ -1219,3 +1219,491 @@ Just say this:
 | **Tree**      | A command that shows your folder structure neatly.                                  |                                                                            |                                                                                    |
 
 ---
+
+# 🎯 QUADCHECKER AUDIT QUESTIONS - FULL DRILL
+
+Let me prepare you for **EVERY possible question** they might ask during the audit!
+
+---
+
+## 📚 **CATEGORY 1: CODE UNDERSTANDING QUESTIONS**
+
+### **Q1: Explain what this program does in one sentence.**
+**Answer:** 
+"This program reads a rectangular pattern from input, checks if it matches any of the five quad drawing functions (quadA through quadE), and prints which function(s) could have created that pattern."
+
+---
+
+### **Q2: Why do we use `strings.Builder` instead of regular string concatenation?**
+**Answer:**
+"Because strings in Go are immutable (can't be changed). If we used `result = result + "o"` in a loop, Go would create a new string every time, which is very slow. `strings.Builder` is efficient because it builds the string in one place without creating copies."
+
+**Example they might ask you to explain:**
+```go
+// SLOW (creates many string copies):
+result := ""
+for i := 0; i < 1000; i++ {
+    result = result + "x"  // Creates 1000 new strings!
+}
+
+// FAST (builds in one place):
+var builder strings.Builder
+for i := 0; i < 1000; i++ {
+    builder.WriteRune('x')  // Adds to same builder
+}
+```
+
+---
+
+### **Q3: What's the difference between `WriteRune` and `WriteString`?**
+**Answer:**
+- `WriteRune('o')` - writes a **single character** (rune)
+- `WriteString("hello")` - writes a **whole string** (multiple characters)
+- Runes are used for single characters, especially important for Unicode characters
+
+---
+
+### **Q4: Why do we use `[]rune(lines[0])` instead of just `len(lines[0])`?**
+**Answer:**
+"Because some characters take up multiple bytes. For example, emoji '😀' is 4 bytes but counts as 1 character. Using `[]rune` converts to characters first, so we count actual characters, not bytes."
+
+**Example:**
+```go
+s := "Hi😀"
+fmt.Println(len(s))           // prints 6 (bytes)
+fmt.Println(len([]rune(s)))   // prints 3 (characters: H, i, 😀)
+```
+
+---
+
+### **Q5: What does the `||` operator do? What about `&&`?**
+**Answer:**
+- `||` means **OR** - if **either** condition is true, the whole thing is true
+- `&&` means **AND** - **both** conditions must be true
+
+**Example:**
+```go
+if row == 1 || row == 5 {  // true if row is 1 OR row is 5
+    // ...
+}
+
+if row == 1 && col == 1 {  // true ONLY if row is 1 AND col is 1
+    // ...
+}
+```
+
+---
+
+### **Q6: Why do we check `x <= 0 || y <= 0` at the start of each quad function?**
+**Answer:**
+"Because you can't draw a rectangle with zero or negative width/height. If someone passes invalid dimensions, we return an empty string instead of crashing or creating garbage output."
+
+---
+
+### **Q7: Explain this line: `strings.TrimRight(content, "\n")`**
+**Answer:**
+"It removes newline characters (`\n`) from the right side (end) of the string. We do this before splitting into lines so we don't get an empty line at the end."
+
+**Example:**
+```go
+content := "line1\nline2\n"
+trimmed := strings.TrimRight(content, "\n")  // "line1\nline2"
+lines := strings.Split(trimmed, "\n")        // ["line1", "line2"]
+```
+
+---
+
+### **Q8: What does `strings.Split` do?**
+**Answer:**
+"It breaks a string into pieces (an array/slice) wherever it finds the separator. Like cutting a paper with scissors at specific marks."
+
+**Example:**
+```go
+s := "apple,banana,cherry"
+parts := strings.Split(s, ",")
+// parts = ["apple", "banana", "cherry"]
+```
+
+---
+
+### **Q9: What's the difference between `:=` and `=`?**
+**Answer:**
+- `:=` - creates a **new variable** and assigns a value (short declaration)
+- `=` - assigns to an **existing variable**
+
+**Example:**
+```go
+x := 5        // Creates new variable x and sets it to 5
+x = 10        // Changes existing variable x to 10
+
+var y int     // Declares variable y
+y = 20        // Assigns 20 to existing variable y
+```
+
+---
+
+### **Q10: Why do we validate that all lines have the same length?**
+**Answer:**
+"Because a valid quad pattern must be a perfect rectangle. If lines have different lengths, it's malformed input and can't be any quad function."
+
+**Example of invalid input:**
+```
+o-o
+|
+o-o
+```
+First line is 3 characters, second line is 1 character - NOT a rectangle!
+
+---
+
+## 📚 **CATEGORY 2: LOGIC QUESTIONS**
+
+### **Q11: Walk me through how quadA draws a 3x3 rectangle.**
+**Answer:**
+```
+"For a 3x3 quadA:
+Row 1: We're on top edge, so:
+  - Col 1: corner, draw 'o'
+  - Col 2: top edge (not corner), draw '-'
+  - Col 3: corner, draw 'o'
+  Result: o-o
+
+Row 2: We're NOT on top/bottom edge, so:
+  - Col 1: left edge, draw '|'
+  - Col 2: inside (not edge), draw ' '
+  - Col 3: right edge, draw '|'
+  Result: | |
+
+Row 3: We're on bottom edge, so:
+  - Col 1: corner, draw 'o'
+  - Col 2: bottom edge (not corner), draw '-'
+  - Col 3: corner, draw 'o'
+  Result: o-o
+
+Final output:
+o-o
+| |
+o-o
+"
+```
+
+---
+
+### **Q12: Why might multiple quads match the same input?**
+**Answer:**
+"Some patterns are ambiguous, especially small ones. For example, a 1x1 input is just 'A', which matches quadC, quadD, and quadE because they all use 'A' for corners."
+
+**Example:**
+```bash
+$ ./quadC 1 1
+A
+$ ./quadD 1 1
+A
+$ ./quadE 1 1
+A
+```
+All three produce the same output!
+
+---
+
+### **Q13: What happens if someone pipes in "0 0"?**
+**Answer:**
+"The program will print 'Not a quad function' because:
+1. The input '0 0' will be read as a 3-character string (including space)
+2. We'll try to generate quads with dimensions based on that
+3. None of the quad functions will produce '0 0' as output
+4. No matches found, so we print 'Not a quad function'"
+
+---
+
+### **Q14: Trace through what happens with this input: `o-o\n| |\no-o`**
+**Answer:**
+```
+1. Read input: "o-o\n| |\no-o"
+2. Trim right newlines: "o-o\n| |\no-o"
+3. Split by newlines: ["o-o", "| |", "o-o"]
+4. Count lines: y = 3
+5. Count chars in first line: x = 3
+6. Validate all lines are length 3: ✓ Pass
+7. Call quadA(3, 3): generates "o-o\n| |\no-o\n"
+8. Compare: input matches quadA!
+9. Add "[quadA] [3] [3]" to matches
+10. Test other quads: no other matches
+11. Print: [quadA] [3] [3]
+```
+
+---
+
+### **Q15: What's the purpose of the nested loops?**
+**Answer:**
+"The outer loop goes through each row (top to bottom), and the inner loop goes through each column (left to right) within that row. Together, they visit every position in the rectangle, like reading a book line by line, word by word."
+
+**Visual:**
+```
+Row 1: visit (1,1), (1,2), (1,3)
+Row 2: visit (2,1), (2,2), (2,3)
+Row 3: visit (3,1), (3,2), (3,3)
+```
+
+---
+
+## 📚 **CATEGORY 3: EDGE CASES & DEBUGGING**
+
+### **Q16: What happens if the input is completely empty?**
+**Answer:**
+```go
+if strings.TrimSpace(content) == "" {
+    fmt.Println("Not a quad function")
+    return
+}
+```
+"We check if the input is empty (or just whitespace) and immediately print 'Not a quad function' and exit."
+
+---
+
+### **Q17: What if someone sends a 1000x1000 rectangle?**
+**Answer:**
+"The program will work, but it might be slow and use a lot of memory. The nested loops would run 1,000,000 times (1000 × 1000) for each quad function. For production code, we'd want to add size limits or optimize."
+
+---
+
+### **Q18: Why don't we handle the error from `io.ReadAll`?**
+**Original code issue - now fixed!**
+
+**Answer:**
+"Actually, we SHOULD handle it! In the fixed version, we do:
+```go
+input, err := io.ReadAll(reader)
+if err != nil {
+    fmt.Println("Not a quad function")
+    return
+}
+```
+This prevents crashes if reading fails."
+
+---
+
+### **Q19: What if lines have tabs or extra spaces?**
+**Answer:**
+"Our program treats tabs and spaces as part of the pattern. If the input has tabs where it should have spaces, it won't match any quad function. Quad functions only use spaces for filling, not tabs."
+
+---
+
+### **Q20: Why do we need `strings.TrimSpace` AND `strings.TrimRight`?**
+**Answer:**
+- `strings.TrimSpace(content) == ""` - checks if input is completely empty/whitespace
+- `strings.TrimRight(content, "\n")` - removes trailing newlines before splitting (so we don't get empty lines at the end)
+
+They serve different purposes!
+
+---
+
+## 📚 **CATEGORY 4: GO-SPECIFIC QUESTIONS**
+
+### **Q21: What's a rune in Go?**
+**Answer:**
+"A rune is Go's way of representing a single Unicode character. It's actually an `int32` (4 bytes) that can hold any Unicode character, including emojis, Chinese characters, etc."
+
+---
+
+### **Q22: What's the difference between `string` and `[]byte`?**
+**Answer:**
+- `string` - immutable text (can't change individual characters)
+- `[]byte` - mutable array of bytes (can change individual elements)
+
+```go
+s := "hello"
+// s[0] = 'H'  // ERROR! Strings are immutable
+
+b := []byte("hello")
+b[0] = 'H'     // OK! Now b = "Hello"
+```
+
+---
+
+### **Q23: What does `append` do?**
+**Answer:**
+"It adds an element to the end of a slice (array). If the slice is full, it creates a bigger slice and copies everything over."
+
+```go
+matches := []string{}                  // Empty slice
+matches = append(matches, "quadA")     // ["quadA"]
+matches = append(matches, "quadB")     // ["quadA", "quadB"]
+```
+
+---
+
+### **Q24: What's the difference between `Println` and `Printf`?**
+**Answer:**
+- `Println` - prints text and automatically adds a newline at the end
+- `Printf` - prints formatted text (you control the format with `%d`, `%s`, etc.)
+
+```go
+fmt.Println("Hello")           // Prints: Hello\n
+fmt.Printf("Hello")            // Prints: Hello (no newline)
+fmt.Printf("Age: %d\n", 25)    // Prints: Age: 25\n
+```
+
+---
+
+### **Q25: What does `fmt.Sprintf` return?**
+**Answer:**
+"It returns a **formatted string** instead of printing it. Like `Printf` but it gives you the string to use later."
+
+```go
+s := fmt.Sprintf("[quadA] [%d] [%d]", 3, 3)
+// s now contains: "[quadA] [3] [3]"
+```
+
+---
+
+## 📚 **CATEGORY 5: MODIFICATIONS & WHAT-IF SCENARIOS**
+
+### **Q26: How would you add a quadF function?**
+**Answer:**
+```go
+// 1. Write the quadF function (same structure as others)
+func quadF(x, y int) string {
+    // ... your pattern logic
+}
+
+// 2. Add check in main (alphabetically!)
+if content == quadF(x, y) {
+    matches = append(matches, fmt.Sprintf("[quadF] [%d] [%d]", x, y))
+}
+```
+
+---
+
+### **Q27: How would you optimize this code?**
+**Answer:**
+"Several ways:
+1. **Early exit**: If we find a match and know only one is possible, stop checking
+2. **Parallel checking**: Check all quads at the same time using goroutines
+3. **Pattern pre-validation**: Before generating quads, check if the input's corners/edges look promising
+4. **Size limits**: Reject inputs that are too large"
+
+---
+
+### **Q28: What if we wanted to read from a file instead of STDIN?**
+**Answer:**
+```go
+// Instead of:
+reader := bufio.NewReader(os.Stdin)
+
+// Do this:
+file, err := os.Open("input.txt")
+if err != nil {
+    fmt.Println("Error opening file")
+    return
+}
+defer file.Close()
+reader := bufio.NewReader(file)
+```
+
+---
+
+### **Q29: How would you make this program work with command-line arguments instead of STDIN?**
+**Answer:**
+```go
+func main() {
+    if len(os.Args) < 2 {
+        fmt.Println("Usage: quadchecker <pattern>")
+        return
+    }
+    
+    content := os.Args[1]  // Get first argument
+    
+    // ... rest of code same as before
+}
+```
+
+---
+
+### **Q30: What if we wanted to print matches on separate lines instead of with `||`?**
+**Answer:**
+```go
+// Instead of:
+fmt.Println(strings.Join(matches, " || "))
+
+// Do this:
+for _, match := range matches {
+    fmt.Println(match)
+}
+```
+
+---
+
+## 📚 **CATEGORY 6: TRICKY CONCEPTUAL QUESTIONS**
+
+### **Q31: Why does the pattern need a newline at the end of each row?**
+**Answer:**
+"Because when we print a pattern, each row ends with `\n` (newline). Without it, all rows would appear on the same line. When we compare the input to generated quads, they must match exactly, including newlines."
+
+---
+
+### **Q32: What's the time complexity of this program?**
+**Answer:**
+"For an input of size x × y:
+- Reading input: O(x × y)
+- Generating each quad: O(x × y)
+- Comparing strings: O(x × y)
+- We check 5 quads, so: 5 × O(x × y) = O(x × y)
+
+**Overall: O(x × y)** - linear with respect to input size"
+
+---
+
+### **Q33: What's the space complexity?**
+**Answer:**
+"We store:
+- Original input: O(x × y)
+- Each generated quad: O(x × y)
+- Matches array: O(1) since max 5 matches
+
+**Overall: O(x × y)** - we need space proportional to input size"
+
+---
+
+### **Q34: Why do all quad functions have the same structure?**
+**Answer:**
+"Because they all draw rectangles with the same approach - nested loops visiting each position. Only the character-placement logic differs. This consistency makes the code easier to understand and maintain."
+
+---
+
+### **Q35: Could we use a switch statement instead of multiple if statements?**
+**Answer:**
+"Not easily for our comparisons, because each if statement does a different comparison. Switch statements work best when comparing one variable against multiple values. Here we're calling functions and comparing results."
+
+---
+
+## 🎯 **BONUS: COMMON AUDIT MISTAKES TO AVOID**
+
+### ❌ **Mistake 1:** "I don't know, I just copied it"
+✅ **Better:** "Let me trace through what that line does..."
+
+### ❌ **Mistake 2:** Getting nervous and silent
+✅ **Better:** "Let me think out loud... First this happens, then..."
+
+### ❌ **Mistake 3:** Pretending to know something you don't
+✅ **Better:** "I'm not 100% sure, but I think it works like this..."
+
+### ❌ **Mistake 4:** Not asking for clarification
+✅ **Better:** "Could you rephrase that question? I want to make sure I understand what you're asking."
+
+---
+
+## 🔥 **ULTIMATE PREPARATION TIP**
+
+**Practice saying these phrases:**
+1. "Let me walk through this step by step..."
+2. "The purpose of this code is to..."
+3. "This works by first doing X, then Y, then Z..."
+4. "I'm not certain, but I believe..."
+5. "Could you give me an example input so I can trace through it?"
+
+---
+
+## ✅ **YOU'RE READY!**
+
+You now have answers to **35 potential audit questions**. Practice explaining these concepts in your own words, and you'll ace the audit! 🎉
