@@ -1,19 +1,14 @@
-package piscine
-
-func ListLast(l *List) interface{} {
-	if l == nil || l.Head == nil {
-		return nil
-	}
-
-	// If Tail is properly maintained, we can return it directly
-	if l.Tail != nil {
-		return l.Tail.Data
-	}
-
-	// Fallback: traverse from Head to find the last node
+func ListClear(l *List) {
+	// Clear all nodes by breaking the chain and letting GC handle memory
 	current := l.Head
-	for current.Next != nil {
-		current = current.Next
+	for current != nil {
+		next := current.Next
+		current.Next = nil  // help garbage collector
+		current.Data = nil  // optional: clear data
+		current = next
 	}
-	return current.Data
+	
+	// Reset both Head and Tail to nil
+	l.Head = nil
+	l.Tail = nil
 }
