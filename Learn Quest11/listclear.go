@@ -1,3 +1,5 @@
+package piscine
+
 func ListClear(l *List) {
 	// Clear all nodes by breaking the chain and letting GC handle memory
 	current := l.Head
