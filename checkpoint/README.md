@@ -1328,6 +1328,143 @@ func Gcd(a, b uint) uint {
   until b = 0
   ```
 ---
+✅ Excellent — this one’s a fun one! Let’s write the `HashCode` function step-by-step and then show you the full working Go code.
 
+---
+
+### 🧠 Logic Breakdown
+
+For a string `dec`, and each character `r` in it:
+
+1. Get the ASCII value:
+
+   ```go
+   ascii := int(r)
+   ```
+2. Add the **length** of the string:
+
+   ```go
+   hashed := (ascii + len(dec)) % 127
+   ```
+3. Check if the new value is *printable* (ASCII 33–126):
+   If not, add 33 to make it printable.
+
+   ```go
+   if hashed < 33 {
+       hashed += 33
+   }
+   ```
+4. Convert back to a rune/character and append to the result string.
+
+---
+
+### 🧩 Full Code
+
+```go
+package piscine
+
+func HashCode(dec string) string {
+	if len(dec) == 0 {
+		return ""
+	}
+
+	size := len(dec)
+	var result string
+
+	for _, r := range dec {
+		hashed := (int(r) + size) % 127
+		if hashed < 33 {
+			hashed += 33
+		}
+		result += string(rune(hashed))
+	}
+
+	return result
+}
+```
+
+---
+
+### 🧾 Output
+
+```
+B
+CD
+EDF
+Spwwz+bz}wo
+```
+
+---
+## `LastWord` 
+
+---
+
+### 🧠 Logic Breakdown
+
+We need the **last word** in a given string `s`, where:
+
+* A **word** is separated by **spaces**.
+* Ignore **extra spaces** at the beginning or end.
+* Return it followed by a newline (`\n`).
+
+---
+
+### 🪜 Steps
+
+1. Trim trailing spaces manually or with logic (not with strings.Trim if not allowed).
+2. Move from the **end of the string** backward:
+
+   * Skip spaces until a character is found.
+   * Then, collect characters until another space (or start of string) is reached.
+3. Reverse the collected runes (since we collected backward).
+4. Add `\n` at the end.
+
+---
+
+### ✅ Full Solution
+
+```go
+package piscine
+
+func LastWord(s string) string {
+	runes := []rune(s)
+	end := len(runes) - 1
+
+	// Step 1: skip trailing spaces
+	for end >= 0 && runes[end] == ' ' {
+		end--
+	}
+
+	if end < 0 {
+		return "\n"
+	}
+
+	// Step 2: find the start of the last word
+	start := end
+	for start >= 0 && runes[start] != ' ' {
+		start--
+	}
+
+	// Step 3: extract the word
+	word := string(runes[start+1 : end+1])
+	return word + "\n"
+}
+```
+
+---
+
+### 🧾 Expected Output
+
+```
+not
+lorem,ipsum
+
+```
+
+*(Last line is just an empty line for the string with only spaces)*
+
+---
+
+---
 **You're all set!**  
 Good luck with your checkpoint — you're going to **ace** it!
