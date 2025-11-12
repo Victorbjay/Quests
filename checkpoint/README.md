@@ -1,3 +1,20 @@
+Here is  grouping all the exercises by **percentage (XP weight)** for the **Checkpoint** —
+
+| Question # | % Weight | Exercises (All in Checkpoint) |
+|------------|----------|-------------------------------|
+| **Question 1** | **5%** | `only1`, `onlya`, `onlyb`, `onlyf`, `onlyz` |
+| **Question 2** | **10%** | `checknumber`, `countalpha`, `countcharacter`, `printif`, `printifnot`, `rectperimeter`, `retainfirsthalf` |
+| **Question 3** | **20%** | `cameltosnakecase`, `digitlen`, `firstword`, `fishandchips`, `gcd`, `hashcode`, `lastword`, `repeatalpha` |
+| **Question 4** | **35%** | `findprevprime`, `fromto`, `iscapitalized`, `itoa`, `printmemory`, `printrevcomb`, `thirdtimeisacharm`, `weareunique`, `zipstring` |
+| **Question 5** | **50%** | `addprimesum`, `canjump`, `chunk`, `concatalternate`, `concatslice`, `fprime`, `hiddenp`, `inter`, `reversestrcap`, `saveandmiss`, `union`, `wdmatch` |
+| **Question 6** | **65%** | `fifthandskip`, `notdecimal`, `revconcatalternate`, `slice` |
+| **Question 7** | **75%** | `findpairs`, `revwstr`, `rostring`, `wordflip` |
+| **Question 8** | **85%** | `itoabase`, `options`, `piglatin`, `romannumbers` |
+| **Question 9** | **95%** | `brackets`, `rpncalc` |
+| **Question 10** | **100%** | `brainfuck`, `grouping` |
+
+
+**Total: 57 exercises** (all in Checkpoint)
 
 ## ✅ **Checkpoint Question 1| in this category you might be given either onlyf, onlyz,onlyb and onlya**
 
@@ -1195,3 +1212,122 @@ hello
 
 hello
 ```
+✅ **Checkpoint: `FishAndChips`**
+
+### 🧩 **Function**
+
+```go
+package piscine
+
+func FishAndChips(n int) string {
+	if n < 0 {
+		return "error: number is negative"
+	}
+	if n%2 == 0 && n%3 == 0 {
+		return "fish and chips"
+	}
+	if n%2 == 0 {
+		return "fish"
+	}
+	if n%3 == 0 {
+		return "chips"
+	}
+	return "error: non divisible"
+}
+```
+
+---
+
+### 🪄 **Line-by-line Explanation**
+
+1. **`if n < 0 { ... }`**
+   → Checks if the number is negative.
+   → If true, returns `"error: number is negative"` immediately.
+
+2. **`if n%2 == 0 && n%3 == 0 { ... }`**
+   → `%` means *modulus*, it checks for remainder.
+   → If divisible by both 2 and 3 (remainder 0 in both), return `"fish and chips"`.
+
+3. **`if n%2 == 0 { ... }`**
+   → If divisible only by 2, return `"fish"`.
+
+4. **`if n%3 == 0 { ... }`**
+   → If divisible only by 3, return `"chips"`.
+
+5. **`return "error: non divisible"`**
+   → If none of the above are true, it means not divisible by 2 or 3.
+
+---
+
+### 🧾 **Example Output**
+
+```
+fish
+chips
+fish and chips
+```
+✅ **Checkpoint category 3: `Gcd`**
+
+### 🧩 **Function Solution**
+
+```go
+package piscine
+
+func Gcd(a, b uint) uint {
+	if a == 0 || b == 0 {
+		return 0
+	}
+	for b != 0 {
+		a, b = b, a%b
+	}
+	return a
+}
+```
+
+---
+
+### 🪄 **Line-by-Line Explanation**
+
+1. **`if a == 0 || b == 0 { return 0 }`**
+   → If either number is zero, there’s no valid GCD, so return `0` immediately.
+
+2. **`for b != 0 { ... }`**
+   → This loop keeps running while `b` is not zero.
+   → It uses **Euclid’s algorithm** — a famous method to find the GCD.
+
+3. **`a, b = b, a%b`**
+   → Swap values:
+
+   * The new `a` becomes the old `b`.
+   * The new `b` becomes the remainder of `a % b`.
+     → This gradually reduces the numbers until `b` becomes 0.
+
+4. **`return a`**
+   → When the loop ends, `a` holds the **greatest common divisor**.
+
+---
+
+### 🧾 **Example Output**
+
+```
+2
+6
+7
+1
+```
+
+---
+
+### 🧠 **Quick Tip**
+
+* `%` means *remainder after division*.
+* Euclid’s rule:
+
+  ```
+  GCD(a, b) = GCD(b, a % b)
+  until b = 0
+  ```
+---
+
+**You're all set!**  
+Good luck with your checkpoint — you're going to **ace** it!
