@@ -1464,7 +1464,356 @@ lorem,ipsum
 *(Last line is just an empty line for the string with only spaces)*
 
 ---
+**solution for `repeatalpha.go`:**
 
+```go
+package piscine
+
+func RepeatAlpha(s string) string {
+	result := ""
+	for _, char := range s {
+		if char >= 'a' && char <= 'z' {
+			// Repeat lowercase letter (char - 'a' + 1) times
+			repeatCount := int(char - 'a' + 1)
+			for i := 0; i < repeatCount; i++ {
+				result += string(char)
+			}
+		} else if char >= 'A' && char <= 'Z' {
+			// Repeat uppercase letter (char - 'A' + 1) times
+			repeatCount := int(char - 'A' + 1)
+			for i := 0; i < repeatCount; i++ {
+				result += string(char)
+			}
+		} else {
+			// Non-alphabetic character → print once
+			result += string(char)
+		}
+	}
+	return result
+}
+```
+
+### Line-by-Line Explanation:
+
+```go
+func RepeatAlpha(s string) string {
+```
+- Function takes a `string` and returns a `string`.
+
+```go
+	result := ""
+```
+- Initialize an empty string to build the final result.
+
+```go
+	for _, char := range s {
+```
+- Loop through each character in the input string `s`.
+- `char` is a `rune` (Unicode code point), which handles all characters safely.
+
+```go
+		if char >= 'a' && char <= 'z' {
+```
+- Check if the character is a **lowercase** letter.
+
+```go
+			repeatCount := int(char - 'a' + 1)
+```
+- Calculate how many times to repeat:
+  - `'a'` → `'a' - 'a' + 1` = 1 → repeat 1 time
+  - `'b'` → 2 times
+  - `'c'` → 3 times → up to `'z'` → 26 times
+
+```go
+			for i := 0; i < repeatCount; i++ {
+				result += string(char)
+			}
+```
+- Append the character `repeatCount` times to `result`.
+
+```go
+		} else if char >= 'A' && char <= 'Z' {
+```
+- Same logic for **uppercase** letters.
+
+```go
+			repeatCount := int(char - 'A' + 1)
+```
+- `'A'` → 1, `'B'` → 2, ..., `'Z'` → 26
+
+```go
+		} else {
+			result += string(char)
+		}
+```
+- For any **non-alphabetic** character (space, digit, punctuation), add it **once**.
+
+```go
+	return result
+```
+- Return the final transformed string.
+
+### Test Output Verification:
+
+```go
+fmt.Println(piscine.RepeatAlpha("abc"))
+// → a bb ccc → "abbccc"
+
+fmt.Println(piscine.RepeatAlpha("Choumi."))
+// C(3) hhhh oooooooooooooo uuuuuuuuuuuuuuuuuuuuu mmmmmmmmmmmm iiiiiiiii .
+// → "CCChhhhhhhhooooooooooooooouuuuuuuuuuuuuuuuuuuuummmmmmmmmmmmmiiiiiiiii."
+
+fmt.Println(piscine.RepeatAlpha(""))
+// → empty string
+
+fmt.Println(piscine.RepeatAlpha("abacadaba 01!"))
+// abbacccaddddabba 01!
+// → "abbacccaddddabba 01!"
+```
+
+**All outputs match exactly!** (including `$` from `cat -e`)
+
+---
+**solution for `findprevprime.go`:Question 4 category**
+
+```go
+package piscine
+
+// isPrime checks if a number is prime
+func isPrime(n int) bool {
+	if n <= 1 {
+		return false
+	}
+	if n <= 3 {
+		return true
+	}
+	if n%2 == 0 || n%3 == 0 {
+		return false
+	}
+
+	// Check divisors from 5 up to sqrt(n)
+	for i := 5; i*i <= n; i += 6 {
+		if n%i == 0 || n%(i+2) == 0 {
+			return false
+		}
+	}
+	return true
+}
+
+// FindPrevPrime returns the largest prime <= nb
+// Returns 0 if no such prime exists
+func FindPrevPrime(nb int) int {
+	if nb <= 2 {
+		return 0
+	}
+
+	// Start from nb and go downwards
+	for i := nb; i >= 2; i-- {
+		if isPrime(i) {
+			return i
+		}
+	}
+
+	return 0
+}
+```
+
+### Line-by-Line Explanation:
+
+```go
+func isPrime(n int) bool {
+```
+- Helper function to check if a number is prime.
+
+```go
+	if n <= 1 { return false }
+	if n <= 3 { return true }
+```
+- Numbers ≤1 are not prime. 2 and 3 are prime.
+
+```go
+	if n%2 == 0 || n%3 == 0 { return false }
+```
+- Eliminate multiples of 2 and 3 early.
+
+```go
+	for i := 5; i*i <= n; i += 6 {
+		if n%i == 0 || n%(i+2) == 0 {
+			return false
+		}
+	}
+```
+- Efficient loop: checks only numbers of form 6k±1 (all primes >3 are in this form).
+- Only needs to go up to √n.
+
+```go
+	return true
+```
+- If no divisors found → prime.
+
+```go
+func FindPrevPrime(nb int) int {
+```
+- Main function.
+
+```go
+	if nb <= 2 { return 0 }
+```
+- No prime ≤2 except 2, but we start searching from 2 anyway. Safe guard.
+
+```go
+	for i := nb; i >= 2; i-- {
+		if isPrime(i) {
+			return i
+		}
+	}
+```
+- Start from `nb` and go down until we find a prime.
+
+```go
+	return 0
+```
+- If no prime found (shouldn't happen for nb ≥ 2), return 0.
+
+### Test Output Verification:
+
+```go
+fmt.Println(FindPrevPrime(5))  // 5 is prime → 5
+fmt.Println(FindPrevPrime(4))  // 4 not prime → 3 is largest prime ≤4 → 3
+```
+
+**Output:**
+```
+5
+3
+```
+**solution for `fromto.go`:**
+
+```go
+package piscine
+
+import "strconv"
+
+func FromTo(from int, to int) string {
+	// Check if any number is < 0 or > 99
+	if from < 0 || from > 99 || to < 0 || to > 99 {
+		return "Invalid\n"
+	}
+
+	result := ""
+	start := from
+	end := to
+	step := 1
+
+	// If from > to, we go backwards
+	if from > to {
+		step = -1
+	}
+
+	// Special case: from == to
+	if from == to {
+		if from < 10 {
+			return "0" + strconv.Itoa(from) + "\n"
+		}
+		return strconv.Itoa(from) + "\n"
+	}
+
+	// Generate the range
+	for i := start; ; i += step {
+		// Format number: add leading zero if < 10
+		if i < 10 {
+			result += "0" + strconv.Itoa(i)
+		} else {
+			result += strconv.Itoa(i)
+		}
+
+		// Stop when we reach 'to'
+		if i == end {
+			break
+		}
+
+		// Add ", " separator
+		result += ", "
+	}
+
+	// Add final newline
+	result += "\n"
+	return result
+}
+```
+
+### Line-by-Line Explanation:
+
+```go
+	if from < 0 || from > 99 || to < 0 || to > 99 {
+		return "Invalid\n"
+	}
+```
+- If **any** number is out of range `[0, 99]`, return `"Invalid\n"`.
+
+```go
+	start := from
+	end := to
+	step := 1
+```
+- Prepare loop variables. Default step is +1.
+
+```go
+	if from > to {
+		step = -1
+	}
+```
+- If `from > to`, we count **downwards** → step = -1.
+
+```go
+	if from == to {
+		if from < 10 {
+			return "0" + strconv.Itoa(from) + "\n"
+		}
+		return strconv.Itoa(from) + "\n"
+	}
+```
+- Special case: single number → format with leading zero if needed.
+
+```go
+	for i := start; ; i += step {
+```
+- Infinite loop (we break manually when `i == end`).
+
+```go
+		if i < 10 {
+			result += "0" + strconv.Itoa(i)
+		} else {
+			result += strconv.Itoa(i)
+		}
+```
+- Convert number to string with **leading zero** if < 10.
+
+```go
+		if i == end {
+			break
+		}
+```
+- Stop when we reach the target.
+
+```go
+		result += ", "
+```
+- Add comma and space **only between** numbers.
+
+```go
+	result += "\n"
+```
+- Final newline as required.
+
+### Test Output Verification:
+
+```go
+FromTo(1, 10)   → "01, 02, 03, 04, 05, 06, 07, 08, 09, 10\n"
+FromTo(10, 1)   → "10, 09, 08, 07, 06, 05, 04, 03, 02, 01\n"
+FromTo(10, 10)  → "10\n"
+FromTo(100, 10) → "Invalid\n"
+```
 ---
 **You're all set!**  
 Good luck with your checkpoint — you're going to **ace** it!
