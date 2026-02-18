@@ -1,0 +1,111 @@
+# Prompt Basics — Tutor Vault
+
+> A beginner-friendly guide to writing effective prompts.
+
+---
+
+## What Is a Prompt?
+
+A **prompt** is what you ask an AI. It's how you communicate with language models like GPT, Claude, or Grok.
+
+---
+
+## Types of Prompts
+
+### 1. Direct Instruction
+**"Do this task."**
+
+Example: "List three programming languages"
+- Best for: Getting structured outputs (lists, steps)
+
+---
+
+### 2. Question
+**"Answer this."**
+
+Example: "What are the benefits of Python?"
+- Best for: Learning explanations, deeper understanding
+
+---
+
+### 3. Refined Prompt
+**"Do this, with these specifics."**
+
+Example: "Explain AI to a complete beginner in simple terms"
+- Best for: Getting exactly what you need
+
+---
+
+## Anatomy of a Prompt
+
+| Component | Example |
+|-----------|---------|
+| Task | "Explain..." |
+| Audience | "...to a beginner" |
+| Format | "...in bullet points" |
+| Scope | "...focusing on healthcare" |
+
+---
+
+## Parameters Explained
+
+### Temperature
+
+| Value | Effect |
+|-------|--------|
+| 0.0 - 0.3 | Focused, deterministic, same answers |
+| 0.4 - 0.7 | Balanced |
+| 0.8 - 1.0 | Creative, diverse, unpredictable |
+
+**When to use:**
+- Low temp: Code, facts, summaries
+- High temp: Creative writing, brainstorming
+
+### Top-p
+Controls nucleus sampling — limits word choices to most likely candidates. Similar effect to temperature but different mechanism.
+
+---
+
+## Zero-Shot vs Few-Shot
+
+### Zero-Shot
+Just give the task — no examples.
+
+> "Translate this to French: Hello"
+
+### Few-Shot
+Give examples first.
+
+> "Translate to French:
+> Hello - Bonjour
+> Goodbye - Au revoir
+> Thank you - ?"
+
+**Few-shot works better for complex tasks.**
+
+---
+
+## Quick Reference
+
+| Goal | Prompt Tip |
+|------|------------|
+| Get a list | Use direct instructions |
+| Learn something | Ask questions |
+| Be specific | Add context, audience, format |
+| Get creative | Use higher temperature |
+| Get facts | Use lower temperature |
+| Complex task | Use few-shot examples |
+
+---
+
+## Golden Rules
+
+1. **Be specific** — The more detail, the better
+2. **Define audience** — "Explain like I'm 5" works!
+3. **Choose format** — "In 3 bullet points" or "as a poem"
+4. **Iterate** — If first try isn't good, refine and retry
+
+---
+
+**Created by:** Victor (vokpe)
+**For:** 01-Edu Prompt Basics Course
