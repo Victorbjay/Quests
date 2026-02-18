@@ -1,0 +1,111 @@
+# Reasoning Flow — Tutor Vault
+
+> A beginner-friendly guide to chain-of-thought prompting and step-by-step reasoning.
+
+---
+
+## What Is Chain-of-Thought?
+
+**Chain-of-thought (CoT)** = asking AI to "think out loud" and show its reasoning steps before giving the final answer.
+
+---
+
+## Why Use It?
+
+| Without CoT | With CoT |
+|-------------|----------|
+| Just gives answer | Shows how it got there |
+| Hard to verify | Clear logic path |
+| Can't find mistakes | Easier to debug |
+| Feels like magic | Transparent |
+
+---
+
+## How to Trigger Chain-of-Thought
+
+### Simple Phrases
+
+> "Let's think step by step."
+
+> "Explain your reasoning before answering."
+
+> "Walk me through your thinking."
+
+> "First, then, finally..."
+
+---
+
+## Types of Reasoning Prompts
+
+### 1. Direct CoT
+> "Solve this: 5 + 3 × 2. Let's think step by step."
+
+### 2. Logic Puzzles
+> "Alice is taller than Bob. Bob is taller than Carol. Who is shortest? Show your reasoning."
+
+### 3. Multi-Step
+> "What is 20% of 150? First find the sum, then calculate the percentage."
+
+### 4. Math Problems
+> "Calculate 5! Show each step."
+
+---
+
+## Examples
+
+### Math Example
+
+**Without:** "What's 25% of 80?" → "20"
+
+**With:** "What's 25% of 80? Think step by step."
+
+→ "First, 25% = 25/100 = 0.25"
+→ "Then, 80 × 0.25 = 20"
+→ "Answer: 20"
+
+---
+
+### Logic Example
+
+**Without:** "Who is youngest?" → "Carol"
+
+**With:** "Explain your reasoning..."
+→ "Alice > Bob > Carol"
+→ "Carol is youngest"
+
+---
+
+## When to Use CoT
+
+| Use For | Don't Use For |
+|---------|--------------|
+| Math problems | Simple facts |
+| Logic puzzles | Quick questions |
+| Complex calculations | Either/or choices |
+| Debugging AI thinking | Creative writing |
+| Learning/education | When you just want answer |
+
+---
+
+## Golden Rules
+
+1. **Be explicit** — "Show your reasoning" or "Think step by step"
+2. **Break complex problems** — Ask for steps explicitly
+3. **Verify the logic** — Check each intermediate step
+4. **Combine with roles** — "As a mathematician, explain..."
+
+---
+
+## Quick Reference
+
+| Phrase | Effect |
+|--------|--------|
+| "Let's think step by step" | Detailed reasoning |
+| "Explain your reasoning" | Educational output |
+| "First... then... finally" | Structured multi-step |
+| "Walk me through this" | Narrative explanation |
+
+---
+
+**Created by:** Victor (vokpe)
+**For:** 01-Edu Reasoning Flow Course
