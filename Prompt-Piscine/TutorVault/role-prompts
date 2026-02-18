@@ -1,0 +1,150 @@
+# Role Prompts — Tutor Vault
+
+> A beginner-friendly guide to using roles and personas in AI prompting.
+
+---
+
+## What Are Role Prompts?
+
+A **role prompt** tells the AI to respond as a specific type of person or professional.
+
+Example:
+> "Act as a scientist..." 
+> "You are a coding mentor..."
+> "Write this as a journalist..."
+
+---
+
+## Why Use Roles?
+
+| Without Role | With Role |
+|--------------|-----------|
+| Generic answer | Tailored perspective |
+| One style | Specific tone |
+| Limited context | Expert knowledge |
+
+---
+
+## Types of Roles
+
+### 1. Expert Roles
+- Scientist
+- Engineer
+- Lawyer
+- Doctor
+- Teacher
+
+### 2. Professional Roles
+- Journalist
+- Recruiter
+- Marketing copywriter
+- Customer support
+
+### 3. Persona Roles
+- Friendly helper
+- Strict critic
+- Encouraging mentor
+- Skeptical analyst
+
+---
+
+## How to Write Role Prompts
+
+### Basic Format
+```
+[Role instruction], [task], [context]
+
+Act as a scientist and explain climate change.
+```
+
+### Advanced Format
+```
+Act as [role]. [Specific context]. 
+Respond in [tone] style.
+
+Act as a friendly coding mentor. Review my code. 
+Provide feedback in an encouraging tone.
+```
+
+---
+
+## Tone vs. Role
+
+| What | Controls |
+|------|----------|
+| **Role** | WHO the AI is — perspective, expertise |
+| **Tone** | HOW it speaks — friendly, formal, etc. |
+
+You can combine both:
+> "Act as a friendly recruiter and write a warm, professional email..."
+
+---
+
+## Examples
+
+### Example 1: Same Question, Different Roles
+
+**Question:** "What is Python?"
+
+| Role | Response |
+|------|----------|
+| Scientist | Technical explanation with data |
+| Journalist | Simple, public-friendly version |
+| Critic | Points out limitations/concerns |
+
+---
+
+### Example 2: Same Task, Different Tones
+
+**Task:** Write an email
+
+| Tone | Result |
+|------|--------|
+| Friendly | "Hey! Hope you're doing well..." |
+| Professional | "Dear Mr./Ms.... Kind regards..." |
+| Casual | "Quick email to let you know..." |
+
+---
+
+## Common Role Templates
+
+### For Learning
+```
+Act as a [subject] tutor. Explain [topic] to a beginner.
+```
+
+### For Feedback
+```
+Act as a [role] reviewer. Provide constructive feedback on [work].
+```
+
+### For Writing
+```
+Write as a [profession]. Use [tone] tone. About [topic].
+```
+
+---
+
+## Golden Rules
+
+1. **Be specific about the role** — "coding mentor" is better than "helper"
+2. **Combine with context** — Add what you want, not just who
+3. **Specify tone** — Friendly, professional, casual
+4. **Iterate** — If not right, refine the role description
+
+---
+
+## Quick Reference
+
+| Goal | Prompt Tip |
+|------|------------|
+| Get technical explanation | "Act as a scientist..." |
+| Get simple explanation | "Explain like I'm 5..." |
+| Get feedback | "Act as a [field] expert..." |
+| Get specific tone | "Write in a friendly/professional tone..." |
+| Combine both | "Act as X, Y style..." |
+
+---
+
+**Created by:** Victor (vokpe)
+**For:** 01-Edu Role Prompts Course
