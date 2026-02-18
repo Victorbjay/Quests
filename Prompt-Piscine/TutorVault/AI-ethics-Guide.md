@@ -176,5 +176,5 @@ The goal: **Become irreplaceable** by building real skills, not by getting AI to
 ---
 
 **Created by:** Victor (vokpe)  
-**For:** 01-Edu AI Ethics Course  
+**For:** Learn2Earn AI Ethics Course  
 **Date:** 2026-02-17
